@@ -34,7 +34,8 @@ import { SettingsPanel } from "@/components/admin/settings-panel";
 import { Loading } from "@/components/admin/ui-bits";
 import { createDemoSupabase, resetDemo } from "@/lib/demo-supabase";
 import { balanceDue, depositDue, isLate } from "@/lib/orders";
-import { getBrowserSupabase, isSupabaseConfigured } from "@/lib/supabase";
+import { createRemoteSupabase } from "@/lib/remote-supabase";
+import { isSupabaseConfigured } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
 const nav: { group: string; items: { id: AdminTab; label: string; icon: React.ElementType }[] }[] = [
@@ -104,7 +105,8 @@ function LoginForm({ supabase }: { supabase: SupabaseClient }) {
 
 export function AdminApp() {
   const demo = !isSupabaseConfigured;
-  const [supabase] = React.useState<SupabaseClient>(() => (demo ? createDemoSupabase() : getBrowserSupabase()!));
+  // Base branchée : tout passe par le serveur, qui vérifie le mot de passe admin (pas de compte e-mail).
+  const [supabase] = React.useState<SupabaseClient>(() => (demo ? createDemoSupabase() : createRemoteSupabase()));
   const [session, setSession] = React.useState<Session | null | undefined>(undefined);
   const [isAdmin, setIsAdmin] = React.useState<boolean | null>(null);
 

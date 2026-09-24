@@ -1,4 +1,5 @@
-import { getServerSupabase } from "@/lib/supabase";
+import { isAdminRequest } from "@/lib/admin-auth";
+import { getServiceSupabase } from "@/lib/supabase-admin";
 
 // Service de capture d'écran (gratuit, ~50 captures par jour sans clé).
 const SCREENSHOT_API = "https://api.microlink.io/";
@@ -8,14 +9,10 @@ const SCREENSHOT_API = "https://api.microlink.io/";
  * l'enregistre dans le stockage Supabase et renvoie son adresse publique.
  */
 export async function POST(request: Request) {
-  const token = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
-  if (!token) return Response.json({ error: "Non autorisé." }, { status: 401 });
+  if (!(await isAdminRequest(request))) return Response.json({ error: "Non autorisé." }, { status: 401 });
 
-  const supabase = getServerSupabase(token);
+  const supabase = getServiceSupabase();
   if (!supabase) return Response.json({ error: "Non configuré." }, { status: 503 });
-
-  const { data: isAdmin } = await supabase.rpc("is_admin");
-  if (isAdmin !== true) return Response.json({ error: "Non autorisé." }, { status: 403 });
 
   const body = (await request.json().catch(() => null)) as { url?: string } | null;
   let target: URL;

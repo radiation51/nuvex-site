@@ -30,6 +30,14 @@ export async function adminToken(password: string) {
   return Array.from(new Uint8Array(signature), (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
+/** Vrai si la requête porte un cookie de session admin valide (en local sans mot de passe : toujours vrai). */
+export async function isAdminRequest(request: Request) {
+  const password = readAdminPassword();
+  if (!password) return process.env.NODE_ENV !== "production";
+  const cookie = request.headers.get("cookie")?.match(new RegExp(`(?:^|;\\s*)${ADMIN_COOKIE}=([^;]+)`))?.[1] ?? "";
+  return cookie !== "" && safeEqual(cookie, await adminToken(password));
+}
+
 /** Comparaison à durée constante. */
 export function safeEqual(a: string, b: string) {
   if (a.length !== b.length) return false;

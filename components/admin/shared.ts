@@ -7,7 +7,7 @@ export async function refreshSite(supabase: SupabaseClient) {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (!token || token === "demo") return;
-  await fetch("/api/revalidate", { method: "POST", headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
+  await fetch("/api/revalidate", { method: "POST" }).catch(() => {});
 }
 
 /** Demande au serveur une capture d'écran automatique d'un site ; renvoie l'adresse de l'image. */
@@ -21,7 +21,7 @@ export async function captureScreenshot(supabase: SupabaseClient, url: string) {
   }
   const res = await fetch("/api/screenshot", {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url }),
   }).catch(() => null);
   const json = res ? await res.json().catch(() => ({})) : {};
