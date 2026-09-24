@@ -290,7 +290,7 @@ function OrderForm({
           </div>
         </div>
         <p className="rounded-lg bg-muted/60 px-3 py-2 text-sm">
-          Acompte à la commande : <strong>{formatDA(depositAmount(amounts))}</strong> · Solde à la livraison :{" "}
+          Acompte à la commande : <strong>{formatDA(depositAmount(amounts))}</strong> · Reste une fois le site terminé :{" "}
           <strong>{formatDA(balanceAmount(amounts))}</strong>
         </p>
 

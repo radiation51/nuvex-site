@@ -90,7 +90,7 @@ export function ClientsPanel({ supabase, data }: { supabase: SupabaseClient; dat
     <div>
       <PageHeader
         title="Clients & paiements"
-        subtitle="Acompte de 50 % à la commande, solde à la livraison."
+        subtitle="Acompte de 50 % à la commande, le reste une fois le site terminé."
         action={
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => setEditingClient("new")}>
@@ -122,7 +122,7 @@ export function ClientsPanel({ supabase, data }: { supabase: SupabaseClient; dat
           hint={
             lateBalances.length
               ? `${lateBalances.length} projet${lateBalances.length > 1 ? "s" : ""} déjà livré${lateBalances.length > 1 ? "s" : ""}`
-              : `${balancesDue.length} à la livraison`
+              : `${balancesDue.length} à la fin du projet`
           }
         />
         <StatTile icon={Wallet} tone="good" label="Encaissé ce mois" value={formatDA(paidThisMonth)} />
@@ -165,7 +165,7 @@ export function ClientsPanel({ supabase, data }: { supabase: SupabaseClient; dat
                         ? `Acompte ${order.deposit_percent} % · réservé le ${formatShortDate(order.created_at)}`
                         : order.status === "delivered"
                           ? `Solde · livré le ${formatShortDate(order.delivered_at ?? order.due_date ?? todayISO())}`
-                          : `Solde · à la livraison${order.due_date ? ` (${formatShortDate(order.due_date)})` : ""}`}
+                          : `Solde · une fois terminé${order.due_date ? ` (${formatShortDate(order.due_date)})` : ""}`}
                     </p>
                   </div>
                   <PaymentStatus

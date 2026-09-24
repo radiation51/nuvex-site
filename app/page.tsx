@@ -25,7 +25,7 @@ export default async function Home() {
         <DownloadWithColumnLines />
         <SectorsStrip />
         <WhyUs />
-        <PricingModule plans={offers} footnote="Acompte de 50 % à la commande, le reste à la livraison." />
+        <PricingModule plans={offers} footnote="Acompte de 50 % à la commande, le reste une fois le site terminé." />
         <Steps />
         <CtaBand
           outline="SIMPLE"

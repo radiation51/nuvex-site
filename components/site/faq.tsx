@@ -10,7 +10,7 @@ const questions = [
   },
   {
     q: "Comment se passe le paiement ?",
-    a: "Avec un acompte de 50 % à la commande pour démarrer le projet. Le reste est à régler à la livraison de votre site.",
+    a: "Avec un acompte de 50 % à la commande pour démarrer le projet. Le reste est à régler une fois votre site terminé.",
   },
   {
     q: "Le nom de domaine et l'hébergement sont-ils inclus ?",
