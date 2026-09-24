@@ -1,14 +1,20 @@
 // Mot de passe de l'espace admin : défini dans la variable d'environnement ADMIN_PASSWORD ou ADMINPASSWORDNUVEX
 // (Netlify > Project configuration > Environment variables). Jamais écrit dans le code.
 
-/** Adresse secrète de l'admin (à garder pour vous). /admin affiche « page introuvable ».
- *  Si vous la changez, changez aussi les deux lignes du `matcher` dans proxy.ts. */
-export const ADMIN_ENTRY_PATH = "/espace-nuvex-618b088f";
+type NetlifyGlobal = { Netlify?: { env: { get(key: string): string | undefined } } };
+
+/**
+ * Adresse secrète de l'admin : définie dans la variable d'environnement ADMIN_PATH (jamais dans le code).
+ * En local sans ADMIN_PATH : « /espace-admin ». En ligne sans ADMIN_PATH : l'admin est inaccessible.
+ */
+export function readAdminPath() {
+  const raw = (process.env.ADMIN_PATH || (globalThis as NetlifyGlobal).Netlify?.env.get("ADMIN_PATH") || "").trim();
+  if (!raw) return process.env.NODE_ENV === "production" ? "" : "/espace-admin";
+  return `/${raw.replace(/^\/+|\/+$/g, "")}`;
+}
 
 export const ADMIN_COOKIE = "nuvex_admin";
 export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 jours
-
-type NetlifyGlobal = { Netlify?: { env: { get(key: string): string | undefined } } };
 
 // Noms acceptés pour la variable (le 2e est celui créé sur Netlify).
 const PASSWORD_VARS = ["ADMIN_PASSWORD", "ADMINPASSWORDNUVEX"] as const;

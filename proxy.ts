@@ -1,14 +1,17 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { ADMIN_COOKIE, ADMIN_ENTRY_PATH, adminToken, readAdminPassword, safeEqual } from "@/lib/admin-auth";
+import { ADMIN_COOKIE, adminToken, readAdminPassword, readAdminPath, safeEqual } from "@/lib/admin-auth";
 
-// L'admin n'est accessible que par son adresse secrète, puis par mot de passe (vérifié côté serveur).
+// L'admin n'est accessible que par son adresse secrète (variable ADMIN_PATH), puis par mot de passe.
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const notFound = () => NextResponse.rewrite(new URL("/page-introuvable", request.url));
 
-  // Accès direct à /admin : on fait comme si la page n'existait pas.
-  if (!pathname.startsWith(ADMIN_ENTRY_PATH)) {
-    return NextResponse.rewrite(new URL("/page-introuvable", request.url));
-  }
+  // Les vraies pages de l'admin ne sont jamais accessibles directement.
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) return notFound();
+
+  const entry = readAdminPath();
+  const isEntry = entry !== "" && (pathname === entry || pathname.startsWith(`${entry}/`));
+  if (!isEntry) return NextResponse.next();
 
   const password = readAdminPassword();
   if (!password) {
@@ -23,5 +26,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*", "/espace-nuvex-618b088f", "/espace-nuvex-618b088f/:path*"],
+  // Toutes les pages (l'adresse secrète n'est connue qu'au moment de la requête), sauf fichiers et API.
+  matcher: ["/((?!_next/|api/|.*\\.[A-Za-z0-9]+$).*)"],
 };
