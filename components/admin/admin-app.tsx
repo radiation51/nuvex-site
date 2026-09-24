@@ -179,6 +179,13 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
 
   const navItems = nav.flatMap((g) => g.items);
 
+  // Ferme la session admin (cookie du mot de passe) puis retourne à la page de connexion.
+  const logout = async () => {
+    await fetch("/api/admin/connexion", { method: "DELETE" }).catch(() => {});
+    if (!demo) await supabase.auth.signOut();
+    window.location.replace(`${window.location.origin}/admin/connexion`);
+  };
+
   return (
     <div className="min-h-screen bg-muted/40">
       {demo && (
@@ -251,7 +258,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
             </a>
             <button
               type="button"
-              onClick={() => supabase.auth.signOut()}
+              onClick={logout}
               className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <LogOut className="size-4" />
@@ -272,7 +279,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
                 <a href="/" target="_blank" className="grid size-9 place-items-center rounded-lg hover:bg-muted" aria-label="Voir le site">
                   <ExternalLink className="size-4" />
                 </a>
-                <button type="button" onClick={() => supabase.auth.signOut()} className="grid size-9 place-items-center rounded-lg hover:bg-muted" aria-label="Déconnexion">
+                <button type="button" onClick={logout} className="grid size-9 place-items-center rounded-lg hover:bg-muted" aria-label="Déconnexion">
                   <LogOut className="size-4" />
                 </button>
               </div>

@@ -23,6 +23,13 @@ Sans base de données, le site s'affiche avec le contenu par défaut, mais les f
 7. Dans le dossier `site`, copiez `.env.example` en `.env.local` et collez-y les 2 valeurs.
 8. Relancez `npm run dev`, allez sur `/admin` et connectez-vous.
 
+## Mot de passe de /admin
+L'espace `/admin` est protégé par un mot de passe vérifié sur le serveur (il n'est jamais écrit dans le code).
+- **Sur Netlify** : Project configuration → Environment variables → Add a variable → clé `ADMIN_PASSWORD`, valeur = votre mot de passe → puis redéployer.
+- **Sur votre ordinateur** (facultatif) : ajoutez `ADMIN_PASSWORD=...` dans `.env.local`. Sans cette ligne, l'admin reste accessible en local pour travailler.
+- Tant que `ADMIN_PASSWORD` n'est pas défini en ligne, `/admin` reste **verrouillé**.
+- Une session dure 30 jours ; le bouton « Déconnexion » la ferme.
+
 ## Ce que vous gérez dans /admin
 
 **Mode démo** : tant que Supabase n'est pas branché, `/admin` s'ouvre avec des données fictives (enregistrées dans votre navigateur) pour tout tester. Le bouton « Réinitialiser la démo » remet les exemples à zéro.
