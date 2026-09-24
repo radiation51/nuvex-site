@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" font-family="Segoe UI, Arial, sans-serif">
+  <!-- Visuel provisoire du logiciel Mayfer : à remplacer par une vraie capture d'écran -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2fb"/>
+      <stop offset="1" stop-color="#e3e9f7"/>
+    </linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b4ef5" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3b4ef5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+
+  <!-- Barre latérale -->
+  <rect width="230" height="750" fill="#141a33"/>
+  <rect x="28" y="30" width="36" height="36" rx="10" fill="#3b4ef5"/>
+  <text x="46" y="55" fill="#fff" font-size="20" font-weight="700" text-anchor="middle">M</text>
+  <text x="76" y="56" fill="#fff" font-size="22" font-weight="700">Mayfer</text>
+  <rect x="20" y="104" width="190" height="42" rx="10" fill="#3b4ef5"/>
+  <rect x="40" y="119" width="14" height="14" rx="3" fill="#fff"/>
+  <rect x="66" y="120" width="96" height="10" rx="5" fill="#fff"/>
+  <g fill="#ffffff" fill-opacity="0.35">
+    <rect x="40" y="175" width="14" height="14" rx="3"/><rect x="66" y="177" width="110" height="10" rx="5"/>
+    <rect x="40" y="221" width="14" height="14" rx="3"/><rect x="66" y="223" width="84" height="10" rx="5"/>
+    <rect x="40" y="267" width="14" height="14" rx="3"/><rect x="66" y="269" width="120" height="10" rx="5"/>
+    <rect x="40" y="313" width="14" height="14" rx="3"/><rect x="66" y="315" width="70" height="10" rx="5"/>
+    <rect x="40" y="359" width="14" height="14" rx="3"/><rect x="66" y="361" width="100" height="10" rx="5"/>
+  </g>
+  <rect x="20" y="676" width="190" height="50" rx="12" fill="#ffffff" fill-opacity="0.08"/>
+  <circle cx="46" cy="701" r="13" fill="#b9f35b"/>
+  <rect x="68" y="690" width="90" height="9" rx="4.5" fill="#fff" fill-opacity="0.6"/>
+  <rect x="68" y="706" width="60" height="7" rx="3.5" fill="#fff" fill-opacity="0.3"/>
+
+  <!-- En-tête -->
+  <text x="270" y="68" fill="#141a33" font-size="28" font-weight="700">Tableau de bord</text>
+  <rect x="870" y="38" width="220" height="42" rx="21" fill="#fff"/>
+  <circle cx="895" cy="59" r="8" fill="none" stroke="#9aa3bf" stroke-width="2.5"/>
+  <rect x="912" y="54" width="120" height="10" rx="5" fill="#dfe4f1"/>
+  <circle cx="1134" cy="59" r="21" fill="#fff"/>
+  <circle cx="1134" cy="59" r="12" fill="#3b4ef5" fill-opacity="0.2"/>
+
+  <!-- Cartes de chiffres -->
+  <g>
+    <rect x="270" y="110" width="265" height="130" rx="18" fill="#fff"/>
+    <rect x="294" y="136" width="90" height="10" rx="5" fill="#c9d0e3"/>
+    <rect x="294" y="164" width="150" height="26" rx="8" fill="#141a33"/>
+    <rect x="294" y="208" width="58" height="16" rx="8" fill="#22c55e" fill-opacity="0.18"/>
+    <rect x="555" y="110" width="265" height="130" rx="18" fill="#fff"/>
+    <rect x="579" y="136" width="70" height="10" rx="5" fill="#c9d0e3"/>
+    <rect x="579" y="164" width="120" height="26" rx="8" fill="#141a33"/>
+    <rect x="579" y="208" width="58" height="16" rx="8" fill="#22c55e" fill-opacity="0.18"/>
+    <rect x="840" y="110" width="250" height="130" rx="18" fill="#3b4ef5"/>
+    <rect x="864" y="136" width="80" height="10" rx="5" fill="#fff" fill-opacity="0.6"/>
+    <rect x="864" y="164" width="130" height="26" rx="8" fill="#fff"/>
+    <rect x="864" y="208" width="58" height="16" rx="8" fill="#b9f35b"/>
+  </g>
+
+  <!-- Graphique -->
+  <rect x="270" y="262" width="550" height="300" rx="18" fill="#fff"/>
+  <rect x="294" y="288" width="140" height="12" rx="6" fill="#c9d0e3"/>
+  <g stroke="#eef1f8" stroke-width="2">
+    <line x1="294" y1="360" x2="796" y2="360"/><line x1="294" y1="420" x2="796" y2="420"/><line x1="294" y1="480" x2="796" y2="480"/><line x1="294" y1="538" x2="796" y2="538"/>
+  </g>
+  <path d="M294 500 C 340 470, 370 480, 410 450 S 480 400, 520 420 S 600 360, 640 380 S 720 330, 796 340 L796 538 L294 538 Z" fill="url(#area)"/>
+  <path d="M294 500 C 340 470, 370 480, 410 450 S 480 400, 520 420 S 600 360, 640 380 S 720 330, 796 340" fill="none" stroke="#3b4ef5" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="640" cy="380" r="8" fill="#fff" stroke="#3b4ef5" stroke-width="4"/>
+
+  <!-- Barres -->
+  <rect x="840" y="262" width="250" height="300" rx="18" fill="#fff"/>
+  <rect x="864" y="288" width="100" height="12" rx="6" fill="#c9d0e3"/>
+  <g fill="#3b4ef5">
+    <rect x="872" y="440" width="26" height="98" rx="8" fill-opacity="0.25"/>
+    <rect x="912" y="400" width="26" height="138" rx="8" fill-opacity="0.25"/>
+    <rect x="952" y="360" width="26" height="178" rx="8"/>
+    <rect x="992" y="420" width="26" height="118" rx="8" fill-opacity="0.25"/>
+    <rect x="1032" y="380" width="26" height="158" rx="8" fill-opacity="0.25"/>
+  </g>
+
+  <!-- Tableau -->
+  <rect x="270" y="584" width="820" height="142" rx="18" fill="#fff"/>
+  <g>
+    <circle cx="302" cy="626" r="12" fill="#3b4ef5" fill-opacity="0.18"/>
+    <rect x="326" y="620" width="180" height="11" rx="5.5" fill="#c9d0e3"/>
+    <rect x="620" y="620" width="110" height="11" rx="5.5" fill="#dfe4f1"/>
+    <rect x="980" y="614" width="84" height="22" rx="11" fill="#22c55e" fill-opacity="0.18"/>
+    <line x1="294" y1="655" x2="1066" y2="655" stroke="#eef1f8" stroke-width="2"/>
+    <circle cx="302" cy="686" r="12" fill="#b9f35b" fill-opacity="0.5"/>
+    <rect x="326" y="680" width="150" height="11" rx="5.5" fill="#c9d0e3"/>
+    <rect x="620" y="680" width="130" height="11" rx="5.5" fill="#dfe4f1"/>
+    <rect x="980" y="674" width="84" height="22" rx="11" fill="#f59e0b" fill-opacity="0.2"/>
+  </g>
+</svg>
