@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { CalendarCheck, Lock, MapPin, MessageCircle, Star } from "lucide-react";
+import { CalendarCheck, Lock, MapPin, Star } from "lucide-react";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -106,7 +107,7 @@ export function SiteMockup() {
             <p className="text-[10px] leading-snug text-muted-foreground">Cuisine authentique au cœur d&apos;Alger.</p>
             <span className="block rounded-full bg-primary py-1.5 text-center text-[10px] font-semibold text-white">Réserver</span>
             <span className="flex items-center justify-center gap-1 rounded-full bg-[#25D366]/15 py-1.5 text-[10px] font-semibold text-[#128C4B]">
-              <MessageCircle className="size-3" />
+              <WhatsAppIcon className="size-3" />
               WhatsApp
             </span>
           </div>

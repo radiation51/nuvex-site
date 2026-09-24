@@ -1,6 +1,7 @@
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { GlassPanel, OutlineText } from "@/components/site/glass-panel";
 import { whatsappLink } from "@/lib/format";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
 /** Bandeau de rappel entre les sections : même style que le footer (texte en contour + panneau verre). */
 export function CtaBand({
@@ -41,7 +42,7 @@ export function CtaBand({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold transition-colors hover:bg-white hover:text-primary"
                 >
-                  <MessageCircle className="size-4" />
+                  <WhatsAppIcon className="size-4" />
                   WhatsApp
                 </a>
               ) : (

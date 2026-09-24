@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { AlertTriangle, CheckCircle2, Clock, MessageCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clock } from "lucide-react";
 import { formatDA, whatsappLink } from "@/lib/format";
 import { formatShortDate, paymentMethodLabel } from "@/lib/orders";
 import type { PaymentMethod } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: React.ReactNode; action?: React.ReactNode }) {
   return (
@@ -133,7 +134,7 @@ export function WhatsAppButton({ phone, text, label = "WhatsApp" }: { phone: str
       rel="noopener noreferrer"
       className="inline-flex h-7 items-center gap-1 rounded-lg bg-[#25D366] px-2.5 text-[0.8rem] font-medium text-ink transition-opacity hover:opacity-90"
     >
-      <MessageCircle className="size-3.5" />
+      <WhatsAppIcon className="size-3.5" />
       {label}
     </a>
   );

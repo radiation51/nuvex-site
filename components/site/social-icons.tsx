@@ -1,6 +1,6 @@
-import { MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/lib/format";
 import type { Settings } from "@/lib/types";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
 // Tracés repris de l'image « réseaux sociaux » du footer d'origine, découpés icône par icône.
 const paths = {
@@ -34,7 +34,7 @@ export function SocialLinks({ settings, className, iconClassName }: { settings: 
       {settings.whatsapp && (
         <li>
           <a href={whatsappLink(settings.whatsapp)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className={iconClassName}>
-            <MessageCircle className="size-5" />
+            <WhatsAppIcon className="size-5" />
           </a>
         </li>
       )}

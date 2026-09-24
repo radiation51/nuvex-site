@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { Check, Clock, Loader2, Mail, MapPin, MessageCircle, Phone, RotateCcw, Send } from "lucide-react";
+import { Check, Clock, Loader2, Mail, MapPin, Phone, RotateCcw, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { SectionHeading } from "@/components/site/section-heading";
 import { SELECT_OFFER_EVENT, formatDA, whatsappLink } from "@/lib/format";
 import { formsViaWhatsApp } from "@/lib/supabase";
 import type { Offer, Settings } from "@/lib/types";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
 export function Contact({ offers, settings }: { offers: Offer[]; settings: Settings }) {
   const [offer, setOffer] = React.useState("");
@@ -77,7 +78,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
   }
 
   const contactItems = [
-    settings.whatsapp && { icon: MessageCircle, label: "WhatsApp", value: settings.whatsapp, href: whatsappLink(settings.whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.") },
+    settings.whatsapp && { icon: WhatsAppIcon, label: "WhatsApp", value: settings.whatsapp, href: whatsappLink(settings.whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.") },
     settings.phone && { icon: Phone, label: "Téléphone", value: settings.phone, href: `tel:${settings.phone.replace(/\s/g, "")}` },
     settings.email && { icon: Mail, label: "E-mail", value: settings.email, href: `mailto:${settings.email}` },
     settings.city && { icon: MapPin, label: "Localisation", value: settings.city, href: null },
@@ -132,7 +133,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
                 rel="noopener noreferrer"
                 className="mt-auto flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 font-semibold text-ink transition-opacity hover:opacity-90"
               >
-                <MessageCircle className="size-5" />
+                <WhatsAppIcon className="size-5" />
                 Écrire sur WhatsApp
               </a>
             )}
@@ -253,7 +254,7 @@ function SuccessPanel({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
           >
-            <MessageCircle className="size-5" />
+            <WhatsAppIcon className="size-5" />
             Ouvrir WhatsApp
           </a>
         </>
