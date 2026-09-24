@@ -9,7 +9,6 @@ import { Projects } from "@/components/site/projects";
 import { SectorsStrip } from "@/components/site/sectors-strip";
 import { Steps } from "@/components/site/steps";
 import { Testimonials } from "@/components/site/testimonials";
-import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { WhyUs } from "@/components/site/why-us";
 import { getSiteData } from "@/lib/data";
 
@@ -46,7 +45,6 @@ export default async function Home() {
         <Contact offers={offers} settings={settings} />
       </main>
       <FooterSection5 offers={offers} settings={settings} />
-      <WhatsAppButton phone={settings.whatsapp} />
     </>
   );
 }
