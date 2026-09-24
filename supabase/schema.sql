@@ -95,7 +95,7 @@ create table if not exists public.settings (
   tiktok text not null default '',
   linkedin text not null default ''
 );
-insert into public.settings (id, whatsapp, phone) values (1, '0791 84 00 45', '0791 84 00 45') on conflict do nothing;
+insert into public.settings (id, whatsapp, phone, instagram) values (1, '0791 84 00 45', '0791 84 00 45', 'https://www.instagram.com/nuvex.213/') on conflict do nothing;
 
 -- ---------- Qui est admin ? ----------
 create or replace function public.is_admin()

@@ -14,6 +14,7 @@ import { SELECT_OFFER_EVENT, formatDA, whatsappLink } from "@/lib/format";
 import { formsViaWhatsApp } from "@/lib/supabase";
 import type { Offer, Settings } from "@/lib/types";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
+import { InstagramIcon, instagramHandle } from "@/components/site/social-icons";
 
 export function Contact({ offers, settings }: { offers: Offer[]; settings: Settings }) {
   const [offer, setOffer] = React.useState("");
@@ -81,6 +82,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
     settings.whatsapp && { icon: WhatsAppIcon, label: "WhatsApp", value: settings.whatsapp, href: whatsappLink(settings.whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.") },
     settings.phone && { icon: Phone, label: "Téléphone", value: settings.phone, href: `tel:${settings.phone.replace(/\s/g, "")}` },
     settings.email && { icon: Mail, label: "E-mail", value: settings.email, href: `mailto:${settings.email}` },
+    settings.instagram && { icon: InstagramIcon, label: "Instagram", value: instagramHandle(settings.instagram), href: settings.instagram },
     settings.city && { icon: MapPin, label: "Localisation", value: settings.city, href: null },
   ].filter(Boolean) as { icon: React.ElementType; label: string; value: string; href: string | null }[];
 

@@ -130,7 +130,7 @@ export const defaultSettings: Settings = {
   email: "",
   city: "Algérie",
   facebook: "",
-  instagram: "",
+  instagram: "https://www.instagram.com/nuvex.213/",
   tiktok: "",
   linkedin: "",
 };

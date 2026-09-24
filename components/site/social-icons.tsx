@@ -23,6 +23,24 @@ const paths = {
 } as const;
 
 type Network = keyof typeof paths;
+
+export function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox={paths.instagram.viewBox} className={className} fill="currentColor" aria-hidden>
+      <path d={paths.instagram.d} />
+    </svg>
+  );
+}
+
+/** « https://www.instagram.com/nuvex.213/ » → « @nuvex.213 » */
+export function instagramHandle(url: string) {
+  try {
+    const name = new URL(url).pathname.split("/").filter(Boolean)[0];
+    return name ? `@${name}` : "Instagram";
+  } catch {
+    return "Instagram";
+  }
+}
 const labels: Record<Network, string> = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok", linkedin: "LinkedIn" };
 
 /** Liste des réseaux renseignés dans l'admin (un réseau sans lien n'est pas affiché). */

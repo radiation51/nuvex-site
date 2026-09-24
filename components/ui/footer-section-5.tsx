@@ -1,7 +1,7 @@
 "use client";
 
 import { GlassPanel, OutlineText } from "@/components/site/glass-panel";
-import { SocialLinks } from "@/components/site/social-icons";
+import { SocialLinks, instagramHandle } from "@/components/site/social-icons";
 import { selectOffer, whatsappLink } from "@/lib/format";
 import type { Offer, Settings } from "@/lib/types";
 
@@ -23,6 +23,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
     settings.whatsapp && { name: "WhatsApp", href: whatsappLink(settings.whatsapp) },
     settings.phone && { name: settings.phone, href: `tel:${settings.phone.replace(/\s/g, "")}` },
     settings.email && { name: settings.email, href: `mailto:${settings.email}` },
+    settings.instagram && { name: `Instagram ${instagramHandle(settings.instagram)}`, href: settings.instagram },
   ].filter(Boolean) as { name: string; href: string }[];
 
   return (
@@ -94,7 +95,12 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
               <ul className="flex flex-col gap-3 md:gap-4">
                 {contactLinks.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className={`${linkClass} break-all`}>
+                    <a
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                      className={`${linkClass} break-all`}
+                    >
                       {link.name}
                     </a>
                   </li>
