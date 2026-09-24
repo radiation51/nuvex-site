@@ -10,7 +10,7 @@ export const defaultOffers: Offer[] = [
     price: 25000,
     delivery: "Livré en 7 jours",
     features: [
-      { label: "Site one-page [À REMPLACER]", included: true },
+      { label: "Site one-page", included: true },
       { label: "Nom de domaine inclus", included: true },
       { label: "Adapté mobile", included: true },
       { label: "Bouton WhatsApp", included: true },
@@ -27,7 +27,7 @@ export const defaultOffers: Offer[] = [
     price: 45000,
     delivery: "Livré en 7 jours",
     features: [
-      { label: "Jusqu'à 5 pages [À REMPLACER]", included: true },
+      { label: "Jusqu'à 5 pages", included: true },
       { label: "Nom de domaine inclus", included: true },
       { label: "Adapté mobile", included: true },
       { label: "Bouton WhatsApp", included: true },
@@ -44,7 +44,7 @@ export const defaultOffers: Offer[] = [
     price: 95000,
     delivery: "Livré en 7 jours",
     features: [
-      { label: "Pages illimitées [À REMPLACER]", included: true },
+      { label: "Pages illimitées", included: true },
       { label: "Nom de domaine inclus", included: true },
       { label: "Design 100 % personnalisé", included: true },
       { label: "Espace d'administration", included: true },
