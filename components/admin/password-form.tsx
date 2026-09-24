@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Loader2, Lock } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,10 +38,11 @@ export function AdminPasswordForm({ notConfigured }: { notConfigured: boolean })
   return (
     <form onSubmit={onSubmit} className="grid w-full max-w-sm gap-4 rounded-2xl border bg-card p-8 shadow-sm">
       <div className="text-center">
-        <span className="mx-auto grid size-12 place-items-center rounded-xl bg-primary text-primary-foreground">
-          <Lock className="size-5" />
+        <span className="mx-auto flex w-fit items-center gap-2 font-heading text-2xl font-bold tracking-tight">
+          <span className="grid size-10 place-items-center rounded-xl bg-primary text-base text-primary-foreground">N</span>
+          NUVEX
         </span>
-        <h1 className="mt-4 font-heading text-2xl font-bold">Espace admin</h1>
+        <h1 className="mt-4 font-heading text-xl font-bold">Espace admin</h1>
         <p className="mt-1 text-sm text-muted-foreground">Entrez le mot de passe pour continuer.</p>
       </div>
 
