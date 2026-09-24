@@ -5,6 +5,12 @@ const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const isSupabaseConfigured = Boolean(url && anonKey);
 
+/**
+ * Site en ligne sans base de données : les formulaires envoient leur contenu sur WhatsApp
+ * (rien n'est perdu). Redevient automatique dès que Supabase est branché.
+ */
+export const formsViaWhatsApp = !isSupabaseConfigured && process.env.NODE_ENV === "production";
+
 let browserClient: SupabaseClient | null = null;
 
 /** Client côté navigateur (admin). Garde la session de connexion. */

@@ -8,9 +8,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { whatsappLink } from "@/lib/format";
+import { formsViaWhatsApp } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
-export function ReviewDialog() {
+export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
   const [open, setOpen] = React.useState(false);
   const [rating, setRating] = React.useState(0);
   const [hover, setHover] = React.useState(0);
@@ -25,6 +27,26 @@ export function ReviewDialog() {
     const form = event.currentTarget;
     const data = new FormData(form);
     data.set("rating", String(rating));
+
+    // Pas encore de base de données : l'avis part sur WhatsApp, déjà rédigé.
+    if (formsViaWhatsApp && whatsapp) {
+      const text = (k: string) => String(data.get(k) ?? "").trim();
+      const message = [
+        "Bonjour NUVEX, voici mon avis :",
+        `${"★".repeat(rating)}${"☆".repeat(5 - rating)} (${rating}/5)`,
+        `Nom : ${text("name")}`,
+        text("role") && `Métier / entreprise : ${text("role")}`,
+        `Avis : ${text("text")}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      if (!text("website")) window.open(whatsappLink(whatsapp, message), "_blank", "noopener");
+      toast.success("Merci ! Votre avis s'est ouvert dans WhatsApp : appuyez sur Envoyer.");
+      form.reset();
+      setRating(0);
+      setOpen(false);
+      return;
+    }
 
     setSending(true);
     try {

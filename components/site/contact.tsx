@@ -11,12 +11,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { GlassPanel } from "@/components/site/glass-panel";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SELECT_OFFER_EVENT, formatDA, whatsappLink } from "@/lib/format";
+import { formsViaWhatsApp } from "@/lib/supabase";
 import type { Offer, Settings } from "@/lib/types";
 
 export function Contact({ offers, settings }: { offers: Offer[]; settings: Settings }) {
   const [offer, setOffer] = React.useState("");
   const [sending, setSending] = React.useState(false);
-  const [sent, setSent] = React.useState<{ name: string; phone: string; offer: string } | null>(null);
+  const [sent, setSent] = React.useState<{ name: string; phone: string; offer: string; whatsappUrl?: string } | null>(null);
   const successRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -29,6 +30,29 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
     event.preventDefault();
     const form = event.currentTarget;
     const payload = Object.fromEntries(new FormData(form));
+    const text = (k: string) => String(payload[k] ?? "").trim();
+    const summary = { name: text("name").split(/\s+/)[0], phone: text("phone"), offer: text("offer") };
+
+    // Pas encore de base de données : la demande part sur WhatsApp, déjà rédigée.
+    if (formsViaWhatsApp && settings.whatsapp) {
+      const message = [
+        "Bonjour NUVEX, je souhaite un devis pour mon site web.",
+        `Nom : ${text("name")}`,
+        `Téléphone : ${text("phone")}`,
+        text("email") && `E-mail : ${text("email")}`,
+        `Offre : ${text("offer") || "je ne sais pas encore"}`,
+        text("message") && `Mon projet : ${text("message")}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      const whatsappUrl = whatsappLink(settings.whatsapp, message);
+      if (!text("website")) window.open(whatsappUrl, "_blank", "noopener");
+      form.reset();
+      setOffer("");
+      setSent({ ...summary, whatsappUrl });
+      requestAnimationFrame(() => successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
+      return;
+    }
 
     setSending(true);
     try {
@@ -43,7 +67,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
       if (json.demo) import("@/lib/demo-supabase").then((m) => m.addDemoLead(payload));
       form.reset();
       setOffer("");
-      setSent({ name: String(payload.name ?? "").trim().split(/\s+/)[0], phone: String(payload.phone ?? ""), offer: String(payload.offer ?? "") });
+      setSent(summary);
       requestAnimationFrame(() => successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Envoi impossible.");
@@ -120,6 +144,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
               name={sent.name}
               phone={sent.phone}
               offer={offers.find((o) => o.name === sent.offer)}
+              whatsappUrl={sent.whatsappUrl}
               onReset={() => setSent(null)}
             />
           ) : (
@@ -184,12 +209,15 @@ function SuccessPanel({
   name,
   phone,
   offer,
+  whatsappUrl,
   onReset,
 }: {
   ref: React.Ref<HTMLDivElement>;
   name: string;
   phone: string;
   offer?: Offer;
+  /** Présent quand la demande est transmise via WhatsApp. */
+  whatsappUrl?: string;
   onReset: () => void;
 }) {
   return (
@@ -211,11 +239,33 @@ function SuccessPanel({
         <Check className="size-8" strokeWidth={3} />
       </motion.span>
 
-      <h3 className="mt-6 font-heading text-2xl font-bold sm:text-3xl">Demande envoyée avec succès !</h3>
-      <p className="mt-3 max-w-md text-muted-foreground">
-        Merci{name ? ` ${name}` : ""}, votre demande a bien été reçue. Vous recevrez un appel ou une réponse dans les{" "}
-        <strong className="text-foreground">prochaines 24 heures</strong>.
-      </p>
+      {whatsappUrl ? (
+        <>
+          <h3 className="mt-6 font-heading text-2xl font-bold sm:text-3xl">Votre demande est prête !</h3>
+          <p className="mt-3 max-w-md text-muted-foreground">
+            Merci{name ? ` ${name}` : ""} ! Votre demande s&apos;est ouverte dans WhatsApp : appuyez sur{" "}
+            <strong className="text-foreground">Envoyer</strong> pour nous la transmettre. Vous recevrez un appel ou une réponse dans les{" "}
+            <strong className="text-foreground">prochaines 24 heures</strong>.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+          >
+            <MessageCircle className="size-5" />
+            Ouvrir WhatsApp
+          </a>
+        </>
+      ) : (
+        <>
+          <h3 className="mt-6 font-heading text-2xl font-bold sm:text-3xl">Demande envoyée avec succès !</h3>
+          <p className="mt-3 max-w-md text-muted-foreground">
+            Merci{name ? ` ${name}` : ""}, votre demande a bien été reçue. Vous recevrez un appel ou une réponse dans les{" "}
+            <strong className="text-foreground">prochaines 24 heures</strong>.
+          </p>
+        </>
+      )}
 
       <div className="mt-6 grid w-full max-w-sm gap-2 rounded-xl bg-muted/60 p-4 text-left text-sm">
         {offer && (

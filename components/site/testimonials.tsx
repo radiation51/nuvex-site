@@ -5,7 +5,7 @@ import { ReviewDialog } from "@/components/site/review-dialog";
 import { SectionHeading } from "@/components/site/section-heading";
 import type { Review } from "@/lib/types";
 
-export function Testimonials({ reviews }: { reviews: Review[] }) {
+export function Testimonials({ reviews, whatsapp }: { reviews: Review[]; whatsapp?: string }) {
   const items: Testimonial[] = reviews.map((r) => ({
     text: r.text,
     image: r.image_url,
@@ -36,7 +36,7 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
 
         <div className="mt-10 flex flex-col items-center gap-3 text-center">
           <p className="text-sm text-muted-foreground">Vous avez travaillé avec nous ?</p>
-          <ReviewDialog />
+          <ReviewDialog whatsapp={whatsapp} />
         </div>
       </div>
     </section>

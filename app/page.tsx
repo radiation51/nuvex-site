@@ -35,7 +35,7 @@ export default async function Home() {
           whatsapp={settings.whatsapp}
         />
         <Projects projects={projects} />
-        <Testimonials reviews={reviews} />
+        <Testimonials reviews={reviews} whatsapp={settings.whatsapp} />
         <CtaBand
           outline="GRATUIT"
           title="Votre devis 100 % gratuit"
