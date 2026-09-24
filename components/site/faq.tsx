@@ -10,11 +10,11 @@ const questions = [
   },
   {
     q: "Comment se passe le paiement ?",
-    a: "Un acompte au démarrage du projet, puis le solde à la mise en ligne. Paiement en espèces, CCP ou BaridiMob. [À CONFIRMER]",
+    a: "En 2 fois : un acompte de 50 % au démarrage du projet, puis le solde de 50 % à la livraison de votre site.",
   },
   {
     q: "Le nom de domaine et l'hébergement sont-ils inclus ?",
-    a: "Oui, le nom de domaine est inclus dans toutes nos offres (.com ou .dz) : on s'occupe de la réservation pour vous. Hébergement : [À CONFIRMER]",
+    a: "Oui, le nom de domaine est inclus dans toutes nos offres (.com ou .dz) : on s'occupe de la réservation pour vous.",
   },
   {
     q: "Pourrai-je modifier mon site après la livraison ?",

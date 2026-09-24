@@ -1,5 +1,5 @@
 // Contenu par défaut, utilisé tant que la base de données est vide ou non configurée.
-// Tout ce qui est marqué [À REMPLACER] se modifie ensuite depuis /admin.
+// Offres, réalisations et coordonnées se modifient ensuite depuis /admin.
 import type { Offer, Project, Review, Settings } from "@/lib/types";
 
 export const defaultOffers: Offer[] = [
@@ -117,7 +117,7 @@ export const defaultProjects: Project[] = [
     id: "mayfer",
     title: "Logiciel Mayfer",
     category: "Logiciel sur mesure",
-    description: "[À COMPLÉTER] Logiciel de gestion développé sur mesure.",
+    description: "Logiciel de gestion développé sur mesure.",
     image_url: "/projects/mayfer.svg",
     link: null,
     position: 3,
