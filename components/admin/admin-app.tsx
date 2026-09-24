@@ -183,7 +183,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
   const logout = async () => {
     await fetch("/api/admin/connexion", { method: "DELETE" }).catch(() => {});
     if (!demo) await supabase.auth.signOut();
-    window.location.replace(`${window.location.origin}/admin/connexion`);
+    window.location.reload(); // l'adresse secrète réaffiche la page de connexion
   };
 
   return (

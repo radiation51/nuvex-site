@@ -10,5 +10,10 @@ export function isRateLimited(key: string, max: number, windowMs: number) {
 }
 
 export function clientIp(request: Request) {
-  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+  // Sur Netlify, « x-nf-client-connection-ip » donne l'IP réelle du visiteur (impossible à falsifier).
+  return (
+    request.headers.get("x-nf-client-connection-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "local"
+  );
 }

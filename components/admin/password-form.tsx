@@ -27,7 +27,8 @@ export function AdminPasswordForm({ notConfigured }: { notConfigured: boolean })
     const json = res ? await res.json().catch(() => ({})) : {};
     setLoading(false);
     if (res?.ok) {
-      window.location.replace(`${window.location.origin}/admin`);
+      // Même adresse (secrète) : le serveur affiche maintenant l'admin.
+      window.location.reload();
       return;
     }
     setError(json.error ?? "Connexion impossible.");

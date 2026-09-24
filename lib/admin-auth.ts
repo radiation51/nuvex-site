@@ -1,6 +1,10 @@
 // Mot de passe de l'espace /admin : défini dans la variable d'environnement ADMIN_PASSWORD
 // (Netlify > Project configuration > Environment variables). Jamais écrit dans le code.
 
+/** Adresse secrète de l'admin (à garder pour vous). /admin affiche « page introuvable ».
+ *  Si vous la changez, changez aussi les deux lignes du `matcher` dans proxy.ts. */
+export const ADMIN_ENTRY_PATH = "/espace-nuvex-618b088f";
+
 export const ADMIN_COOKIE = "nuvex_admin";
 export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 jours
 
