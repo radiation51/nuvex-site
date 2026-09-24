@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const ip = clientIp(request);
 
   // Filet de sécurité immédiat contre les rafales de requêtes.
-  if (isRateLimited(`admin-login:${ip}`, 10, 60 * 1000)) {
+  if (isRateLimited(`admin-login:${ip}`, 15, 60 * 1000)) {
     return Response.json({ error: "Trop d'essais. Réessayez plus tard." }, { status: 429 });
   }
 

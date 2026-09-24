@@ -5,7 +5,7 @@ import "server-only";
 // aux redémarrages des serveurs ; en local, il est gardé en mémoire.
 
 const WINDOW_MS = 15 * 60 * 1000; // erreurs comptées sur 15 minutes
-export const MAX_FAILS = 5;
+export const MAX_FAILS = 10;
 const BLOCK_STEPS_MS = [60 * 60 * 1000, 24 * 60 * 60 * 1000, 7 * 24 * 60 * 60 * 1000];
 
 interface GuardRecord {
