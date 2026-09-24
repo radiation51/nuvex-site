@@ -1,78 +1,22 @@
 // MODE DÉMO de l'admin : imite le client Supabase avec des données fictives
 // enregistrées dans le navigateur. Utilisé uniquement tant que Supabase n'est pas configuré.
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { defaultOffers, defaultProjects, defaultSettings, demoReviews } from "@/lib/defaults";
-import { addDays, todayISO } from "@/lib/orders";
-import type { Client, Lead, Order, Review } from "@/lib/types";
+import { defaultOffers, defaultProjects, defaultSettings } from "@/lib/defaults";
+import type { Lead } from "@/lib/types";
 
 type Row = Record<string, unknown>;
 type Tables = Record<string, Row[]>;
 
-const STORAGE_KEY = "nuvex-admin-demo-v1";
+// v2 : repart à vide (les anciennes données fictives enregistrées dans le navigateur sont ignorées).
+const STORAGE_KEY = "nuvex-admin-demo-v2";
 
+/** Point de départ : aucune fausse donnée, seulement les vraies infos (offres, réalisations, coordonnées). */
 function seed(): Tables {
-  const t = todayISO();
-  const at = (days: number) => `${addDays(t, days)}T10:00:00Z`;
-
-  const clients: Client[] = [
-    { id: "c1", name: "Restaurant El Bahdja", phone: "0555 11 22 33", email: "contact@elbahdja.dz", company: "El Bahdja", city: "Alger", notes: null, created_at: at(-9) },
-    { id: "c2", name: "Dr Meziane", phone: "0661 44 55 66", email: null, company: "Cabinet dentaire", city: "Oran", notes: "Préfère être appelé le matin.", created_at: at(-1) },
-    { id: "c3", name: "Auto Location Sétif", phone: "0770 12 34 56", email: "autoloc.setif@gmail.com", company: null, city: "Sétif", notes: null, created_at: at(-6) },
-    { id: "c4", name: "Lina Mode", phone: "0550 98 76 54", email: null, company: "Boutique de vêtements", city: "Blida", notes: null, created_at: at(-20) },
-    { id: "c5", name: "Immo Tlemcen", phone: "0662 00 11 22", email: "immo.tlemcen@gmail.com", company: "Agence immobilière", city: "Tlemcen", notes: null, created_at: at(-70) },
-    { id: "c6", name: "FitZone", phone: "0771 33 44 55", email: null, company: "Salle de sport", city: "Constantine", notes: null, created_at: at(-8) },
-    { id: "c7", name: "Pâtisserie Yasmine", phone: "0558 66 77 88", email: null, company: null, city: "Béjaïa", notes: null, created_at: at(-110) },
-  ];
-
-  const order = (o: Partial<Order> & Pick<Order, "id" | "client_id" | "title" | "offer" | "price" | "status">): Order => ({
-    lead_id: null,
-    deposit_percent: 50,
-    deposit_paid_at: null,
-    deposit_method: null,
-    balance_paid_at: null,
-    balance_method: null,
-    start_date: null,
-    due_date: null,
-    delivered_at: null,
-    notes: null,
-    created_at: at(0),
-    ...o,
-  });
-
-  const orders: Order[] = [
-    order({ id: "o1", client_id: "c1", title: "Site vitrine + réservation", offer: "Pro", price: 45000, status: "in_progress", deposit_paid_at: addDays(t, -5), deposit_method: "baridimob", start_date: addDays(t, -5), due_date: addDays(t, 2), created_at: at(-9) }),
-    order({ id: "o2", client_id: "c2", title: "Site du cabinet", offer: "Éco", price: 25000, status: "todo", start_date: t, due_date: addDays(t, 7), created_at: at(-1), lead_id: "l5" }),
-    order({ id: "o3", client_id: "c3", title: "Site de location de voitures", offer: "Premium", price: 95000, status: "in_progress", deposit_paid_at: addDays(t, -2), deposit_method: "ccp", start_date: addDays(t, -2), due_date: addDays(t, 5), created_at: at(-6), lead_id: "l6" }),
-    order({ id: "o4", client_id: "c4", title: "Boutique en ligne", offer: "Pro", price: 45000, status: "delivered", deposit_paid_at: addDays(t, -18), deposit_method: "especes", start_date: addDays(t, -18), due_date: addDays(t, -11), delivered_at: addDays(t, -11), created_at: at(-20) }),
-    order({ id: "o5", client_id: "c5", title: "Plateforme d'annonces immobilières", offer: "Sur-mesure", price: 180000, status: "delivered", deposit_paid_at: addDays(t, -68), deposit_method: "virement", balance_paid_at: addDays(t, -40), balance_method: "virement", start_date: addDays(t, -68), due_date: addDays(t, -42), delivered_at: addDays(t, -41), created_at: at(-70) }),
-    order({ id: "o6", client_id: "c6", title: "Site de la salle", offer: "Éco", price: 25000, status: "in_progress", deposit_paid_at: addDays(t, -8), deposit_method: "especes", start_date: addDays(t, -8), due_date: addDays(t, -1), created_at: at(-8) }),
-    order({ id: "o7", client_id: "c7", title: "Site vitrine", offer: "Éco", price: 25000, status: "delivered", deposit_paid_at: addDays(t, -108), deposit_method: "especes", balance_paid_at: addDays(t, -100), balance_method: "especes", start_date: addDays(t, -108), due_date: addDays(t, -101), delivered_at: addDays(t, -101), created_at: at(-110) }),
-  ];
-
-  const lead = (l: Partial<Lead> & Pick<Lead, "id" | "name" | "phone">): Lead => ({
-    email: null, offer: null, message: null, status: "new", created_at: at(0), ...l,
-  });
-
-  const leads: Lead[] = [
-    lead({ id: "l1", name: "Sofiane Kaci", phone: "0556 21 43 65", offer: "Pro", message: "Bonjour, je voudrais un site pour mon agence de voyage avec les circuits et un formulaire.", created_at: `${t}T08:40:00Z` }),
-    lead({ id: "l2", name: "Nadia Belkacem", phone: "0662 87 65 43", email: "nadia.b@gmail.com", offer: "Éco", message: "Site simple pour mon salon de coiffure.", created_at: at(-1) }),
-    lead({ id: "l3", name: "Hôtel Les Oliviers", phone: "0770 55 66 77", offer: "Sur-mesure", message: "Site avec réservation de chambres en ligne.", created_at: at(-2) }),
-    lead({ id: "l4", name: "Mehdi Ouali", phone: "0551 00 99 88", offer: "Premium", message: "Auto-école, besoin d'un site avec inscription.", status: "contacted", created_at: at(-3) }),
-    lead({ id: "l5", name: "Dr Meziane", phone: "0661 44 55 66", offer: "Éco", status: "converted", created_at: at(-2) }),
-    lead({ id: "l6", name: "Auto Location Sétif", phone: "0770 12 34 56", offer: "Premium", status: "converted", created_at: at(-7) }),
-  ];
-
-  const reviews: Review[] = [
-    ...demoReviews,
-    { id: "r-p1", name: "Lina", role: "Lina Mode, Blida", text: "Très contente de ma boutique en ligne, livrée à temps !", rating: 5, image_url: null, status: "pending", created_at: at(-1) },
-    { id: "r-p2", name: "Karim", role: null, text: "Bon travail et équipe réactive.", rating: 4, image_url: null, status: "pending", created_at: at(-3) },
-  ];
-
   return {
-    clients: clients as unknown as Row[],
-    orders: orders as unknown as Row[],
-    leads: leads as unknown as Row[],
-    reviews: reviews as unknown as Row[],
+    clients: [],
+    orders: [],
+    leads: [],
+    reviews: [],
     offers: defaultOffers as unknown as Row[],
     projects: defaultProjects as unknown as Row[],
     settings: [{ id: 1, ...defaultSettings }],

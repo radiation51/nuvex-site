@@ -58,10 +58,8 @@ export function DashboardPanel({ data, onNavigate }: { data: AdminData; onNaviga
   const decided = leads.filter((l) => l.status === "converted" || l.status === "cancelled" || l.status === "contacted");
   const conversion = decided.length ? Math.round((leads.filter((l) => l.status === "converted").length / decided.length) * 100) : 0;
 
-  const approved = reviews.filter((r) => r.status === "approved" && !r.id.startsWith("demo-"));
-  const approvedAll = reviews.filter((r) => r.status === "approved");
-  const avgSource = approved.length ? approved : approvedAll;
-  const avgRating = avgSource.length ? avgSource.reduce((t, r) => t + r.rating, 0) / avgSource.length : 0;
+  const approved = reviews.filter((r) => r.status === "approved");
+  const avgRating = approved.length ? approved.reduce((t, r) => t + r.rating, 0) / approved.length : 0;
   const pendingReviews = reviews.filter((r) => r.status === "pending");
 
   // 6 derniers mois d'encaissements

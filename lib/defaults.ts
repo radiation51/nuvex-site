@@ -1,6 +1,6 @@
 // Contenu par défaut, utilisé tant que la base de données est vide ou non configurée.
 // Offres, réalisations et coordonnées se modifient ensuite depuis /admin.
-import type { Offer, Project, Review, Settings } from "@/lib/types";
+import type { Offer, Project, Settings } from "@/lib/types";
 
 export const defaultOffers: Offer[] = [
   {
@@ -70,27 +70,6 @@ export const defaultOffers: Offer[] = [
     popular: false,
     position: 4,
   },
-];
-
-const demo = (i: number, name: string, role: string, text: string, rating = 5): Review => ({
-  id: `demo-${i}`,
-  name,
-  role,
-  text,
-  rating,
-  image_url: null,
-  status: "approved",
-  created_at: "2026-01-01T00:00:00Z",
-});
-
-// Avis de démonstration : remplacés automatiquement par les vrais avis validés.
-export const demoReviews: Review[] = [
-  demo(1, "Yacine B.", "Restaurant, Alger", "Site livré rapidement et très propre. Nos clients réservent maintenant directement depuis WhatsApp."),
-  demo(2, "Amina K.", "Cabinet dentaire, Oran", "Équipe à l'écoute, de bons conseils. Le site est beau et s'affiche parfaitement sur téléphone."),
-  demo(3, "Karim M.", "Agence immobilière", "Le rapport qualité-prix est excellent. On reçoit des demandes chaque semaine grâce au formulaire."),
-  demo(4, "Sarah L.", "Boutique de vêtements", "J'avais peur que ce soit compliqué, mais tout a été géré pour moi du début à la fin."),
-  demo(5, "Walid H.", "Entreprise BTP, Sétif", "Enfin un site professionnel qui inspire confiance à nos partenaires. Je recommande.", 4),
-  demo(6, "Nesrine T.", "Coach sportive", "Design moderne, rapide, et toujours disponibles pour les petites modifications."),
 ];
 
 // Nos vraies réalisations, affichées tant qu'aucun projet n'est enregistré dans l'admin.

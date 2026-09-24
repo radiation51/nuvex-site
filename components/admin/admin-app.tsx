@@ -191,7 +191,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
       {demo && (
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 bg-amber-100 px-4 py-2 text-center text-sm text-amber-950">
           <span>
-            <strong>Mode démo</strong> · données fictives enregistrées dans ce navigateur. Branchez Supabase pour vos vraies données (voir GUIDE-ADMIN.md).
+            <strong>Mode test</strong> · la base de données n&apos;est pas encore branchée : ce que vous ajoutez ici reste uniquement dans ce navigateur.
           </span>
           <button
             type="button"
@@ -202,7 +202,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
             className="inline-flex items-center gap-1 font-semibold underline underline-offset-2"
           >
             <RotateCcw className="size-3.5" />
-            Réinitialiser la démo
+            Tout effacer
           </button>
         </div>
       )}
