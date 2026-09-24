@@ -1,4 +1,4 @@
-// Mot de passe de l'espace /admin : défini dans la variable d'environnement ADMIN_PASSWORD
+// Mot de passe de l'espace admin : défini dans la variable d'environnement ADMIN_PASSWORD ou ADMINPASSWORDNUVEX
 // (Netlify > Project configuration > Environment variables). Jamais écrit dans le code.
 
 /** Adresse secrète de l'admin (à garder pour vous). /admin affiche « page introuvable ».
@@ -10,8 +10,16 @@ export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 jours
 
 type NetlifyGlobal = { Netlify?: { env: { get(key: string): string | undefined } } };
 
+// Noms acceptés pour la variable (le 2e est celui créé sur Netlify).
+const PASSWORD_VARS = ["ADMIN_PASSWORD", "ADMINPASSWORDNUVEX"] as const;
+
 export function readAdminPassword() {
-  return process.env.ADMIN_PASSWORD || (globalThis as NetlifyGlobal).Netlify?.env.get("ADMIN_PASSWORD") || "";
+  const netlify = (globalThis as NetlifyGlobal).Netlify?.env;
+  for (const name of PASSWORD_VARS) {
+    const value = process.env[name] || netlify?.get(name);
+    if (value) return value;
+  }
+  return "";
 }
 
 /** Jeton stocké dans le cookie : empreinte du mot de passe (le mot de passe lui-même n'est jamais stocké). */
