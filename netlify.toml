@@ -1,7 +1,11 @@
-# Configuration Netlify (Next.js est détecté automatiquement).
+# Configuration Netlify pour Next.js.
 [build]
   command = "npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Module Next.js de Netlify (pages, routes /api, images).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
