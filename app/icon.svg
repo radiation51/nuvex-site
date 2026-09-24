@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Logo NUVEX : « N » blanc sur carré bleu arrondi (onglet du navigateur) -->
+  <rect width="64" height="64" rx="14" fill="#3448e8"/>
+  <path d="M17 15h8.5l13 21V15H47v34h-8.5l-13-21v21H17Z" fill="#fff"/>
+</svg>
