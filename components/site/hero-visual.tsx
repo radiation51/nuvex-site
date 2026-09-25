@@ -1,7 +1,8 @@
 "use client";
 
+import * as React from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { CalendarCheck, Lock, MapPin, Star } from "lucide-react";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 
@@ -9,18 +10,38 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 // Photo d'exemple affichée dans la maquette (site fictif de restaurant).
 const DEMO_PHOTO = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=75&auto=format&fit=crop";
+// Même taille pour l'ordinateur et le téléphone de la maquette : la photo n'est téléchargée qu'une fois.
+const DEMO_SIZES = "(min-width: 1040px) 480px, 45vw";
 
-/** Ciel bleu dégradé avec quelques nuages flous qui dérivent lentement. */
+/** Réglage d'un nuage : distance de dérive et durée d'un aller-retour. */
+const drift = (x: number, seconds: number) => ({ "--drift": `${x}px`, "--drift-duration": `${seconds}s` }) as React.CSSProperties;
+
+/**
+ * Ciel bleu dégradé avec quelques nuages flous qui dérivent lentement.
+ * Animation en CSS (carte graphique), mise en pause dès que l'accueil sort de l'écran.
+ */
 export function SkyBackground() {
-  const reduceMotion = useReducedMotion();
-  const drift = (x: number, duration: number) =>
-    reduceMotion ? {} : { animate: { x: [0, x, 0] }, transition: { duration, repeat: Infinity, ease: "easeInOut" as const } };
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div aria-hidden className="absolute inset-0 overflow-hidden bg-[linear-gradient(180deg,#1f5c9c_0%,#3377b4_38%,#6aa8dd_72%,#b4d6f1_100%)]">
-      <motion.div {...drift(40, 26)} className="absolute top-[34%] -left-[8%] h-40 w-[46rem] rounded-full bg-white/35 blur-3xl" />
-      <motion.div {...drift(-50, 32)} className="absolute top-[48%] -right-[10%] h-48 w-[52rem] rounded-full bg-white/40 blur-3xl" />
-      <motion.div {...drift(30, 22)} className="absolute top-[18%] right-[12%] h-24 w-80 rounded-full bg-white/20 blur-2xl" />
+    <div
+      ref={ref}
+      aria-hidden
+      data-paused={visible ? undefined : ""}
+      className="absolute inset-0 overflow-hidden bg-[linear-gradient(180deg,#1f5c9c_0%,#3377b4_38%,#6aa8dd_72%,#b4d6f1_100%)]"
+    >
+      <div style={drift(40, 26)} className="absolute top-[34%] -left-[8%] h-40 w-[46rem] animate-drift rounded-full bg-white/35 blur-3xl motion-reduce:animate-none" />
+      <div style={drift(-50, 32)} className="absolute top-[48%] -right-[10%] h-48 w-[52rem] animate-drift rounded-full bg-white/40 blur-3xl motion-reduce:animate-none" />
+      <div style={drift(30, 22)} className="absolute top-[18%] right-[12%] h-24 w-80 animate-drift rounded-full bg-white/20 blur-2xl motion-reduce:animate-none" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/40 to-transparent" />
     </div>
   );
@@ -90,7 +111,7 @@ export function SiteMockup() {
               </span>
             </div>
             <div className="relative hidden aspect-[4/3] overflow-hidden rounded-xl sm:block">
-              <Image src={DEMO_PHOTO} alt="" fill sizes="(min-width: 1040px) 480px, 45vw" className="object-cover" />
+              <Image src={DEMO_PHOTO} alt="" fill sizes={DEMO_SIZES} className="object-cover" />
             </div>
           </div>
         </div>
@@ -100,7 +121,7 @@ export function SiteMockup() {
       <div className="absolute right-[-2%] bottom-[22%] hidden w-[21%] rotate-[4deg] rounded-[30px] bg-ink p-1.5 shadow-2xl shadow-black/30 md:block">
         <div className="overflow-hidden rounded-[24px] bg-white text-left text-ink">
           <div className="relative aspect-[4/3]">
-            <Image src={DEMO_PHOTO} alt="" fill sizes="220px" className="object-cover" />
+            <Image src={DEMO_PHOTO} alt="" fill sizes={DEMO_SIZES} className="object-cover" />
           </div>
           <div className="space-y-2 p-3">
             <p className="font-heading text-sm leading-tight font-semibold">El Bahdja</p>

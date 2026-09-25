@@ -33,15 +33,33 @@ export function GlassPanel({
   shader?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
+  const ref = React.useRef<HTMLDivElement>(null);
   const [showShader, setShowShader] = React.useState(false);
 
+  // Le shader (WebGL, plus lourd) n'est chargé qu'à l'approche du panneau : la page s'ouvre plus vite,
+  // et l'effet en CSS (identique à l'œil) reste affiché d'ici là.
   React.useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- détection navigateur, impossible côté serveur
-    setShowShader(shader && !reduceMotion && hasWebGL());
+    const el = ref.current;
+    if (!shader || reduceMotion || !el || !hasWebGL()) return;
+    if (!("IntersectionObserver" in window)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- détection navigateur, impossible côté serveur
+      setShowShader(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShowShader(true);
+        observer.disconnect();
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [shader, reduceMotion]);
 
   return (
-    <div className={cn("relative isolate overflow-hidden bg-glass text-white", className)}>
+    <div ref={ref} className={cn("relative isolate overflow-hidden bg-glass text-white", className)}>
       <div aria-hidden className={cn("fluted pointer-events-none absolute inset-0 -z-10", showShader && "hidden")} />
       {showShader && (
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">

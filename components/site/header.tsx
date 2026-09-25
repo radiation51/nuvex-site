@@ -53,7 +53,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,color] duration-300",
         onPhoto ? "bg-transparent text-white" : "border-b bg-background/85 text-foreground backdrop-blur-lg"
       )}
     >
@@ -73,7 +73,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
               onMouseEnter={() => setHovered(link.href)}
               onFocus={() => setHovered(link.href)}
               className={cn(
-                "relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-200",
+                "tap relative rounded-full px-3.5 py-1.5 text-sm font-medium",
                 onPhoto ? "text-white/85 hover:text-white" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -100,7 +100,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
           <Link
             href="/#contact"
             className={cn(
-              "hidden rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap transition-colors sm:inline-flex",
+              "tap hidden rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap sm:inline-flex",
               onPhoto
                 ? "text-white ring-1 ring-white/60 hover:bg-white hover:text-ink"
                 : "bg-primary text-primary-foreground hover:bg-primary/90"
@@ -111,35 +111,68 @@ export function Header({ solid = false }: { solid?: boolean }) {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className={cn("grid size-10 place-items-center rounded-lg lg:hidden", onPhoto ? "hover:bg-white/15" : "hover:bg-muted")}
+            className={cn("tap grid size-10 place-items-center rounded-lg lg:hidden", onPhoto ? "hover:bg-white/15" : "hover:bg-muted")}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
+            aria-controls="menu-mobile"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {/* Les deux icônes se croisent en tournant (CSS uniquement) */}
+            <span className="relative size-5">
+              <Menu
+                className={cn(
+                  "absolute inset-0 size-5 transition-[rotate,scale,opacity] duration-300",
+                  open ? "scale-50 rotate-90 opacity-0" : "opacity-100"
+                )}
+              />
+              <X
+                className={cn(
+                  "absolute inset-0 size-5 transition-[rotate,scale,opacity] duration-300",
+                  open ? "opacity-100" : "scale-50 -rotate-90 opacity-0"
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>
 
-      {open && (
-        <nav className="border-t bg-background px-4 pb-5 lg:hidden" aria-label="Navigation mobile">
-          <ul className="flex flex-col py-2">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} onClick={() => setOpen(false)} className="block py-3 text-base font-medium">
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/#contact"
-            onClick={() => setOpen(false)}
-            className="block rounded-full bg-primary py-3 text-center font-semibold text-primary-foreground"
-          >
-            Demander un devis gratuit
-          </Link>
-        </nav>
-      )}
+      {/* Menu téléphone / tablette : se déplie en douceur, les liens apparaissent l'un après l'autre */}
+      <div
+        id="menu-mobile"
+        inert={!open}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-300 ease-out lg:hidden",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+      >
+        <div className="overflow-hidden">
+          <nav className="border-t bg-background px-4 pb-5" aria-label="Navigation mobile">
+            <ul className="flex flex-col py-2">
+              {navLinks.map((link, i) => (
+                <li
+                  key={link.href}
+                  className={cn("transition-[opacity,translate] duration-300 ease-out", open ? "opacity-100" : "-translate-y-1.5 opacity-0")}
+                  style={{ transitionDelay: open ? `${40 + i * 30}ms` : "0ms" }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="tap -mx-3 block rounded-xl px-3 py-3 text-base font-medium hover:bg-muted active:bg-primary/[0.08] active:text-primary"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/#contact"
+              onClick={() => setOpen(false)}
+              className="tap block rounded-full bg-primary py-3 text-center font-semibold text-primary-foreground hover:bg-primary/90"
+            >
+              Demander un devis gratuit
+            </Link>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }

@@ -57,7 +57,7 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex w-fit items-center gap-1 text-sm font-semibold text-foreground transition-colors hover:text-primary"
+            className="mt-4 inline-flex w-fit items-center gap-1 text-sm font-semibold text-foreground tap hover:text-primary"
           >
             Voir le site
             <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

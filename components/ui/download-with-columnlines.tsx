@@ -92,7 +92,7 @@ export default function DownloadWithColumnLines({
             <motion.a
               {...fadeUp(0)}
               href={badgeHref}
-              className="group mb-5 flex items-center gap-2 rounded-full bg-white/15 py-1.5 pr-3 pl-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md transition-colors hover:bg-white/25"
+              className="group mb-5 flex items-center gap-2 rounded-full bg-white/15 py-1.5 pr-3 pl-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md tap hover:bg-white/25"
             >
               {badgeTag && <span className="rounded-full bg-lime px-2 py-0.5 text-xs font-bold text-ink">{badgeTag}</span>}
               {badge}
@@ -118,14 +118,14 @@ export default function DownloadWithColumnLines({
         <motion.div {...fadeUp(0.85)} className="mt-7 flex flex-col items-center gap-3 sm:flex-row">
           <a
             href={primaryHref}
-            className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-black/10 transition-transform hover:-translate-y-0.5"
+            className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-black/10 tap hover:-translate-y-0.5"
           >
             {primaryLabel}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
             href={secondaryHref}
-            className="rounded-full bg-white/15 px-6 py-3 text-sm font-semibold text-white ring-1 ring-white/35 backdrop-blur-md transition-colors hover:bg-white/25"
+            className="rounded-full bg-white/15 px-6 py-3 text-sm font-semibold text-white ring-1 ring-white/35 backdrop-blur-md tap hover:bg-white/25"
           >
             {secondaryLabel}
           </a>

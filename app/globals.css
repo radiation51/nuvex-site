@@ -126,6 +126,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    /* Pas de rectangle gris au toucher sur téléphone : on a notre propre effet (« tap »). */
+    -webkit-tap-highlight-color: transparent;
+  }
   body {
     @apply bg-background text-foreground;
   }
@@ -162,6 +166,31 @@ section[id] {
   background-size: 64px 100%;
 }
 
+/* ===== Retour visuel au clic / au toucher (CSS pur : léger sur tous les appareils) ===== */
+@utility tap {
+  transition-property: color, background-color, border-color, box-shadow, opacity, translate, scale;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  transition-duration: 200ms;
+  &:active {
+    scale: 0.96;
+  }
+}
+
+/* ===== Nuages de l'accueil : dérive lente, animée par la carte graphique ===== */
+@keyframes drift {
+  50% {
+    translate: var(--drift, 40px) 0;
+  }
+}
+@utility animate-drift {
+  animation: drift var(--drift-duration, 26s) ease-in-out infinite;
+  will-change: translate;
+}
+/* Mise en pause quand l'accueil n'est plus visible (économise le processeur et la batterie). */
+[data-paused] .animate-drift {
+  animation-play-state: paused;
+}
+
 /* ===== Bande des secteurs qui défile ===== */
 @keyframes marquee {
   from {
@@ -173,6 +202,7 @@ section[id] {
 }
 @utility animate-marquee {
   animation: marquee 70s linear infinite;
+  will-change: transform;
 }
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {

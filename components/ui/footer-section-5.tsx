@@ -56,7 +56,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
               <SocialLinks
                 settings={settings}
                 className="flex flex-wrap gap-2"
-                iconClassName="grid size-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-primary"
+                iconClassName="grid size-10 place-items-center rounded-full bg-white/10 text-white tap hover:bg-white hover:text-primary"
               />
               <p className="text-xs font-light text-white/80 md:text-[13px]">
                 © {new Date().getFullYear()} {companyName} — Tous droits réservés

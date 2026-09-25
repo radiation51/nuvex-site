@@ -127,7 +127,7 @@ export function Contact({
                 return (
                   <li key={label}>
                     {href ? (
-                      <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-1 transition-colors hover:bg-white/5">
+                      <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-1 tap hover:bg-white/5">
                         {inner}
                       </a>
                     ) : (
@@ -142,7 +142,7 @@ export function Contact({
                 href={whatsappLink(settings.whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+                className="mt-auto flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 font-semibold text-ink tap hover:opacity-90"
               >
                 <WhatsAppIcon className="size-5" />
                 Écrire sur WhatsApp
@@ -288,7 +288,7 @@ function SuccessPanel({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 font-semibold text-ink tap hover:opacity-90"
           >
             <WhatsAppIcon className="size-5" />
             Ouvrir WhatsApp

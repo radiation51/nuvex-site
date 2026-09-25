@@ -102,7 +102,7 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
                   aria-controls="offres-panel"
                   onClick={() => setActive(g.id)}
                   className={cn(
-                    "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:px-5",
+                    "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold tap sm:px-5",
                     selected ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:text-foreground"
                   )}
                 >

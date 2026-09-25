@@ -30,7 +30,7 @@ export function CtaBand({
             <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row md:flex-col lg:flex-row">
               <a
                 href="#contact"
-                className="group flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-lg transition-transform hover:-translate-y-0.5"
+                className="group flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-lg tap hover:-translate-y-0.5"
               >
                 Demander mon devis gratuit
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
@@ -40,7 +40,7 @@ export function CtaBand({
                   href={whatsappLink(whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold transition-colors hover:bg-white hover:text-primary"
+                  className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold tap hover:bg-white hover:text-primary"
                 >
                   <WhatsAppIcon className="size-4" />
                   WhatsApp
@@ -48,7 +48,7 @@ export function CtaBand({
               ) : (
                 <a
                   href="#offres"
-                  className="flex items-center justify-center rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold transition-colors hover:bg-white hover:text-primary"
+                  className="flex items-center justify-center rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold tap hover:bg-white hover:text-primary"
                 >
                   Voir les offres
                 </a>
