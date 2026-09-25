@@ -1,27 +1,31 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
-import { Briefcase, Check, Crown, Gift, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { Briefcase, Check, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SectionHeading } from "@/components/site/section-heading";
 import { formatDA, selectOffer } from "@/lib/format";
 import type { Offer } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export type { PlanFeature } from "@/lib/types";
 
-export interface PricingModuleProps {
-  /** Ancre de la section (ex. "offres", "logiciels"). */
-  id?: string;
-  badge?: string;
-  title?: string;
-  subtitle?: string;
+/** Un onglet de la section Offres (ex. sites web, logiciels). */
+export interface PlanGroup {
+  /** Identifiant, aussi utilisé comme ancre (ex. "logiciels" → lien « #logiciels »). */
+  id: string;
+  label: string;
+  /** Petite étiquette à côté du bouton (ex. « Nouveau »). */
+  tag?: string;
+  subtitle: string;
   plans: Offer[];
   footnote?: string;
-  /** Fond légèrement grisé (par défaut) ou fond de page. */
-  muted?: boolean;
+}
+
+export interface PricingModuleProps {
+  title?: string;
+  groups: PlanGroup[];
   className?: string;
 }
 
@@ -35,24 +39,100 @@ const icons: Record<string, React.ElementType> = {
   "logiciel-sur-mesure": Sparkles,
 };
 
-export function PricingModule({
-  id = "offres",
-  badge = "Tarifs",
-  title = "Nos offres",
-  subtitle = "Des prix clairs, sans surprise. Choisissez la formule adaptée à votre projet.",
-  plans,
-  footnote,
-  muted = true,
-  className,
-}: PricingModuleProps) {
+const tabIcons: Record<string, React.ElementType> = { sites: Globe, logiciels: Monitor };
+
+export function PricingModule({ title = "Nos offres", groups, className }: PricingModuleProps) {
+  const [active, setActive] = React.useState(groups[0].id);
+  const group = groups.find((g) => g.id === active) ?? groups[0];
+  const groupIds = groups.map((g) => g.id).join(" ");
+
+  // Les liens « #offres » ouvrent le 1er onglet, « #logiciels » l'onglet correspondant (menu, accueil, footer).
+  React.useEffect(() => {
+    const ids = groupIds.split(" ");
+    const tabFor = (href: string) => {
+      const hash = href.slice(href.lastIndexOf("#") + 1);
+      if (hash === "offres") return ids[0];
+      return ids.includes(hash) ? hash : null;
+    };
+    const fromUrl = () => {
+      const tab = tabFor(window.location.hash);
+      if (tab) setActive(tab);
+    };
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.("a[href*='#']");
+      const tab = link && tabFor(link.getAttribute("href") ?? "");
+      if (tab) setActive(tab);
+    };
+    fromUrl();
+    window.addEventListener("hashchange", fromUrl);
+    document.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("hashchange", fromUrl);
+      document.removeEventListener("click", onClick);
+    };
+  }, [groupIds]);
+
   return (
-    <section id={id} className={cn("w-full px-4 py-24 text-foreground md:px-8", muted ? "bg-muted/40" : "bg-background", className)}>
+    <section id="offres" className={cn("relative w-full bg-muted/40 px-4 py-24 text-foreground md:px-8", className)}>
+      {/* Ancres des autres onglets : même position que la section */}
+      {groups.slice(1).map((g) => (
+        <span key={g.id} id={g.id} aria-hidden className="absolute top-0" />
+      ))}
+
       <div className="mx-auto max-w-6xl">
-        <SectionHeading badge={badge} title={title} subtitle={subtitle} />
-        <div className="mt-16">
-          <PlanGrid plans={plans} />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="mx-auto flex max-w-2xl flex-col items-center text-center"
+        >
+          <div role="tablist" aria-label="Type d'offre" className="inline-flex rounded-full border bg-card p-1 shadow-sm">
+            {groups.map((g) => {
+              const Icon = tabIcons[g.id] ?? Sparkles;
+              const selected = g.id === group.id;
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  aria-controls="offres-panel"
+                  onClick={() => setActive(g.id)}
+                  className={cn(
+                    "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:px-5",
+                    selected ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Icon className="size-4" />
+                  {g.label}
+                  {g.tag && (
+                    <span className={cn("rounded-full px-1.5 py-0.5 text-[10px] leading-none font-bold", selected ? "bg-lime text-ink" : "bg-lime/70 text-ink")}>
+                      {g.tag}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <h2 className="mt-5 font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{title}</h2>
+          <p className="mt-4 min-h-[3.5rem] text-base text-muted-foreground sm:text-lg">{group.subtitle}</p>
+        </motion.div>
+
+        <div id="offres-panel" role="tabpanel" className="mt-12">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={group.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <PlanGrid plans={group.plans} />
+              {group.footnote && <p className="mt-10 text-center text-sm text-muted-foreground">{group.footnote}</p>}
+            </motion.div>
+          </AnimatePresence>
         </div>
-        {footnote && <p className="mt-10 text-center text-sm text-muted-foreground">{footnote}</p>}
       </div>
     </section>
   );

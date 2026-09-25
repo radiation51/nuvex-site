@@ -25,22 +25,33 @@ export default async function Home() {
         <DownloadWithColumnLines badgeTag="Nouveau" badge="Logiciels de gestion" badgeHref="#logiciels" />
         <SectorsStrip />
         <WhyUs />
-        <PricingModule plans={offers} footnote="Acompte de 50 % à la commande, le reste une fois le site terminé." />
+        <PricingModule
+          groups={[
+            {
+              id: "sites",
+              label: "Sites web",
+              subtitle: "Des prix clairs, sans surprise. Choisissez la formule adaptée à votre projet.",
+              plans: offers,
+              footnote: "Acompte de 50 % à la commande, le reste une fois le site terminé.",
+            },
+            {
+              id: "logiciels",
+              label: "Logiciels",
+              tag: "Nouveau",
+              subtitle:
+                "Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés sur clé USB, prêts à installer.",
+              plans: softwareOffers,
+              footnote:
+                "Acompte de 50 % à la commande, le reste à la fin du développement. Sur la clé USB : une vidéo d'installation et une vidéo complète pour apprendre à utiliser le logiciel.",
+            },
+          ]}
+        />
         <Steps />
         <CtaBand
           outline="SIMPLE"
           title="Prêt à lancer votre site ?"
           text="Un site pro à partir de 25 000 DA, livré en 7 jours et adapté au mobile."
           whatsapp={settings.whatsapp}
-        />
-        <PricingModule
-          id="logiciels"
-          badge="Nouveau · Logiciels"
-          title="Nos logiciels de gestion"
-          subtitle="Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés sur clé USB, prêts à installer."
-          plans={softwareOffers}
-          muted={false}
-          footnote="Acompte de 50 % à la commande, le reste à la fin du développement. Sur la clé USB : une vidéo d'installation et une vidéo complète pour apprendre à utiliser le logiciel."
         />
         <Projects projects={projects} />
         <Testimonials reviews={reviews} whatsapp={settings.whatsapp} />
