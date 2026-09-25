@@ -8,6 +8,10 @@ import { SiteMockup, SkyBackground } from "@/components/site/hero-visual";
 
 interface DownloadWithColumnLinesProps {
   badge?: string;
+  /** Rend le badge cliquable (ex. "#logiciels"). */
+  badgeHref?: string;
+  /** Petite étiquette colorée devant le badge cliquable (ex. "Nouveau"). */
+  badgeTag?: string;
   /** Lignes du titre séparées par "\n". */
   headline?: string;
   subheadline?: string;
@@ -52,7 +56,9 @@ function RevealHeadline({ text }: { text: string }) {
 
 export default function DownloadWithColumnLines({
   badge,
-  headline = "Votre site web pro,\nprêt en 7 jours.",
+  badgeHref,
+  badgeTag,
+  headline ="Votre site web pro,\nprêt en 7 jours.",
   subheadline = "Sites vitrines modernes et adaptés au mobile, à partir de 25 000 DA. Devis 100 % gratuit.",
   primaryLabel = "Demander un devis gratuit",
   primaryHref = "#contact",
@@ -81,14 +87,25 @@ export default function DownloadWithColumnLines({
         id="accueil"
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 pt-28 sm:pt-32 md:pt-36"
       >
-        {badge && (
-          <motion.span
-            {...fadeUp(0)}
-            className="mb-5 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md"
-          >
-            {badge}
-          </motion.span>
-        )}
+        {badge &&
+          (badgeHref ? (
+            <motion.a
+              {...fadeUp(0)}
+              href={badgeHref}
+              className="group mb-5 flex items-center gap-2 rounded-full bg-white/15 py-1.5 pr-3 pl-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md transition-colors hover:bg-white/25"
+            >
+              {badgeTag && <span className="rounded-full bg-lime px-2 py-0.5 text-xs font-bold text-ink">{badgeTag}</span>}
+              {badge}
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            </motion.a>
+          ) : (
+            <motion.span
+              {...fadeUp(0)}
+              className="mb-5 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md"
+            >
+              {badge}
+            </motion.span>
+          ))}
 
         <RevealHeadline text={headline} />
 

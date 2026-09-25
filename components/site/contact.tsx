@@ -16,7 +16,15 @@ import type { Offer, Settings } from "@/lib/types";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 import { InstagramIcon, instagramHandle } from "@/components/site/social-icons";
 
-export function Contact({ offers, settings }: { offers: Offer[]; settings: Settings }) {
+export function Contact({
+  offers,
+  softwareOffers,
+  settings,
+}: {
+  offers: Offer[];
+  softwareOffers: Offer[];
+  settings: Settings;
+}) {
   const [offer, setOffer] = React.useState("");
   const [sending, setSending] = React.useState(false);
   const [sent, setSent] = React.useState<{ name: string; phone: string; offer: string; whatsappUrl?: string } | null>(null);
@@ -37,8 +45,9 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
 
     // Pas encore de base de données : la demande part sur WhatsApp, déjà rédigée.
     if (formsViaWhatsApp && settings.whatsapp) {
+      const wantsSoftware = softwareOffers.some((o) => o.name === text("offer"));
       const message = [
-        "Bonjour NUVEX, je souhaite un devis pour mon site web.",
+        `Bonjour NUVEX, je souhaite un devis pour ${wantsSoftware ? "un logiciel" : "mon site web"}.`,
         `Nom : ${text("name")}`,
         `Téléphone : ${text("phone")}`,
         text("email") && `E-mail : ${text("email")}`,
@@ -146,7 +155,7 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
               ref={successRef}
               name={sent.name}
               phone={sent.phone}
-              offer={offers.find((o) => o.name === sent.offer)}
+              offer={[...offers, ...softwareOffers].find((o) => o.name === sent.offer)}
               whatsappUrl={sent.whatsappUrl}
               onReset={() => setSent(null)}
             />
@@ -180,18 +189,27 @@ export function Contact({ offers, settings }: { offers: Offer[]; settings: Setti
                   className="h-11 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   <option value="">Je ne sais pas encore</option>
-                  {offers.map((o) => (
-                    <option key={o.id} value={o.name}>
-                      {o.name}
-                    </option>
-                  ))}
+                  <optgroup label="Sites web">
+                    {offers.map((o) => (
+                      <option key={o.id} value={o.name}>
+                        {o.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Logiciels">
+                    {softwareOffers.map((o) => (
+                      <option key={o.id} value={o.name}>
+                        {o.name}
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="lead-message">Votre projet</Label>
-              <Textarea id="lead-message" name="message" rows={5} maxLength={2000} placeholder="Votre activité, ce que vous attendez du site, vos délais…" />
+              <Textarea id="lead-message" name="message" rows={5} maxLength={2000} placeholder="Votre activité, ce que vous attendez du site ou du logiciel, vos délais…" />
             </div>
 
             <Button type="submit" disabled={sending} className="h-12 rounded-xl text-base font-semibold">

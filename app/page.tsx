@@ -7,6 +7,7 @@ import { Faq } from "@/components/site/faq";
 import { Header } from "@/components/site/header";
 import { Projects } from "@/components/site/projects";
 import { SectorsStrip } from "@/components/site/sectors-strip";
+import { Software } from "@/components/site/software";
 import { Steps } from "@/components/site/steps";
 import { Testimonials } from "@/components/site/testimonials";
 import { WhyUs } from "@/components/site/why-us";
@@ -16,13 +17,13 @@ import { getSiteData } from "@/lib/data";
 export const revalidate = 60;
 
 export default async function Home() {
-  const { offers, reviews, projects, settings } = await getSiteData();
+  const { offers, softwareOffers, reviews, projects, settings } = await getSiteData();
 
   return (
     <>
       <Header />
       <main>
-        <DownloadWithColumnLines />
+        <DownloadWithColumnLines badgeTag="Nouveau" badge="Logiciels de gestion" badgeHref="#logiciels" />
         <SectorsStrip />
         <WhyUs />
         <PricingModule plans={offers} footnote="Acompte de 50 % à la commande, le reste une fois le site terminé." />
@@ -33,6 +34,7 @@ export default async function Home() {
           text="Un site pro à partir de 25 000 DA, livré en 7 jours et adapté au mobile."
           whatsapp={settings.whatsapp}
         />
+        <Software plans={softwareOffers} whatsapp={settings.whatsapp} />
         <Projects projects={projects} />
         <Testimonials reviews={reviews} whatsapp={settings.whatsapp} />
         <CtaBand
@@ -42,7 +44,7 @@ export default async function Home() {
           whatsapp={settings.whatsapp}
         />
         <Faq />
-        <Contact offers={offers} settings={settings} />
+        <Contact offers={offers} softwareOffers={softwareOffers} settings={settings} />
       </main>
       <FooterSection5 offers={offers} settings={settings} />
     </>

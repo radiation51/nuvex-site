@@ -113,7 +113,7 @@ export function SectorsStrip() {
   return (
     <section aria-label="Secteurs" className="border-b bg-background py-10">
       <p className="px-4 text-center text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
-        Des sites pour tous les secteurs
+        Des sites et logiciels pour tous les secteurs
       </p>
       <div className="mx-auto mt-6 flex max-w-6xl flex-col gap-5">
         <MarqueeRow sectors={rowOne} />

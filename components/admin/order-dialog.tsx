@@ -12,15 +12,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { done, fieldClass } from "@/components/admin/shared";
 import { formatDA } from "@/lib/format";
 import {
-  DEFAULT_DELIVERY_DAYS,
   DEFAULT_DEPOSIT_PERCENT,
   addDays,
   balanceAmount,
+  defaultOrderTitle,
+  deliveryDaysFor,
   depositAmount,
   orderStatusLabel,
   paymentMethodLabel,
   todayISO,
 } from "@/lib/orders";
+import { isSoftwareOffer } from "@/lib/defaults";
 import type { Client, Offer, Order, OrderStatus, PaymentMethod } from "@/lib/types";
 
 const NEW_CLIENT = "__new__";
@@ -113,12 +115,12 @@ function OrderForm({
     city: "",
   });
   const [form, setForm] = React.useState({
-    title: order?.title ?? (initialOffer ? `Site web — offre ${initialOffer}` : "Site web"),
+    title: order?.title ?? (initialOffer ? defaultOrderTitle(offerByName(initialOffer) ?? { id: "", name: initialOffer }) : "Site web"),
     offer: initialOffer,
     price: String(initialPrice || ""),
     deposit_percent: String(order?.deposit_percent ?? DEFAULT_DEPOSIT_PERCENT),
     start_date: order?.start_date ?? today,
-    due_date: order?.due_date ?? (fixedDelivery(initialOffer) || !initialOffer ? addDays(today, DEFAULT_DELIVERY_DAYS) : ""),
+    due_date: order?.due_date ?? (fixedDelivery(initialOffer) || !initialOffer ? addDays(today, deliveryDaysFor(offerByName(initialOffer))) : ""),
     status: (order?.status ?? "todo") as OrderStatus,
     notes: order?.notes ?? prefill?.notes ?? "",
     deposit_paid: Boolean(order?.deposit_paid_at),
@@ -138,8 +140,9 @@ function OrderForm({
       ...f,
       offer: name,
       price: offer?.price != null ? String(offer.price) : f.price,
-      title: f.title.startsWith("Site web") ? `Site web — offre ${name}` : f.title,
-      due_date: offer?.price != null ? addDays(f.start_date || today, DEFAULT_DELIVERY_DAYS) : f.due_date,
+      // Le nom n'est remplacé que s'il a été proposé automatiquement.
+      title: f.title.startsWith("Site web") || f.title.startsWith("Logiciel") ? defaultOrderTitle(offer) : f.title,
+      due_date: offer?.price != null ? addDays(f.start_date || today, deliveryDaysFor(offer)) : f.due_date,
     }));
   }
 
@@ -248,11 +251,18 @@ function OrderForm({
           <Label htmlFor="o-offer">Offre</Label>
           <select id="o-offer" value={form.offer} onChange={(e) => changeOffer(e.target.value)} className={fieldClass}>
             <option value="">—</option>
-            {offers.map((o) => (
-              <option key={o.id} value={o.name}>
-                {o.name}
-                {o.price != null ? ` · ${formatDA(o.price)}` : " · sur devis"}
-              </option>
+            {[
+              { label: "Sites web", list: offers.filter((o) => !isSoftwareOffer(o)) },
+              { label: "Logiciels", list: offers.filter(isSoftwareOffer) },
+            ].map(({ label, list }) => (
+              <optgroup key={label} label={label}>
+                {list.map((o) => (
+                  <option key={o.id} value={o.name}>
+                    {o.name}
+                    {o.price != null ? ` · ${formatDA(o.price)}` : " · sur devis"}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>

@@ -16,12 +16,12 @@ const bricolage = Bricolage_Grotesque({
 export const metadata: Metadata = {
   // Adresse du site (fournie par Netlify) : sert aux liens de l'image d'aperçu de partage.
   metadataBase: new URL(process.env.URL ?? "https://nuvex-agence.netlify.app"),
-  title: "NUVEX — Création de sites web en Algérie | À partir de 25 000 DA",
+  title: "NUVEX — Sites web et logiciels de gestion en Algérie | À partir de 25 000 DA",
   description:
-    "NUVEX crée des sites web modernes, rapides et adaptés au mobile pour les entreprises en Algérie. Offres à partir de 25 000 DA, devis 100 % gratuit.",
+    "NUVEX crée des sites web modernes et des logiciels de gestion qui fonctionnent sans internet pour les entreprises en Algérie. Sites à partir de 25 000 DA, devis 100 % gratuit.",
   openGraph: {
-    title: "NUVEX — Création de sites web en Algérie",
-    description: "Sites vitrines modernes à partir de 25 000 DA. Devis 100 % gratuit.",
+    title: "NUVEX — Sites web et logiciels en Algérie",
+    description: "Sites web à partir de 25 000 DA et logiciels de gestion sur mesure. Devis 100 % gratuit.",
     locale: "fr_DZ",
     type: "website",
   },

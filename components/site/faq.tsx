@@ -25,6 +25,18 @@ const questions = [
     a: "Oui, nous proposons un suivi mensuel : mises à jour, sauvegardes, sécurité et petites évolutions. Demandez-nous un devis gratuit.",
   },
   {
+    q: "Le logiciel fonctionne-t-il sans internet ?",
+    a: "Oui. Il est installé sur votre PC et vos données restent chez vous : vous vendez, encaissez et gérez votre stock même quand la connexion est coupée. La synchronisation en ligne est possible en option.",
+  },
+  {
+    q: "Comment se paie un logiciel ?",
+    a: "Vous l'achetez une seule fois : pas d'abonnement obligatoire. Acompte de 50 % à la commande, le reste à l'installation. Le suivi annuel (mises à jour + assistance) est facultatif.",
+  },
+  {
+    q: "Et si mon PC tombe en panne ?",
+    a: "Vos données sont sauvegardées automatiquement (clé USB ou dossier de sauvegarde). On réinstalle le logiciel sur votre nouveau PC et vous retrouvez tout.",
+  },
+  {
     q: "Le devis est-il vraiment gratuit ?",
     a: "Oui, 100 % gratuit et sans engagement. Vous nous expliquez votre projet, on vous répond avec un prix clair.",
   },

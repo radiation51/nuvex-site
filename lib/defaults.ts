@@ -72,6 +72,81 @@ export const defaultOffers: Offer[] = [
   },
 ];
 
+// Les offres logiciels sont des lignes de la même table « offers », repérées par leur identifiant.
+const SOFTWARE_PREFIX = "logiciel-";
+
+export const isSoftwareOffer = (offer: Pick<Offer, "id">) => offer.id.startsWith(SOFTWARE_PREFIX);
+
+export const defaultSoftwareOffers: Offer[] = [
+  {
+    id: "logiciel-essentiel",
+    name: "Logiciel Essentiel",
+    description: "Un logiciel simple pour gérer votre activité au quotidien.",
+    price: 35000,
+    delivery: "Livré et installé en 3 semaines",
+    features: [
+      { label: "Fonctionne sans internet", included: true },
+      { label: "1 poste (1 PC)", included: true },
+      { label: "Encaissement, tickets et factures", included: true },
+      { label: "Produits, stock et clients", included: true },
+      { label: "Rapports du jour et du mois", included: true },
+      { label: "Sauvegarde automatique", included: true },
+      { label: "Installation et formation sur place", included: true },
+      { label: "Comptes employés", included: false },
+    ],
+    popular: false,
+    position: 11,
+  },
+  {
+    id: "logiciel-pro",
+    name: "Logiciel Pro",
+    description: "Pour les commerces qui travaillent avec des employés.",
+    price: 70000,
+    delivery: "Livré et installé en 4 semaines",
+    features: [
+      { label: "Tout le Logiciel Essentiel", included: true },
+      { label: "Jusqu'à 2 postes (2 PC)", included: true },
+      { label: "Comptes patron et employés", included: true },
+      { label: "Crédit clients et fournisseurs", included: true },
+      { label: "Modules métier (péremption, tailles, balance…)", included: true },
+      { label: "Bénéfices et meilleures ventes", included: true },
+    ],
+    popular: true,
+    position: 12,
+  },
+  {
+    id: "logiciel-sur-mesure",
+    name: "Logiciel Sur-mesure",
+    description: "Un logiciel conçu entièrement pour votre activité.",
+    price: null,
+    delivery: "Délai fixé ensemble selon le projet",
+    features: [
+      { label: "Analyse de votre besoin", included: true },
+      { label: "Fonctionnalités sur mesure", included: true },
+      { label: "Nombre de postes au choix", included: true },
+      { label: "Synchronisation en ligne possible", included: true },
+      { label: "Accompagnement dédié", included: true },
+    ],
+    popular: false,
+    position: 13,
+  },
+];
+
+/**
+ * Sépare les offres enregistrées en sites / logiciels.
+ * Sites : offres par défaut si aucune n'est enregistrée. Logiciels : chaque offre par défaut
+ * pas encore enregistrée est ajoutée, pour qu'enregistrer l'une d'elles ne fasse pas disparaître les autres.
+ */
+export function splitOffers(rows: Offer[]) {
+  const sites = rows.filter((o) => !isSoftwareOffer(o));
+  const software = rows.filter(isSoftwareOffer);
+  const missing = defaultSoftwareOffers.filter((d) => !software.some((o) => o.id === d.id));
+  return {
+    offers: sites.length ? sites : defaultOffers,
+    softwareOffers: [...software, ...missing].sort((a, b) => a.position - b.position),
+  };
+}
+
 // Nos vraies réalisations, affichées tant qu'aucun projet n'est enregistré dans l'admin.
 export const defaultProjects: Project[] = [
   {
@@ -96,7 +171,7 @@ export const defaultProjects: Project[] = [
     id: "mayfer",
     title: "Logiciel Mayfer",
     category: "Logiciel sur mesure",
-    description: "Logiciel de gestion développé sur mesure.",
+    description: "Boutique de costumes avec logiciel de gestion : produits, stock, commandes et sur-mesure.",
     image_url: "/projects/mayfer.svg",
     link: null,
     position: 3,

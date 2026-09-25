@@ -104,7 +104,10 @@ export interface Settings {
 }
 
 export interface SiteData {
+  /** Offres de sites web. */
   offers: Offer[];
+  /** Offres de logiciels (identifiants « logiciel-… »). */
+  softwareOffers: Offer[];
   reviews: Review[];
   projects: Project[];
   settings: Settings;

@@ -3,7 +3,7 @@
 import * as React from "react";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useTable } from "@/components/admin/shared";
-import { defaultOffers } from "@/lib/defaults";
+import { splitOffers } from "@/lib/defaults";
 import type { Client, Lead, Offer, Order, Review } from "@/lib/types";
 
 export interface AdminData {
@@ -29,7 +29,12 @@ export function useAdminData(supabase: SupabaseClient): AdminData | null {
   }, [reloadOrders, reloadClients, reloadLeads, reloadOffers, reloadReviews]);
 
   const clientById = React.useMemo(() => new Map((clients ?? []).map((c) => [c.id, c])), [clients]);
+  // Offres de sites puis de logiciels (valeurs par défaut pour un groupe pas encore enregistré).
+  const allOffers = React.useMemo(() => {
+    const { offers: sites, softwareOffers } = splitOffers(offers ?? []);
+    return [...sites, ...softwareOffers];
+  }, [offers]);
 
   if (!orders || !clients || !leads || !offers || !reviews) return null;
-  return { orders, clients, leads, offers: offers.length ? offers : defaultOffers, reviews, clientById, reload };
+  return { orders, clients, leads, offers: allOffers, reviews, clientById, reload };
 }

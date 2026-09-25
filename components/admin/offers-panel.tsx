@@ -7,21 +7,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { done } from "@/components/admin/shared";
-import { defaultOffers } from "@/lib/defaults";
+import { splitOffers } from "@/lib/defaults";
 import type { Offer } from "@/lib/types";
 
 export function OffersPanel({ supabase }: { supabase: SupabaseClient }) {
-  const [offers, setOffers] = React.useState<Offer[] | null>(null);
+  const [groups, setGroups] = React.useState<ReturnType<typeof splitOffers> | null>(null);
 
   React.useEffect(() => {
     supabase
       .from("offers")
       .select("*")
       .order("position")
-      .then(({ data }) => setOffers(data?.length ? (data as Offer[]) : defaultOffers));
+      .then(({ data }) => setGroups(splitOffers((data as Offer[] | null) ?? [])));
   }, [supabase]);
 
-  if (!offers) return <p className="text-sm text-muted-foreground">Chargement…</p>;
+  if (!groups) return <p className="text-sm text-muted-foreground">Chargement…</p>;
 
   return (
     <div>
@@ -29,11 +29,19 @@ export function OffersPanel({ supabase }: { supabase: SupabaseClient }) {
       <p className="text-sm text-muted-foreground">
         Laissez le prix vide pour afficher « Sur devis — Devis 100 % gratuit ».
       </p>
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        {offers.map((offer) => (
-          <OfferEditor key={offer.id} supabase={supabase} initial={offer} />
-        ))}
-      </div>
+      {[
+        { title: "Sites web", list: groups.offers },
+        { title: "Logiciels", list: groups.softwareOffers },
+      ].map(({ title, list }) => (
+        <section key={title} className="mt-8">
+          <h2 className="font-heading text-lg font-bold">{title}</h2>
+          <div className="mt-3 grid gap-5 lg:grid-cols-2">
+            {list.map((offer) => (
+              <OfferEditor key={offer.id} supabase={supabase} initial={offer} />
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }
