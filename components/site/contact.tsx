@@ -212,6 +212,22 @@ export function Contact({
               <Textarea id="lead-message" name="message" rows={5} maxLength={2000} placeholder="Votre activité, ce que vous attendez du site ou du logiciel, vos délais…" />
             </div>
 
+            <label className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+              <input type="checkbox" name="terms" required className="mt-1 size-4 shrink-0 accent-primary" />
+              <span>
+                J&apos;ai lu et j&apos;accepte la{" "}
+                <a
+                  href="/politique-de-confidentialite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-primary underline-offset-4 hover:underline"
+                >
+                  politique de confidentialité et les conditions de vente
+                </a>{" "}
+                : acompte de 50 %, aucun remboursement après la livraison, garantie d&apos;un mois. *
+              </span>
+            </label>
+
             <Button type="submit" disabled={sending} className="h-12 rounded-xl text-base font-semibold">
               {sending ? <Loader2 className="animate-spin" /> : <Send />}
               Envoyer ma demande

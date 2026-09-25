@@ -12,11 +12,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { done, fieldClass } from "@/components/admin/shared";
 import { formatDA } from "@/lib/format";
 import {
+  DEFAULT_DELIVERY_DAYS,
   DEFAULT_DEPOSIT_PERCENT,
   addDays,
   balanceAmount,
   defaultOrderTitle,
-  deliveryDaysFor,
   depositAmount,
   orderStatusLabel,
   paymentMethodLabel,
@@ -120,7 +120,7 @@ function OrderForm({
     price: String(initialPrice || ""),
     deposit_percent: String(order?.deposit_percent ?? DEFAULT_DEPOSIT_PERCENT),
     start_date: order?.start_date ?? today,
-    due_date: order?.due_date ?? (fixedDelivery(initialOffer) || !initialOffer ? addDays(today, deliveryDaysFor(offerByName(initialOffer))) : ""),
+    due_date: order?.due_date ?? (fixedDelivery(initialOffer) || !initialOffer ? addDays(today, DEFAULT_DELIVERY_DAYS) : ""),
     status: (order?.status ?? "todo") as OrderStatus,
     notes: order?.notes ?? prefill?.notes ?? "",
     deposit_paid: Boolean(order?.deposit_paid_at),
@@ -142,7 +142,7 @@ function OrderForm({
       price: offer?.price != null ? String(offer.price) : f.price,
       // Le nom n'est remplacé que s'il a été proposé automatiquement.
       title: f.title.startsWith("Site web") || f.title.startsWith("Logiciel") ? defaultOrderTitle(offer) : f.title,
-      due_date: offer?.price != null ? addDays(f.start_date || today, deliveryDaysFor(offer)) : f.due_date,
+      due_date: offer?.price != null ? addDays(f.start_date || today, DEFAULT_DELIVERY_DAYS) : f.due_date,
     }));
   }
 

@@ -5,8 +5,8 @@ import { SectionHeading } from "@/components/site/section-heading";
 
 const questions = [
   {
-    q: "En combien de temps mon site est-il livré ?",
-    a: "7 jours pour les offres Éco, Pro et Premium, à partir de la validation de la maquette et de la réception de vos contenus (textes, photos, logo). Pour un projet sur-mesure, le délai est fixé ensemble dans le devis.",
+    q: "En combien de temps mon site ou mon logiciel est-il livré ?",
+    a: "7 jours pour les sites Éco, Pro et Premium comme pour les logiciels Essentiel et Pro, à partir de la validation de la maquette et de la réception de vos contenus (textes, photos, logo, liste de produits). Pour un projet sur-mesure, le délai est fixé ensemble dans le devis.",
   },
   {
     q: "Comment se passe le paiement ?",
@@ -34,11 +34,15 @@ const questions = [
   },
   {
     q: "Comment le logiciel est-il installé ?",
-    a: "Vous le recevez sur une clé USB : branchez-la sur votre PC et l'installation se lance normalement. Une vidéo sur la clé vous montre chaque étape.",
+    a: "Vous le recevez sur une clé USB : branchez-la sur votre PC et l'installation se lance normalement. Sur la clé, une vidéo vous montre chaque étape de l'installation, et une vidéo complète vous apprend à utiliser le logiciel.",
   },
   {
     q: "Et si mon PC tombe en panne ?",
     a: "Vos données sont sauvegardées automatiquement. Il suffit de réinstaller le logiciel sur le nouveau PC avec la clé USB pour tout retrouver.",
+  },
+  {
+    q: "Et si quelque chose ne marche pas après la livraison ?",
+    a: "Vous avez une garantie d'un mois : tout défaut de fonctionnement de notre fait est corrigé gratuitement. En revanche, aucun remboursement n'est possible après la livraison. Tout est détaillé dans nos conditions de vente.",
   },
   {
     q: "Le devis est-il vraiment gratuit ?",

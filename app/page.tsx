@@ -40,7 +40,7 @@ export default async function Home() {
           subtitle="Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés sur clé USB, prêts à installer."
           plans={softwareOffers}
           muted={false}
-          footnote="Acompte de 50 % à la commande, le reste à la fin du développement. Installation guidée par une vidéo intégrée à la clé USB."
+          footnote="Acompte de 50 % à la commande, le reste à la fin du développement. Sur la clé USB : une vidéo d'installation et une vidéo complète pour apprendre à utiliser le logiciel."
         />
         <Projects projects={projects} />
         <Testimonials reviews={reviews} whatsapp={settings.whatsapp} />

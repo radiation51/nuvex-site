@@ -4,11 +4,6 @@ import type { LeadStatus, Offer, Order, OrderStatus, PaymentMethod } from "@/lib
 
 export const DEFAULT_DEPOSIT_PERCENT = 50;
 export const DEFAULT_DELIVERY_DAYS = 7;
-export const SOFTWARE_DELIVERY_DAYS = 21;
-
-/** Délai de livraison prévu pour une offre : 7 jours pour un site, 21 jours pour un logiciel. */
-export const deliveryDaysFor = (offer?: Pick<Offer, "id">) =>
-  offer && isSoftwareOffer(offer) ? SOFTWARE_DELIVERY_DAYS : DEFAULT_DELIVERY_DAYS;
 
 /** Nom proposé pour un nouveau projet selon l'offre choisie. */
 export function defaultOrderTitle(offer?: Pick<Offer, "id" | "name">) {

@@ -28,5 +28,9 @@ export const SELECT_OFFER_EVENT = "nuvex:select-offer";
 
 export function selectOffer(offerName: string) {
   window.dispatchEvent(new CustomEvent(SELECT_OFFER_EVENT, { detail: offerName }));
-  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  const contact = document.getElementById("contact");
+  // Sur une autre page que l'accueil : on y retourne, au formulaire.
+  if (contact) contact.scrollIntoView({ behavior: "smooth" });
+  // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- fonction appelée hors composant, sans router
+  else window.location.href = "/#contact";
 }

@@ -11,6 +11,11 @@ export async function POST(request: Request) {
     return Response.json({ error: "Trop d'envois. Réessayez plus tard." }, { status: 429 });
   }
 
+  // Case obligatoire du formulaire : conditions de vente et politique de confidentialité acceptées.
+  if (body.terms !== "on") {
+    return Response.json({ error: "Veuillez accepter les conditions de vente et la politique de confidentialité." }, { status: 400 });
+  }
+
   const name = String(body.name ?? "").trim();
   const phone = String(body.phone ?? "").trim();
   const email = String(body.email ?? "").trim();

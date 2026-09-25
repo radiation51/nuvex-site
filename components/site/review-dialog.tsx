@@ -139,6 +139,13 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
               {sending && <Loader2 className="animate-spin" />}
               Envoyer mon avis
             </Button>
+            <p className="text-center text-xs text-muted-foreground">
+              Votre nom, votre métier et votre avis seront visibles sur le site après validation. Voir notre{" "}
+              <a href="/politique-de-confidentialite" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                politique de confidentialité
+              </a>
+              .
+            </p>
           </form>
         </DialogContent>
       </Dialog>

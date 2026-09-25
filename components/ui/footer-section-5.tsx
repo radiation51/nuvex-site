@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { GlassPanel, OutlineText } from "@/components/site/glass-panel";
 import { SocialLinks, instagramHandle } from "@/components/site/social-icons";
 import { selectOffer, whatsappLink } from "@/lib/format";
@@ -8,13 +9,13 @@ import type { Offer, Settings } from "@/lib/types";
 const companyName = "NUVEX";
 
 const navigation = [
-  { name: "Accueil", href: "#accueil" },
-  { name: "Nos offres", href: "#offres" },
-  { name: "Logiciels", href: "#logiciels" },
-  { name: "Réalisations", href: "#realisations" },
-  { name: "Avis clients", href: "#avis" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
+  { name: "Accueil", href: "/#accueil" },
+  { name: "Nos offres", href: "/#offres" },
+  { name: "Logiciels", href: "/#logiciels" },
+  { name: "Réalisations", href: "/#realisations" },
+  { name: "Avis clients", href: "/#avis" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 const linkClass = "text-white/70 hover:text-white transition-colors text-sm md:text-[15px] font-medium text-left";
@@ -45,7 +46,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
                 {companyName}
               </span>
               <p className="text-xl leading-tight font-medium text-white md:text-[22px]">
-                Des sites web modernes
+                Des sites web et logiciels
                 <br />
                 qui font grandir votre activité.
               </p>
@@ -59,6 +60,10 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
               />
               <p className="text-xs font-light text-white/80 md:text-[13px]">
                 © {new Date().getFullYear()} {companyName} — Tous droits réservés
+                <br />
+                <Link href="/politique-de-confidentialite" className="underline underline-offset-4 hover:text-white">
+                  Politique de confidentialité et conditions de vente
+                </Link>
               </p>
             </div>
           </div>
@@ -70,9 +75,9 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
               <ul className="flex flex-col gap-3 md:gap-4">
                 {navigation.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className={linkClass}>
+                    <Link href={link.href} className={linkClass}>
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
