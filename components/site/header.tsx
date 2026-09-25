@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,8 @@ export function Logo({ className, light }: { className?: string; light?: boolean
 export function Header({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -57,17 +60,38 @@ export function Header({ solid = false }: { solid?: boolean }) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
         <Logo light={onPhoto} />
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Navigation principale">
+        <nav
+          className="hidden items-center gap-1 lg:flex"
+          aria-label="Navigation principale"
+          onMouseLeave={() => setHovered(null)}
+          onBlur={() => setHovered(null)}
+        >
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              onMouseEnter={() => setHovered(link.href)}
+              onFocus={() => setHovered(link.href)}
               className={cn(
-                "text-sm font-medium transition-colors",
+                "relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-200",
                 onPhoto ? "text-white/85 hover:text-white" : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {link.name}
+              {/* Pastille de survol : elle glisse d'un lien à l'autre */}
+              <AnimatePresence>
+                {hovered === link.href && (
+                  <motion.span
+                    layoutId="nav-hover"
+                    aria-hidden
+                    className={cn("absolute inset-0 rounded-full", onPhoto ? "bg-white/15" : "bg-primary/[0.08]")}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34, mass: 0.6 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="relative">{link.name}</span>
             </Link>
           ))}
         </nav>
