@@ -11,7 +11,6 @@ const companyName = "NUVEX";
 const navigation = [
   { name: "Accueil", href: "/#accueil" },
   { name: "Nos offres", href: "/#offres" },
-  { name: "Logiciels", href: "/#logiciels" },
   { name: "Réalisations", href: "/#realisations" },
   { name: "Avis clients", href: "/#avis" },
   { name: "FAQ", href: "/#faq" },
