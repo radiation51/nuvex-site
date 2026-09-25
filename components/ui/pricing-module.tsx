@@ -63,7 +63,9 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
       const tab = link && tabFor(link.getAttribute("href") ?? "");
       if (tab) setActive(tab);
     };
-    fromUrl();
+    // Au rechargement de la page, on repart toujours du 1er onglet (sites web), même si l'adresse garde « #logiciels ».
+    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    if (navigation?.type !== "reload") fromUrl();
     window.addEventListener("hashchange", fromUrl);
     document.addEventListener("click", onClick);
     return () => {
