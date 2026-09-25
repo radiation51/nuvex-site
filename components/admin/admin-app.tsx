@@ -32,6 +32,7 @@ import { ReservationsPanel } from "@/components/admin/reservations-panel";
 import { ReviewsPanel } from "@/components/admin/reviews-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
 import { Loading } from "@/components/admin/ui-bits";
+import { Loader, LoadingScreen } from "@/components/ui/loader";
 import { createDemoSupabase, resetDemo } from "@/lib/demo-supabase";
 import { balanceDue, depositDue, isLate } from "@/lib/orders";
 import { createRemoteSupabase } from "@/lib/remote-supabase";
@@ -123,8 +124,8 @@ export function AdminApp() {
 
   if (session === undefined || (session && isAdmin === null)) {
     return (
-      <main className="grid min-h-screen place-items-center">
-        <Loader2 className="size-6 animate-spin text-muted-foreground" />
+      <main className="grid min-h-screen place-items-center p-6">
+        <Loader secure title="Espace admin" messages={["Ouverture de votre espace…", "Chargement de vos données…", "Encore un instant…"]} />
       </main>
     );
   }
@@ -182,7 +183,9 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
   const navItems = nav.flatMap((g) => g.items);
 
   // Ferme la session admin (cookie du mot de passe) puis retourne à la page de connexion.
+  const [loggingOut, setLoggingOut] = React.useState(false);
   const logout = async () => {
+    setLoggingOut(true);
     await fetch("/api/admin/connexion", { method: "DELETE" }).catch(() => {});
     if (!demo) await supabase.auth.signOut();
     window.location.reload(); // l'adresse secrète réaffiche la page de connexion
@@ -190,6 +193,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
 
   return (
     <div className="min-h-screen bg-muted/40">
+      {loggingOut && <LoadingScreen title="Déconnexion" messages={["Fermeture de votre session…", "À bientôt !"]} />}
       {demo && (
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 bg-amber-100 px-4 py-2 text-center text-sm text-amber-950">
           <span>

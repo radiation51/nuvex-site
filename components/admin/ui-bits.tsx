@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { AlertTriangle, CheckCircle2, Clock } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import { formatDA, whatsappLink } from "@/lib/format";
 import { formatShortDate, paymentMethodLabel } from "@/lib/orders";
 import type { PaymentMethod } from "@/lib/types";
@@ -145,5 +146,9 @@ export function Empty({ children }: { children: React.ReactNode }) {
 }
 
 export function Loading() {
-  return <p className="text-sm text-muted-foreground">Chargement…</p>;
+  return (
+    <div className="grid min-h-[45vh] place-items-center">
+      <Loader size="sm" messages={["Chargement de vos données…", "Encore un instant…"]} />
+    </div>
+  );
 }

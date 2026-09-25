@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { done } from "@/components/admin/shared";
+import { Loading } from "@/components/admin/ui-bits";
 import { defaultSettings } from "@/lib/defaults";
 import type { Settings } from "@/lib/types";
 
@@ -44,7 +45,7 @@ export function SettingsPanel({ supabase }: { supabase: SupabaseClient }) {
     await done(supabase, error, "Paramètres enregistrés.");
   }
 
-  if (!settings) return <p className="text-sm text-muted-foreground">Chargement…</p>;
+  if (!settings) return <Loading />;
 
   return (
     <div>

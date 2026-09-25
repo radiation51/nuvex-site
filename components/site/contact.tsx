@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { GlassPanel } from "@/components/site/glass-panel";
+import { Loader } from "@/components/ui/loader";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SELECT_OFFER_EVENT, formatDA, whatsappLink } from "@/lib/format";
 import { formsViaWhatsApp } from "@/lib/supabase";
@@ -160,7 +161,18 @@ export function Contact({
               onReset={() => setSent(null)}
             />
           ) : (
-          <form onSubmit={onSubmit} className="grid gap-4 rounded-2xl border bg-card p-6 sm:p-8">
+          <form onSubmit={onSubmit} aria-busy={sending} className="relative grid gap-4 rounded-2xl border bg-card p-6 sm:p-8">
+            {/* Pendant l'envoi : message rassurant par-dessus le formulaire */}
+            {sending && (
+              <div className="absolute inset-0 z-10 grid animate-loader-fade place-items-center rounded-2xl bg-card/95 p-6">
+                <Loader
+                  size="sm"
+                  secure
+                  title="Envoi de votre demande"
+                  messages={["Transmission de vos informations…", "Encore un instant…"]}
+                />
+              </div>
+            )}
             <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
 
             <div className="grid gap-4 sm:grid-cols-2">

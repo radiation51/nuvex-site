@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader } from "@/components/ui/loader";
 import { Textarea } from "@/components/ui/textarea";
 import { whatsappLink } from "@/lib/format";
 import { formsViaWhatsApp } from "@/lib/supabase";
@@ -73,6 +74,11 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-md">
+          {sending && (
+            <div className="absolute inset-0 z-20 grid animate-loader-fade place-items-center rounded-[inherit] bg-background/95 p-6">
+              <Loader size="sm" title="Envoi de votre avis" messages={["Merci pour votre retour…", "Encore un instant…"]} />
+            </div>
+          )}
           <DialogHeader>
             <DialogTitle className="font-heading text-xl font-bold">Votre avis compte</DialogTitle>
             <DialogDescription>Partagez votre expérience avec NUVEX. Votre avis sera publié après validation.</DialogDescription>

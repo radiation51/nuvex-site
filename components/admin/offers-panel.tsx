@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { done } from "@/components/admin/shared";
+import { Loading } from "@/components/admin/ui-bits";
 import { splitOffers } from "@/lib/defaults";
 import type { Offer } from "@/lib/types";
 
@@ -21,7 +22,7 @@ export function OffersPanel({ supabase }: { supabase: SupabaseClient }) {
       .then(({ data }) => setGroups(splitOffers((data as Offer[] | null) ?? [])));
   }, [supabase]);
 
-  if (!groups) return <p className="text-sm text-muted-foreground">Chargement…</p>;
+  if (!groups) return <Loading />;
 
   return (
     <div>
