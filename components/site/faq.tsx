@@ -30,11 +30,15 @@ const questions = [
   },
   {
     q: "Comment se paie un logiciel ?",
-    a: "Vous l'achetez une seule fois : pas d'abonnement obligatoire. Acompte de 50 % à la commande, le reste à l'installation. Le suivi annuel (mises à jour + assistance) est facultatif.",
+    a: "Comme pour les sites : un acompte de 50 % à la commande pour démarrer le développement, et le reste à la fin, quand le logiciel est terminé.",
+  },
+  {
+    q: "Comment le logiciel est-il installé ?",
+    a: "Vous le recevez sur une clé USB : branchez-la sur votre PC et l'installation se lance normalement. Une vidéo sur la clé vous montre chaque étape.",
   },
   {
     q: "Et si mon PC tombe en panne ?",
-    a: "Vos données sont sauvegardées automatiquement (clé USB ou dossier de sauvegarde). On réinstalle le logiciel sur votre nouveau PC et vous retrouvez tout.",
+    a: "Vos données sont sauvegardées automatiquement. Il suffit de réinstaller le logiciel sur le nouveau PC avec la clé USB pour tout retrouver.",
   },
   {
     q: "Le devis est-il vraiment gratuit ?",

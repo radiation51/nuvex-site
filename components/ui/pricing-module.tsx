@@ -13,10 +13,15 @@ import { cn } from "@/lib/utils";
 export type { PlanFeature } from "@/lib/types";
 
 export interface PricingModuleProps {
+  /** Ancre de la section (ex. "offres", "logiciels"). */
+  id?: string;
+  badge?: string;
   title?: string;
   subtitle?: string;
   plans: Offer[];
   footnote?: string;
+  /** Fond légèrement grisé (par défaut) ou fond de page. */
+  muted?: boolean;
   className?: string;
 }
 
@@ -31,16 +36,19 @@ const icons: Record<string, React.ElementType> = {
 };
 
 export function PricingModule({
+  id = "offres",
+  badge = "Tarifs",
   title = "Nos offres",
   subtitle = "Des prix clairs, sans surprise. Choisissez la formule adaptée à votre projet.",
   plans,
   footnote,
+  muted = true,
   className,
 }: PricingModuleProps) {
   return (
-    <section id="offres" className={cn("w-full bg-muted/40 px-4 py-24 text-foreground md:px-8", className)}>
+    <section id={id} className={cn("w-full px-4 py-24 text-foreground md:px-8", muted ? "bg-muted/40" : "bg-background", className)}>
       <div className="mx-auto max-w-6xl">
-        <SectionHeading badge="Tarifs" title={title} subtitle={subtitle} />
+        <SectionHeading badge={badge} title={title} subtitle={subtitle} />
         <div className="mt-16">
           <PlanGrid plans={plans} />
         </div>
@@ -50,8 +58,8 @@ export function PricingModule({
   );
 }
 
-/** Grille des cartes d'offres (aussi utilisée dans la section Logiciels). */
-export function PlanGrid({ plans }: { plans: Offer[] }) {
+/** Grille des cartes d'offres. */
+function PlanGrid({ plans }: { plans: Offer[] }) {
   return (
     <div
       className={cn(

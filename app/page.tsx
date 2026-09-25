@@ -7,7 +7,6 @@ import { Faq } from "@/components/site/faq";
 import { Header } from "@/components/site/header";
 import { Projects } from "@/components/site/projects";
 import { SectorsStrip } from "@/components/site/sectors-strip";
-import { Software } from "@/components/site/software";
 import { Steps } from "@/components/site/steps";
 import { Testimonials } from "@/components/site/testimonials";
 import { WhyUs } from "@/components/site/why-us";
@@ -34,7 +33,15 @@ export default async function Home() {
           text="Un site pro à partir de 25 000 DA, livré en 7 jours et adapté au mobile."
           whatsapp={settings.whatsapp}
         />
-        <Software plans={softwareOffers} whatsapp={settings.whatsapp} />
+        <PricingModule
+          id="logiciels"
+          badge="Nouveau · Logiciels"
+          title="Nos logiciels de gestion"
+          subtitle="Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés sur clé USB, prêts à installer."
+          plans={softwareOffers}
+          muted={false}
+          footnote="Acompte de 50 % à la commande, le reste à la fin du développement. Installation guidée par une vidéo intégrée à la clé USB."
+        />
         <Projects projects={projects} />
         <Testimonials reviews={reviews} whatsapp={settings.whatsapp} />
         <CtaBand
