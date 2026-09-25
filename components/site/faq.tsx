@@ -34,7 +34,7 @@ const questions = [
   },
   {
     q: "Comment le logiciel est-il installé ?",
-    a: "Vous le recevez sur une clé USB : branchez-la sur votre PC et l'installation se lance normalement. Sur la clé, une vidéo vous montre chaque étape de l'installation, et une vidéo complète vous apprend à utiliser le logiciel.",
+    a: "Vous le recevez sur une clé USB, livrée gratuitement : branchez-la sur votre PC et l'installation se lance normalement. Sur la clé, une vidéo vous montre chaque étape de l'installation, et une vidéo complète vous apprend à utiliser le logiciel.",
   },
   {
     q: "Et si mon PC tombe en panne ?",

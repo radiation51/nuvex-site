@@ -257,7 +257,7 @@ export default async function PrivacyPage() {
                   <strong>Site web :</strong> la livraison correspond à la mise en ligne du site à l&apos;adresse prévue.
                 </li>
                 <li>
-                  <strong>Logiciel :</strong> la livraison correspond à la remise de la clé USB, qui contient le logiciel, une vidéo
+                  <strong>Logiciel :</strong> la livraison correspond à la remise de la clé USB, livrée gratuitement, qui contient le logiciel, une vidéo
                   d&apos;installation et une vidéo complète expliquant comment utiliser le logiciel.
                 </li>
                 <li>

@@ -39,10 +39,10 @@ export default async function Home() {
               label: "Logiciels",
               tag: "Nouveau",
               subtitle:
-                "Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés sur clé USB, prêts à installer.",
+                "Des logiciels faits pour votre activité, qui marchent même sans internet. Livrés gratuitement sur clé USB, prêts à installer.",
               plans: softwareOffers,
               footnote:
-                "Acompte de 50 % à la commande, le reste à la fin du développement. Sur la clé USB : une vidéo d'installation et une vidéo complète pour apprendre à utiliser le logiciel.",
+                "Acompte de 50 % à la commande, le reste à la fin du développement. Livraison gratuite de la clé USB. Sur la clé USB : une vidéo d'installation et une vidéo complète pour apprendre à utiliser le logiciel.",
             },
           ]}
         />
