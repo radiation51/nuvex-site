@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { done } from "@/components/admin/shared";
 import { Loading } from "@/components/admin/ui-bits";
-import { TelegramCard } from "@/components/admin/telegram-card";
+import { PushCard } from "@/components/admin/push-card";
 import { defaultSettings } from "@/lib/defaults";
 import type { Settings } from "@/lib/types";
 
@@ -72,7 +72,7 @@ export function SettingsPanel({ supabase }: { supabase: SupabaseClient }) {
         </Button>
       </form>
 
-      <TelegramCard />
+      <PushCard />
     </div>
   );
 }

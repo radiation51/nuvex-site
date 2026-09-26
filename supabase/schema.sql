@@ -116,13 +116,22 @@ create table if not exists public.visits (
 create index if not exists visits_created_at_idx on public.visits (created_at);
 alter table public.visits enable row level security;
 
--- Compte Telegram qui reçoit les notifications (voir supabase/migration-notifications.sql)
+-- Notifications sur le téléphone (voir supabase/migration-notifications.sql)
 create table if not exists public.notify (
   id int primary key default 1 check (id = 1),
-  telegram_chat_id text,
+  vapid_public text,
+  vapid_private text,
   updated_at timestamptz not null default now()
 );
+create table if not exists public.push_subscriptions (
+  endpoint text primary key,
+  p256dh text not null,
+  auth text not null,
+  device text,
+  created_at timestamptz not null default now()
+);
 alter table public.notify enable row level security;
+alter table public.push_subscriptions enable row level security;
 
 -- ---------- Qui est admin ? ----------
 create or replace function public.is_admin()

@@ -1,6 +1,6 @@
 import { clientIp, isRateLimited } from "@/lib/rate-limit";
 import { getServerSupabase } from "@/lib/supabase";
-import { notifyLead } from "@/lib/telegram";
+import { notifyLead } from "@/lib/push";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
@@ -37,7 +37,10 @@ export async function POST(request: Request) {
   const supabase = getServerSupabase();
   if (!supabase) {
     // En local sans Supabase : on simule l'envoi pour tester le parcours (la demande va dans l'admin de démo).
-    if (process.env.NODE_ENV !== "production") return Response.json({ ok: true, demo: true });
+    if (process.env.NODE_ENV !== "production") {
+      await notifyLead({ name, phone, offer, message });
+      return Response.json({ ok: true, demo: true });
+    }
     return Response.json({ error: "Le site n'est pas encore relié à la base de données." }, { status: 503 });
   }
 
@@ -52,7 +55,7 @@ export async function POST(request: Request) {
 
   if (error) return Response.json({ error: "Envoi impossible pour le moment." }, { status: 500 });
 
-  // Notification sur le téléphone (Telegram), si elle est configurée.
-  await notifyLead({ name, phone, email, offer, message });
+  // Notification sur le téléphone de l'administrateur (appareils activés dans Admin > Paramètres).
+  await notifyLead({ name, phone, offer, message });
   return Response.json({ ok: true });
 }

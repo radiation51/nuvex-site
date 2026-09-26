@@ -1,6 +1,6 @@
 import { clientIp, isRateLimited } from "@/lib/rate-limit";
 import { getServerSupabase } from "@/lib/supabase";
-import { notifyReview } from "@/lib/telegram";
+import { notifyReview } from "@/lib/push";
 
 const MAX_PHOTO_BYTES = 3 * 1024 * 1024;
 const PHOTO_TYPES: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
   if (error) return Response.json({ error: "Envoi impossible pour le moment." }, { status: 500 });
 
-  // Notification sur le téléphone (Telegram), si elle est configurée.
-  await notifyReview({ name, role, rating, text });
+  // Notification sur le téléphone de l'administrateur (appareils activés dans Admin > Paramètres).
+  await notifyReview({ name, rating, text });
   return Response.json({ ok: true });
 }
