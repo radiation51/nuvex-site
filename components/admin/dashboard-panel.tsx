@@ -31,7 +31,7 @@ import {
 } from "@/lib/orders";
 import { cn } from "@/lib/utils";
 
-export type AdminTab = "dashboard" | "calendar" | "reservations" | "orders" | "clients" | "reviews" | "offers" | "portfolio" | "settings";
+export type AdminTab = "dashboard" | "visitors" | "calendar" | "reservations" | "orders" | "clients" | "reviews" | "offers" | "portfolio" | "settings";
 
 const monthLabel = new Intl.DateTimeFormat("fr-FR", { month: "short" });
 const monthLong = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" });

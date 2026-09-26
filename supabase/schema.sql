@@ -100,6 +100,22 @@ create table if not exists public.settings (
 );
 insert into public.settings (id, whatsapp, phone, instagram) values (1, '0791 84 00 45', '0791 84 00 45', 'https://www.instagram.com/nuvex.213/') on conflict do nothing;
 
+-- Mesure d'audience anonyme de la page « Visiteurs » (voir supabase/migration-visiteurs.sql)
+create table if not exists public.visits (
+  id bigint generated always as identity primary key,
+  created_at timestamptz not null default now(),
+  kind text not null,
+  path text not null default '/',
+  lang text,
+  source text,
+  device text,
+  country text,
+  visitor text not null,
+  label text
+);
+create index if not exists visits_created_at_idx on public.visits (created_at);
+alter table public.visits enable row level security;
+
 -- ---------- Qui est admin ? ----------
 create or replace function public.is_admin()
 returns boolean

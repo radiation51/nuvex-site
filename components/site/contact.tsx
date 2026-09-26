@@ -20,6 +20,7 @@ import { RichText } from "@/components/ui/rich-text";
 import { OfferSelect } from "@/components/site/offer-select";
 import { useI18n } from "@/components/i18n-provider";
 import { fill } from "@/lib/i18n/fill";
+import { track } from "@/lib/analytics";
 
 export function Contact({
   offers,
@@ -65,7 +66,10 @@ export function Contact({
         .filter(Boolean)
         .join("\n");
       const whatsappUrl = whatsappLink(settings.whatsapp, message);
-      if (!text("website")) window.open(whatsappUrl, "_blank", "noopener");
+      if (!text("website")) {
+        window.open(whatsappUrl, "_blank", "noopener");
+        track({ kind: "lead", path: window.location.pathname, lang, label: text("offer") || undefined });
+      }
       form.reset();
       setOffer("");
       setSent({ ...summary, whatsappUrl });
@@ -84,6 +88,7 @@ export function Contact({
       if (!res.ok) throw new Error(lang === "fr" ? (json.error ?? t.error) : t.error);
       // Mode démo (Supabase pas encore branché) : la demande apparaît dans l'admin de démo.
       if (json.demo) import("@/lib/demo-supabase").then((m) => m.addDemoLead(payload));
+      track({ kind: "lead", path: window.location.pathname, lang, label: text("offer") || undefined });
       form.reset();
       setOffer("");
       setSent(summary);

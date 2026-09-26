@@ -106,7 +106,7 @@ export const en: Dictionary = {
     sites: {
       label: "Websites",
       subtitle: "Clear prices, no surprises. Pick the plan that fits your project.",
-      footnote: "50% deposit when you order, the rest once your website is finished.",
+      footnote: "50% deposit to start the website, the rest once it is finished, before it goes live.",
     },
     software: {
       label: "Software",
@@ -209,7 +209,7 @@ export const en: Dictionary = {
       },
       {
         q: "How does payment work?",
-        a: "With a 50% deposit when you order to start the project. The rest is paid once your website is finished.",
+        a: "With a 50% deposit when you order: work starts as soon as it is paid. The rest is paid once your website is finished, before it goes live and is delivered.",
       },
       {
         q: "Are the domain name and hosting included?",

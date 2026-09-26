@@ -7,12 +7,12 @@ export const legalEn: LegalDoc = {
   badge: "Legal information",
   title: "Privacy policy and terms of sale",
   intro: "Last updated: {date}. By requesting a quote on this website, you confirm that you have read and accepted this entire document.",
-  updatedAt: "25 September 2026",
+  updatedAt: "26 September 2026",
   officialNotice:
     "This English translation is provided for convenience. In case of any difference, the French version of this document prevails.",
   essentialsTitle: "The essentials in 5 points",
   essentials: [
-    "50% deposit when you order, the rest when the work is finished.",
+    "50% deposit to start the website; the rest is paid once it is finished, before it is published and delivered.",
     "No refund after the website or software has been delivered.",
     "A one-month warranty: any defect caused by our work is fixed for free.",
     "Your data is only used to handle your request: it is never sold.",
@@ -66,8 +66,8 @@ export const legalEn: LegalDoc = {
           {
             ul: [
               "Prices are shown in Algerian dinars (DA). “From” refers to the plan's base price: the final price is the one in the accepted quote.",
-              "**50% deposit when you order.** Work starts once the deposit is received.",
-              "**The remaining 50% is paid at the end of the work**, when the website or software is finished, before the website goes live for good or the software USB drive is handed over.",
+              "**50% deposit when you order: work only starts once this deposit has been paid.**",
+              "**The balance (the remaining 50%) is paid once the website or software is finished, before it is published and delivered**: the website only goes live, and the software USB drive is only handed over, after full payment.",
               "Accepted payment methods: cash, CCP, BaridiMob or bank transfer.",
               "Until the balance is paid, NUVEX may put the website launch on hold or withhold the software.",
             ],
@@ -215,39 +215,31 @@ export const legalEn: LegalDoc = {
     articles: [
       {
         id: "responsable",
-        title: "Data controller",
-        blocks: [{ p: "The controller of the data collected on this website is **NUVEX**, reachable at the contact details given in part 1." }],
+        title: "Who is responsible for your data",
+        blocks: [
+          {
+            p: "The controller of all data collected on this website is **NUVEX**, an agency based in Algeria that builds websites and business software, reachable at the contact details given in part 1 (WhatsApp, phone, email or Instagram). NUVEX decides what data is collected, how it is used and how long it is kept. This policy explains, simply and without jargon, what we do with your information when you visit the website, request a quote, leave a review or become a client, and it applies in the same way to all three versions of the website: French, English and Arabic.",
+          },
+        ],
       },
       {
         id: "donnees-collectees",
-        title: "Data we collect",
+        title: "The data we collect",
         blocks: [
-          { p: "We only collect the data we need:" },
           {
-            ul: [
-              "**Quote request:** name, phone number, email (optional), chosen plan and description of your project.",
-              "**Client reviews:** name, job or company, rating, review text and photo (optional).",
-              "**Clients:** information needed to follow the project and payments (contact details, plan, amounts, dates, payment method). We never ask for a bank card number or a password.",
-              "**Technical data:** your IP address, used temporarily to protect the website against spam and intrusion attempts.",
-            ],
+            p: "We only collect what is genuinely useful. When you **request a quote**, you send us your name, your phone number, your email if you choose to give it, the plan you're interested in and a description of your project; depending on the case, the request reaches us through our form or opens directly in WhatsApp, already written, so that you send it to us yourself. When you **leave a review**, we receive your name, your job or company name, your rating, the text of your review and, if you wish, a photo. When you **become a client**, we keep the information needed to follow your project and payments: your contact details, the chosen plan, the amounts, the deposit and balance dates and the payment method used (cash, CCP, BaridiMob or bank transfer). We never ask for a bank card number, a PIN or a password.",
+          },
+          {
+            p: "To know whether our website is useful and to improve it, we also measure its **traffic, anonymously and without any cookie**: for each page viewed, we record the page, the website language, the type of device (phone, tablet or computer), the approximate country, the website you came from (for example Google, Instagram or WhatsApp) and, where relevant, an action that shows your interest, such as opening the pricing section, choosing a plan, clicking WhatsApp or the phone number, or sending a quote request. To count visitors without tracking them, we compute an anonymous fingerprint that changes automatically every day: it cannot identify you or recognise you from one day to the next, and **your IP address is never stored**. That IP address is only used, for a brief moment, to protect the website against spam and intrusion attempts.",
           },
         ],
       },
       {
         id: "utilisation",
-        title: "How we use your data",
+        title: "What we do with your data",
         blocks: [
-          { p: "Your data is only used to:" },
           {
-            ul: [
-              "call you back and answer your request, then prepare your quote;",
-              "build your website or software, and follow up on payments;",
-              "publish your review on the website, only after our approval;",
-              "keep the website secure.",
-            ],
-          },
-          {
-            p: "It is processed with your consent (box ticked in the form), to deliver the service you ordered, or to meet our legal obligations. **It is never sold, rented or used for advertising.**",
+            p: "Your data is only used to call you back and answer your request, prepare your quote, build your website or software, follow up on the deposit and balance payments, publish your review on the website after checking it, understand, through anonymous statistics, which pages and plans interest our visitors, and keep the website secure. It is processed because you gave us your consent by ticking the box in the form, because it is needed to deliver the service you ordered, or to meet our legal obligations, particularly accounting ones. **It is never sold, rented, traded or used for advertising**, and we never send you marketing messages without your consent.",
           },
         ],
       },
@@ -256,27 +248,16 @@ export const legalEn: LegalDoc = {
         title: "Who can see your data",
         blocks: [
           {
-            ul: [
-              "Only the NUVEX team, from a protected admin area.",
-              "Our technical providers (website hosting and database), who store it on our behalf. Their servers may be located outside Algeria; they apply recognised security measures.",
-              "If you message us on WhatsApp or Instagram, your messages are also subject to those apps' privacy rules.",
-              "The authorities, only if required by law.",
-            ],
+            p: "Only the NUVEX team has access to your information, from a private admin area protected by a secret address and a password. To work, the website relies on well-known technical providers: the website host and the database service that stores quote requests, reviews, client records and anonymous statistics on our behalf. Their servers may be located outside Algeria, and they apply recognised security measures. If you choose to message us on WhatsApp or Instagram, your messages also go through those apps and are subject to their own privacy rules. Your data is only shared with the authorities if the law requires it. Finally, the reviews we approve (name, job or company, rating, text and photo) are, by nature, visible to all website visitors.",
           },
-          { p: "Approved reviews (name, job or company, rating, text, photo) are visible to all website visitors." },
         ],
       },
       {
         id: "conservation",
-        title: "How long we keep data",
+        title: "How long we keep it",
         blocks: [
           {
-            ul: [
-              "Quote requests with no follow-up: 2 years maximum after the last contact.",
-              "Clients: for the whole relationship, then for the period required by law for accounting records.",
-              "Reviews: as long as they are published, or until you ask for them to be removed.",
-              "IP addresses: a few days at most, for security.",
-            ],
+            p: "We only keep your data for as long as necessary. A quote request with no follow-up is deleted at the latest two years after our last exchange. Client information is kept for the whole duration of our collaboration, then for the period required by law for accounting records. Reviews stay online as long as they are published, or until you ask for them to be removed. Traffic statistics, which are already anonymous, are kept for thirteen months at most, and the IP addresses used for security are kept for a few days at most.",
           },
         ],
       },
@@ -285,7 +266,7 @@ export const legalEn: LegalDoc = {
         title: "Cookies",
         blocks: [
           {
-            p: "This website uses **no advertising or tracking cookies**. Only two technical cookies are used: one remembers the language you choose, the other is for NUVEX's private admin area and does not concern visitors.",
+            p: "This website uses **no advertising, tracking or social media cookies**, and the traffic measurement described above works without cookies. Only two small technical cookies exist: the first simply remembers the language you chose (French, English or Arabic) to show it to you on your next visit, and the second is only used for NUVEX's private admin area, so it does not concern visitors. These cookies contain no personal information and serve no other purpose.",
           },
         ],
       },
@@ -294,7 +275,7 @@ export const legalEn: LegalDoc = {
         title: "Security",
         blocks: [
           {
-            p: "The website is protected by an encrypted connection (HTTPS). The admin area is reached through a private address and a password, and blocks repeated login attempts. Access to the database is kept to the strict minimum.",
+            p: "Every page of the website is protected by an encrypted connection (HTTPS), which prevents your information from being read while it is sent. The admin area can only be reached through a private address and a password checked on the server, and it automatically blocks repeated login attempts. Access to the database only goes through our server, with a secret key that is never sent to visitors, and it is kept to the strict minimum. The contact form and the review form are also protected against bots and abusive submissions.",
           },
         ],
       },
@@ -303,27 +284,16 @@ export const legalEn: LegalDoc = {
         title: "Your rights",
         blocks: [
           {
-            p: "Under Law No. 18-07 of 10 June 2018 on the protection of individuals in the processing of personal data, you can at any time:",
-          },
-          {
-            ul: [
-              "find out what data we hold about you and get a copy;",
-              "have it corrected;",
-              "object to its use or ask for it to be deleted;",
-              "ask for your review to be removed from the website.",
-            ],
-          },
-          {
-            p: "To do so, contact us by WhatsApp, phone or email: we reply within one month at most. You can also contact the National Authority for the Protection of Personal Data (ANPDP).",
+            p: "Under Law No. 18-07 of 10 June 2018 on the protection of individuals in the processing of personal data, you can at any time find out what data we hold about you and get a copy, have it corrected if it is inaccurate, object to its use, ask for it to be deleted or ask for your review to be removed from the website. Just contact us by WhatsApp, phone or email: we reply within one month at most, and usually much sooner. If you believe your rights are not being respected, you can also contact the National Authority for the Protection of Personal Data (ANPDP).",
           },
         ],
       },
       {
         id: "modifications",
-        title: "Changes",
+        title: "Updates to this policy",
         blocks: [
           {
-            p: "This policy may be updated. The date of the last update is shown at the top of this page. Our services are intended for professionals and adults.",
+            p: "This policy may change, for example if we add a new service or if the law changes. The date of the last update is always shown at the top of this page, and the version published on the website is the only one that applies. Our services are intended for professionals and adults.",
           },
         ],
       },

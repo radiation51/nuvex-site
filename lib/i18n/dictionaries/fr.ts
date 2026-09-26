@@ -106,7 +106,7 @@ export const fr = {
     sites: {
       label: "Sites web",
       subtitle: "Des prix clairs, sans surprise. Choisissez la formule adaptée à votre projet.",
-      footnote: "Acompte de 50 % à la commande, le reste une fois le site terminé.",
+      footnote: "Acompte de 50 % pour lancer le site, le reste une fois le site terminé, avant sa mise en ligne.",
     },
     software: {
       label: "Logiciels",
@@ -209,7 +209,7 @@ export const fr = {
       },
       {
         q: "Comment se passe le paiement ?",
-        a: "Avec un acompte de 50 % à la commande pour démarrer le projet. Le reste est à régler une fois votre site terminé.",
+        a: "Avec un acompte de 50 % à la commande : le travail commence dès qu'il est versé. Le reste est à régler une fois votre site terminé, avant sa mise en ligne et sa livraison.",
       },
       {
         q: "Le nom de domaine et l'hébergement sont-ils inclus ?",

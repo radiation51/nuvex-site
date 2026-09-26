@@ -9,10 +9,10 @@ export const legalFr: LegalDoc = {
   title: "Politique de confidentialité et conditions de vente",
   intro:
     "Dernière mise à jour : {date}. En demandant un devis sur ce site, vous déclarez avoir lu et accepté l'ensemble de ce document.",
-  updatedAt: "25 septembre 2026",
+  updatedAt: "26 septembre 2026",
   essentialsTitle: "L'essentiel en 5 points",
   essentials: [
-    "Acompte de 50 % à la commande, le reste à la fin de la réalisation.",
+    "Acompte de 50 % pour lancer le site ; le reste est payé une fois le site terminé, avant sa publication et sa livraison.",
     "Aucun remboursement après la livraison du site ou du logiciel.",
     "Une garantie d'un mois : tout défaut de notre fait est corrigé gratuitement.",
     "Vos données servent uniquement à traiter votre demande : elles ne sont jamais vendues.",
@@ -66,8 +66,8 @@ export const legalFr: LegalDoc = {
           {
             ul: [
               "Les prix sont indiqués en dinars algériens (DA). La mention « à partir de » correspond au prix de base de l'offre : le prix final est celui du devis accepté.",
-              "**Acompte de 50 % à la commande.** Le travail commence à la réception de l'acompte.",
-              "**Le reste (50 %) est payé à la fin de la réalisation**, lorsque le site ou le logiciel est terminé, avant la mise en ligne définitive du site ou la remise de la clé USB du logiciel.",
+              "**Acompte de 50 % à la commande : le travail ne commence qu'après le versement de cet acompte.**",
+              "**Le solde (les 50 % restants) est payé une fois le site ou le logiciel terminé, avant sa publication et sa livraison** : le site n'est mis en ligne, et le logiciel n'est remis sur clé USB, qu'après le paiement complet.",
               "Moyens de paiement acceptés : espèces, CCP, BaridiMob ou virement.",
               "Tant que le solde n'est pas payé, NUVEX peut suspendre la mise en ligne du site ou ne pas remettre le logiciel.",
             ],
@@ -215,43 +215,31 @@ export const legalFr: LegalDoc = {
     articles: [
       {
         id: "responsable",
-        title: "Responsable des données",
+        title: "Qui est responsable de vos données",
         blocks: [
           {
-            p: "Le responsable des données collectées sur ce site est **NUVEX**, joignable aux coordonnées indiquées dans la partie 1.",
+            p: "Le responsable de toutes les données recueillies sur ce site est **NUVEX**, agence basée en Algérie spécialisée dans la création de sites web et de logiciels de gestion, joignable aux coordonnées indiquées dans la partie 1 (WhatsApp, téléphone, e-mail ou Instagram). C'est NUVEX qui décide des données collectées, de la manière dont elles sont utilisées et de la durée pendant laquelle elles sont conservées. Cette politique explique, simplement et sans jargon, ce que nous faisons de vos informations lorsque vous visitez le site, demandez un devis, laissez un avis ou devenez client, et elle s'applique de la même façon aux trois versions du site : français, anglais et arabe.",
           },
         ],
       },
       {
         id: "donnees-collectees",
-        title: "Données collectées",
+        title: "Les données que nous recueillons",
         blocks: [
-          { p: "Nous collectons uniquement les données nécessaires :" },
           {
-            ul: [
-              "**Demande de devis :** nom, numéro de téléphone, e-mail (facultatif), offre choisie et description de votre projet.",
-              "**Avis clients :** nom, métier ou entreprise, note, texte de l'avis et photo (facultative).",
-              "**Clients :** les informations utiles au suivi du projet et des paiements (coordonnées, offre, montants, dates, moyen de paiement). Nous ne demandons jamais de numéro de carte bancaire ni de mot de passe.",
-              "**Données techniques :** l'adresse IP, utilisée temporairement pour protéger le site contre le spam et les tentatives d'intrusion.",
-            ],
+            p: "Nous ne recueillons que ce qui est vraiment utile. Lorsque vous **demandez un devis**, vous nous transmettez votre nom, votre numéro de téléphone, votre e-mail si vous choisissez de le donner, l'offre qui vous intéresse et la description de votre projet ; selon le cas, cette demande nous arrive par notre formulaire ou s'ouvre directement dans WhatsApp, déjà rédigée, pour que vous nous l'envoyiez vous-même. Lorsque vous **laissez un avis**, nous recevons votre nom, votre métier ou le nom de votre entreprise, votre note, le texte de votre avis et, si vous le souhaitez, une photo. Lorsque vous **devenez client**, nous gardons les informations nécessaires au suivi de votre projet et de vos paiements : vos coordonnées, l'offre choisie, les montants, les dates d'acompte et de solde et le moyen de paiement utilisé (espèces, CCP, BaridiMob ou virement). Nous ne vous demandons jamais de numéro de carte bancaire, de code secret ni de mot de passe.",
+          },
+          {
+            p: "Pour savoir si notre site est utile et l'améliorer, nous mesurons aussi sa **fréquentation, de façon anonyme et sans aucun cookie** : à chaque page consultée, nous enregistrons la page vue, la langue du site, le type d'appareil (téléphone, tablette ou ordinateur), le pays approximatif, le site d'où vous venez (par exemple Google, Instagram ou WhatsApp) et, le cas échéant, un geste qui montre votre intérêt, comme l'ouverture de la section des offres, le choix d'une offre, un clic sur WhatsApp ou sur le numéro de téléphone, ou l'envoi d'une demande de devis. Pour compter les visiteurs sans les suivre, nous calculons une empreinte anonyme qui change automatiquement chaque jour : elle ne permet ni de vous identifier, ni de vous reconnaître d'un jour à l'autre, et **votre adresse IP n'est jamais enregistrée**. Cette adresse IP est seulement utilisée, un court instant, pour protéger le site contre le spam et les tentatives d'intrusion.",
           },
         ],
       },
       {
         id: "utilisation",
-        title: "Utilisation des données",
+        title: "Ce que nous faisons de vos données",
         blocks: [
-          { p: "Vos données servent uniquement à :" },
           {
-            ul: [
-              "vous rappeler et répondre à votre demande, puis établir votre devis ;",
-              "réaliser votre site ou votre logiciel, et suivre les paiements ;",
-              "publier votre avis sur le site, seulement après notre validation ;",
-              "assurer la sécurité du site.",
-            ],
-          },
-          {
-            p: "Elles sont traitées avec votre accord (case cochée dans le formulaire), pour exécuter la prestation commandée, ou pour respecter nos obligations légales. **Elles ne sont jamais vendues, louées ni utilisées pour de la publicité.**",
+            p: "Vos données servent uniquement à vous rappeler et à répondre à votre demande, à préparer votre devis, à réaliser votre site ou votre logiciel, à suivre le paiement de l'acompte et du solde, à publier votre avis sur le site après l'avoir vérifié, à comprendre, grâce aux statistiques anonymes, quelles pages et quelles offres intéressent nos visiteurs, et à assurer la sécurité du site. Elles sont traitées parce que vous nous avez donné votre accord en cochant la case prévue dans le formulaire, parce qu'elles sont nécessaires pour exécuter la prestation que vous avez commandée, ou pour respecter nos obligations légales, notamment comptables. **Elles ne sont jamais vendues, louées, échangées ni utilisées pour de la publicité**, et nous ne vous envoyons aucun message commercial sans votre accord.",
           },
         ],
       },
@@ -260,27 +248,16 @@ export const legalFr: LegalDoc = {
         title: "Qui peut voir vos données",
         blocks: [
           {
-            ul: [
-              "Uniquement l'équipe NUVEX, depuis un espace d'administration protégé.",
-              "Nos prestataires techniques (hébergement du site et base de données), qui les stockent pour notre compte. Leurs serveurs peuvent être situés hors d'Algérie ; ils appliquent des mesures de sécurité reconnues.",
-              "Si vous nous écrivez sur WhatsApp ou Instagram, vos messages sont aussi soumis aux règles de confidentialité de ces applications.",
-              "Les autorités, uniquement si la loi l'exige.",
-            ],
+            p: "Seule l'équipe NUVEX a accès à vos informations, depuis un espace d'administration privé protégé par une adresse secrète et un mot de passe. Pour fonctionner, le site s'appuie sur des prestataires techniques reconnus : l'hébergeur du site et le service de base de données qui conserve les demandes, les avis, les dossiers clients et les statistiques anonymes pour notre compte. Leurs serveurs peuvent être situés hors d'Algérie, et ils appliquent des mesures de sécurité reconnues. Si vous choisissez de nous écrire sur WhatsApp ou sur Instagram, vos messages passent aussi par ces applications et sont soumis à leurs propres règles de confidentialité. Vos données ne sont communiquées aux autorités que si la loi l'exige. Enfin, les avis que nous approuvons (nom, métier ou entreprise, note, texte et photo) sont, par nature, visibles par tous les visiteurs du site.",
           },
-          { p: "Les avis approuvés (nom, métier ou entreprise, note, texte, photo) sont visibles par tous les visiteurs du site." },
         ],
       },
       {
         id: "conservation",
-        title: "Durée de conservation",
+        title: "Combien de temps nous les gardons",
         blocks: [
           {
-            ul: [
-              "Demandes de devis sans suite : 2 ans maximum après le dernier contact.",
-              "Clients : pendant toute la durée de la relation, puis pendant la durée imposée par la loi pour les documents comptables.",
-              "Avis : tant qu'ils sont publiés, ou jusqu'à ce que vous demandiez leur suppression.",
-              "Adresses IP : quelques jours au maximum, pour la sécurité.",
-            ],
+            p: "Nous ne gardons vos données que le temps nécessaire. Une demande de devis qui n'a pas donné suite est effacée au plus tard deux ans après notre dernier échange. Les informations des clients sont conservées pendant toute la durée de notre collaboration, puis pendant la durée imposée par la loi pour les documents comptables. Les avis restent en ligne tant qu'ils sont publiés, ou jusqu'à ce que vous demandiez leur retrait. Les statistiques de fréquentation, déjà anonymes, sont conservées treize mois au maximum, et les adresses IP utilisées pour la sécurité ne sont gardées que quelques jours tout au plus.",
           },
         ],
       },
@@ -289,7 +266,7 @@ export const legalFr: LegalDoc = {
         title: "Cookies",
         blocks: [
           {
-            p: "Ce site n'utilise **aucun cookie publicitaire ni de suivi**. Seuls deux cookies techniques sont utilisés : l'un retient la langue que vous choisissez, l'autre sert à l'espace d'administration privé de NUVEX et ne concerne pas les visiteurs.",
+            p: "Ce site n'utilise **aucun cookie publicitaire, de suivi ou de réseau social**, et la mesure de fréquentation décrite plus haut fonctionne sans cookie. Seuls deux petits cookies techniques existent : le premier retient simplement la langue que vous avez choisie (français, anglais ou arabe) pour vous l'afficher à votre prochaine visite, et le second sert uniquement à l'espace d'administration privé de NUVEX, il ne concerne donc pas les visiteurs. Ces cookies ne contiennent aucune information personnelle et ne servent à rien d'autre.",
           },
         ],
       },
@@ -298,7 +275,7 @@ export const legalFr: LegalDoc = {
         title: "Sécurité",
         blocks: [
           {
-            p: "Le site est protégé par une connexion chiffrée (HTTPS). L'espace d'administration est accessible par une adresse privée et un mot de passe, et bloque les tentatives de connexion répétées. L'accès à la base de données est limité au strict nécessaire.",
+            p: "Toutes les pages du site sont protégées par une connexion chiffrée (HTTPS), ce qui empêche vos informations d'être lues pendant leur envoi. L'espace d'administration n'est accessible que par une adresse privée et un mot de passe vérifié sur le serveur, et il bloque automatiquement les tentatives de connexion répétées. L'accès à la base de données passe uniquement par notre serveur, avec une clé secrète qui n'est jamais envoyée aux visiteurs, et il est limité au strict nécessaire. Le formulaire de contact et le formulaire d'avis sont en plus protégés contre les robots et les envois abusifs.",
           },
         ],
       },
@@ -307,27 +284,16 @@ export const legalFr: LegalDoc = {
         title: "Vos droits",
         blocks: [
           {
-            p: "Conformément à la loi n° 18-07 du 10 juin 2018 relative à la protection des personnes physiques dans le traitement des données à caractère personnel, vous pouvez à tout moment :",
-          },
-          {
-            ul: [
-              "savoir quelles données nous avons sur vous et en obtenir une copie ;",
-              "les faire corriger ;",
-              "vous opposer à leur utilisation ou demander leur suppression ;",
-              "demander le retrait de votre avis du site.",
-            ],
-          },
-          {
-            p: "Pour cela, contactez-nous par WhatsApp, par téléphone ou par e-mail : nous répondons dans un délai d'un mois au maximum. Vous pouvez aussi saisir l'Autorité nationale de protection des données à caractère personnel (ANPDP).",
+            p: "Conformément à la loi n° 18-07 du 10 juin 2018 relative à la protection des personnes physiques dans le traitement des données à caractère personnel, vous pouvez à tout moment savoir quelles données nous détenons sur vous et en obtenir une copie, les faire corriger si elles sont inexactes, vous opposer à leur utilisation, demander leur suppression ou demander le retrait de votre avis du site. Il vous suffit de nous contacter par WhatsApp, par téléphone ou par e-mail : nous vous répondons dans un délai d'un mois au maximum, et généralement bien plus vite. Si vous estimez que vos droits ne sont pas respectés, vous pouvez également saisir l'Autorité nationale de protection des données à caractère personnel (ANPDP).",
           },
         ],
       },
       {
         id: "modifications",
-        title: "Modifications",
+        title: "Mises à jour de cette politique",
         blocks: [
           {
-            p: "Cette politique peut être mise à jour. La date de la dernière mise à jour est indiquée en haut de cette page. Nos services s'adressent aux professionnels et aux personnes majeures.",
+            p: "Cette politique peut évoluer, par exemple si nous ajoutons un nouveau service ou si la loi change. La date de la dernière mise à jour est toujours indiquée en haut de cette page, et la version publiée sur le site est la seule qui fait foi. Nos services s'adressent aux professionnels et aux personnes majeures.",
           },
         ],
       },

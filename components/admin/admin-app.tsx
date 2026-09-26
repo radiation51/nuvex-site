@@ -3,6 +3,7 @@
 import * as React from "react";
 import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import {
+  Activity,
   Briefcase,
   CalendarDays,
   ExternalLink,
@@ -31,6 +32,7 @@ import { ProjectsPanel } from "@/components/admin/projects-panel";
 import { ReservationsPanel } from "@/components/admin/reservations-panel";
 import { ReviewsPanel } from "@/components/admin/reviews-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
+import { VisitorsPanel } from "@/components/admin/visitors-panel";
 import { Loading } from "@/components/admin/ui-bits";
 import { Loader, LoadingScreen } from "@/components/ui/loader";
 import { createDemoSupabase, resetDemo } from "@/lib/demo-supabase";
@@ -44,6 +46,7 @@ const nav: { group: string; items: { id: AdminTab; label: string; icon: React.El
     group: "Pilotage",
     items: [
       { id: "dashboard", label: "Tableau de bord", icon: LayoutDashboard },
+      { id: "visitors", label: "Visiteurs", icon: Activity },
       { id: "calendar", label: "Calendrier", icon: CalendarDays },
     ],
   },
@@ -323,6 +326,7 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
             ) : (
               <>
                 {tab === "dashboard" && data && <DashboardPanel data={data} onNavigate={go} />}
+                {tab === "visitors" && <VisitorsPanel />}
                 {tab === "calendar" && data && <CalendarPanel supabase={supabase} data={data} />}
                 {tab === "reservations" && data && <ReservationsPanel supabase={supabase} data={data} onOpenProjects={() => go("orders")} />}
                 {tab === "orders" && data && <OrdersPanel supabase={supabase} data={data} />}
