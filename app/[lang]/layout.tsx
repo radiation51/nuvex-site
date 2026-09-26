@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     metadataBase: new URL(process.env.URL ?? "https://nuvex-agence.netlify.app"),
     title: t.meta.title,
     description: t.meta.description,
+    other: { google: "notranslate" },
     openGraph: {
       title: t.meta.ogTitle,
       description: t.meta.ogDescription,
@@ -40,9 +41,12 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
   if (!hasLocale(lang)) notFound();
 
   return (
+    // translate="no" : le site existe déjà en 3 langues, on demande aux navigateurs
+    // (Chrome, Edge, Safari…) de ne pas proposer leur traduction automatique.
     <html
       lang={lang}
       dir={dirOf(lang)}
+      translate="no"
       className={cn(manrope.variable, bricolage.variable, lang === "ar" && [plexArabic.variable, kufiArabic.variable], "h-full antialiased")}
     >
       <body className="flex min-h-full flex-col">
