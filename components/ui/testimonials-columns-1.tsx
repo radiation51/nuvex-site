@@ -5,6 +5,8 @@ import { motion, useReducedMotion } from "motion/react";
 import { Star } from "lucide-react";
 import { initials } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/i18n-provider";
+import { fill } from "@/lib/i18n/fill";
 
 export interface Testimonial {
   text: string;
@@ -15,8 +17,9 @@ export interface Testimonial {
 }
 
 export function Stars({ rating, className }: { rating: number; className?: string }) {
+  const { t } = useI18n();
   return (
-    <div className={cn("flex gap-0.5", className)} aria-label={`${rating} sur 5`}>
+    <div className={cn("flex gap-0.5", className)} aria-label={fill(t.testimonials.outOf5, { n: rating })}>
       {Array.from({ length: 5 }, (_, i) => (
         <Star key={i} className={cn("size-4", i < rating ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30")} />
       ))}
@@ -52,7 +55,7 @@ export const TestimonialsColumn = (props: {
                 aria-hidden={index === 1 || undefined}
               >
                 <Stars rating={rating} />
-                <p className="mt-4 leading-relaxed">{text}</p>
+                <p dir="auto" className="mt-4 leading-relaxed">{text}</p>
                 <div className="mt-5 flex items-center gap-3">
                   {image ? (
                     // eslint-disable-next-line @next/next/no-img-element -- photo envoyée par le client

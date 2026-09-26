@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { ColumnLines } from "@/components/ui/download-with-columnlines-utils/columnlines";
 import { SiteMockup, SkyBackground } from "@/components/site/hero-visual";
+import { useI18n } from "@/components/i18n-provider";
 
 interface DownloadWithColumnLinesProps {
   badge?: string;
@@ -58,13 +59,20 @@ export default function DownloadWithColumnLines({
   badge,
   badgeHref,
   badgeTag,
-  headline ="Votre site web pro,\nprêt en 7 jours.",
-  subheadline = "Sites vitrines modernes et adaptés au mobile, à partir de 25 000 DA. Devis 100 % gratuit.",
-  primaryLabel = "Demander un devis gratuit",
+  headline,
+  subheadline,
+  primaryLabel,
   primaryHref = "#contact",
-  secondaryLabel = "Voir nos offres",
+  secondaryLabel,
   secondaryHref = "#offres",
 }: DownloadWithColumnLinesProps) {
+  // Textes de la langue de la page, sauf s'ils sont fournis.
+  const { t } = useI18n();
+  headline ??= t.hero.headline;
+  subheadline ??= t.hero.subheadline;
+  primaryLabel ??= t.hero.primary;
+  secondaryLabel ??= t.hero.secondary;
+
   const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 14 },
     animate: { opacity: 1, y: 0 },
@@ -92,11 +100,11 @@ export default function DownloadWithColumnLines({
             <motion.a
               {...fadeUp(0)}
               href={badgeHref}
-              className="group mb-5 flex items-center gap-2 rounded-full bg-white/15 py-1.5 pr-3 pl-1.5 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md tap hover:bg-white/25"
+              className="group mb-5 flex items-center gap-2 rounded-full bg-white/15 py-1.5 ps-1.5 pe-3 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur-md tap hover:bg-white/25"
             >
               {badgeTag && <span className="rounded-full bg-lime px-2 py-0.5 text-xs font-bold text-ink">{badgeTag}</span>}
               {badge}
-              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
             </motion.a>
           ) : (
             <motion.span
@@ -121,7 +129,7 @@ export default function DownloadWithColumnLines({
             className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-black/10 tap hover:-translate-y-0.5"
           >
             {primaryLabel}
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
           </a>
           <a
             href={secondaryHref}

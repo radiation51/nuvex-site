@@ -5,21 +5,18 @@ import { GlassPanel, OutlineText } from "@/components/site/glass-panel";
 import { SocialLinks, instagramHandle } from "@/components/site/social-icons";
 import { selectOffer, whatsappLink } from "@/lib/format";
 import type { Offer, Settings } from "@/lib/types";
+import { useI18n } from "@/components/i18n-provider";
 
 const companyName = "NUVEX";
 
-const navigation = [
-  { name: "Accueil", href: "/#accueil" },
-  { name: "Nos offres", href: "/#offres" },
-  { name: "Réalisations", href: "/#realisations" },
-  { name: "Avis clients", href: "/#avis" },
-  { name: "FAQ", href: "/#faq" },
-  { name: "Contact", href: "/#contact" },
-];
+const sections = ["accueil", "offres", "realisations", "avis", "faq", "contact"];
 
-const linkClass = "text-white/70 hover:text-white transition-colors text-sm md:text-[15px] font-medium text-left";
+const linkClass = "text-white/70 hover:text-white transition-colors text-sm md:text-[15px] font-medium text-start";
 
 export default function FooterSection5({ offers, settings }: { offers: Offer[]; settings: Settings }) {
+  const { t: all, href } = useI18n();
+  const t = all.footer;
+  const navigation = sections.map((id, i) => ({ name: t.links[i], href: href(`/#${id}`) }));
   const contactLinks = [
     settings.whatsapp && { name: "WhatsApp", href: whatsappLink(settings.whatsapp) },
     settings.phone && { name: settings.phone, href: `tel:${settings.phone.replace(/\s/g, "")}` },
@@ -45,9 +42,11 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
                 {companyName}
               </span>
               <p className="text-xl leading-tight font-medium text-white md:text-[22px]">
-                Des sites web et logiciels
-                <br />
-                qui font grandir votre activité.
+                {t.tagline.split("\n").map((line, i) => (
+                  <span key={i} className="block">
+                    {line}
+                  </span>
+                ))}
               </p>
             </div>
 
@@ -58,10 +57,10 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
                 iconClassName="grid size-10 place-items-center rounded-full bg-white/10 text-white tap hover:bg-white hover:text-primary"
               />
               <p className="text-xs font-light text-white/80 md:text-[13px]">
-                © {new Date().getFullYear()} {companyName} — Tous droits réservés
+                © {new Date().getFullYear()} {companyName} — {t.rights}
                 <br />
-                <Link href="/politique-de-confidentialite" className="underline underline-offset-4 hover:text-white">
-                  Politique de confidentialité et conditions de vente
+                <Link href={href("/politique-de-confidentialite")} className="underline underline-offset-4 hover:text-white">
+                  {t.legal}
                 </Link>
               </p>
             </div>
@@ -70,7 +69,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
           {/* Droite : liens */}
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:gap-16 lg:gap-20">
             <div className="flex flex-col gap-5">
-              <h3 className="text-lg font-semibold text-white md:text-xl">Navigation</h3>
+              <h3 className="text-lg font-semibold text-white md:text-xl">{t.navigation}</h3>
               <ul className="flex flex-col gap-3 md:gap-4">
                 {navigation.map((link) => (
                   <li key={link.href}>
@@ -83,11 +82,11 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
             </div>
 
             <div className="flex flex-col gap-5">
-              <h3 className="text-lg font-semibold text-white md:text-xl">Nos offres</h3>
+              <h3 className="text-lg font-semibold text-white md:text-xl">{t.offers}</h3>
               <ul className="flex flex-col gap-3 md:gap-4">
                 {offers.map((offer) => (
                   <li key={offer.id}>
-                    <button type="button" onClick={() => selectOffer(offer.name)} className={linkClass}>
+                    <button type="button" onClick={() => selectOffer(offer.value ?? offer.name, href("/#contact"))} className={linkClass}>
                       {offer.name}
                     </button>
                   </li>
@@ -96,7 +95,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
             </div>
 
             <div className="col-span-2 flex flex-col gap-5 sm:col-span-1">
-              <h3 className="text-lg font-semibold text-white md:text-xl">Contact</h3>
+              <h3 className="text-lg font-semibold text-white md:text-xl">{t.contact}</h3>
               <ul className="flex flex-col gap-3 md:gap-4">
                 {contactLinks.map((link) => (
                   <li key={link.href}>
@@ -104,6 +103,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
                       href={link.href}
                       target={link.href.startsWith("http") ? "_blank" : undefined}
                       rel="noopener noreferrer"
+                      dir="ltr"
                       className={`${linkClass} break-all`}
                     >
                       {link.name}

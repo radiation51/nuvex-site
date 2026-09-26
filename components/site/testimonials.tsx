@@ -6,6 +6,7 @@ import { ReviewDialog } from "@/components/site/review-dialog";
 import { SectionHeading } from "@/components/site/section-heading";
 import { initials } from "@/lib/format";
 import type { Review } from "@/lib/types";
+import { useI18n } from "@/components/i18n-provider";
 
 // En dessous de ce nombre d'avis, on les affiche simplement (pas de colonnes qui défilent).
 const MIN_FOR_SCROLL = 6;
@@ -14,7 +15,7 @@ function StaticCard({ item }: { item: Testimonial }) {
   return (
     <div className="w-full rounded-3xl border bg-card p-8 shadow-lg shadow-primary/10">
       <Stars rating={item.rating} />
-      <p className="mt-4 leading-relaxed">{item.text}</p>
+      <p dir="auto" className="mt-4 leading-relaxed">{item.text}</p>
       <div className="mt-5 flex items-center gap-3">
         {item.image ? (
           // eslint-disable-next-line @next/next/no-img-element -- photo envoyée par le client
@@ -32,6 +33,7 @@ function StaticCard({ item }: { item: Testimonial }) {
 }
 
 export function Testimonials({ reviews, whatsapp }: { reviews: Review[]; whatsapp?: string }) {
+  const { t } = useI18n();
   const items: Testimonial[] = reviews.map((r) => ({
     text: r.text,
     image: r.image_url,
@@ -48,9 +50,9 @@ export function Testimonials({ reviews, whatsapp }: { reviews: Review[]; whatsap
     <section id="avis" className="relative bg-background px-4 py-24 md:px-8">
       <div className="z-10 mx-auto max-w-6xl">
         <SectionHeading
-          badge="Avis clients"
-          title="Ce que nos clients disent de nous"
-          subtitle={items.length ? "Des entreprises algériennes qui nous ont fait confiance." : "Vous avez travaillé avec nous ? Votre avis aide d'autres entreprises à nous choisir."}
+          badge={t.testimonials.badge}
+          title={t.testimonials.title}
+          subtitle={items.length ? t.testimonials.subtitle : t.testimonials.subtitleEmpty}
           className="max-w-[560px]"
         />
 
@@ -59,8 +61,8 @@ export function Testimonials({ reviews, whatsapp }: { reviews: Review[]; whatsap
             <span className="grid size-14 place-items-center rounded-2xl bg-primary/10 text-primary">
               <MessageSquareHeart className="size-7" />
             </span>
-            <p className="mt-4 font-heading text-xl font-semibold">Soyez le premier à laisser un avis</p>
-            <p className="mt-2 text-sm text-muted-foreground">Les avis sont publiés après vérification.</p>
+            <p className="mt-4 font-heading text-xl font-semibold">{t.testimonials.beFirst}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t.testimonials.verified}</p>
             <div className="mt-6">
               <ReviewDialog whatsapp={whatsapp} />
             </div>
@@ -82,7 +84,7 @@ export function Testimonials({ reviews, whatsapp }: { reviews: Review[]; whatsap
             )}
 
             <div className="mt-10 flex flex-col items-center gap-3 text-center">
-              <p className="text-sm text-muted-foreground">Vous avez travaillé avec nous ?</p>
+              <p className="text-sm text-muted-foreground">{t.testimonials.workedWithUs}</p>
               <ReviewDialog whatsapp={whatsapp} />
             </div>
           </>

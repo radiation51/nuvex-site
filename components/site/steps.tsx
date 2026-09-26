@@ -2,21 +2,17 @@
 
 import { motion } from "motion/react";
 import { SectionHeading } from "@/components/site/section-heading";
-
-const steps = [
-  { title: "Contact", text: "Vous nous parlez de votre projet par WhatsApp ou via le formulaire." },
-  { title: "Devis et maquette", text: "On vous envoie un devis clair et une première maquette." },
-  { title: "Création", text: "On construit votre site et on l'ajuste avec vos retours." },
-  { title: "Mise en ligne", text: "Votre site est en ligne, prêt à recevoir vos clients." },
-];
+import { useI18n } from "@/components/i18n-provider";
 
 export function Steps() {
+  const { t } = useI18n();
+  const steps = t.steps.items;
   return (
     <section className="px-4 py-24 md:px-8">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading badge="Comment ça marche" title="4 étapes, zéro prise de tête" />
+        <SectionHeading badge={t.steps.badge} title={t.steps.title} />
         <div className="relative mt-16">
-        <div aria-hidden className="absolute top-6 right-[12%] left-[12%] hidden h-px border-t-2 border-dashed border-primary/25 md:block" />
+        <div aria-hidden className="absolute inset-x-[12%] top-6 hidden h-px border-t-2 border-dashed border-primary/25 md:block" />
         <ol className="grid gap-10 md:grid-cols-4 md:gap-6">
           {steps.map((step, i) => (
             <motion.li

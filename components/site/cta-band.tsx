@@ -1,7 +1,10 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { GlassPanel, OutlineText } from "@/components/site/glass-panel";
 import { whatsappLink } from "@/lib/format";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
+import { useI18n } from "@/components/i18n-provider";
 
 /** Bandeau de rappel entre les sections : même style que le footer (texte en contour + panneau verre). */
 export function CtaBand({
@@ -15,6 +18,7 @@ export function CtaBand({
   text: string;
   whatsapp?: string;
 }) {
+  const { t } = useI18n();
   return (
     <section className="overflow-hidden px-4 pt-8 pb-16 md:px-8">
       <div className="mx-auto max-w-6xl">
@@ -22,7 +26,7 @@ export function CtaBand({
           <OutlineText className="-mb-2 text-[19vw] sm:text-[120px] md:-mb-4 md:text-[160px]">{outline}</OutlineText>
         </div>
         <GlassPanel shader className="z-10 rounded-3xl px-6 py-10 shadow-2xl shadow-primary/20 sm:px-10 md:px-14 md:py-14">
-          <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
+          <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-start">
             <div className="max-w-xl">
               <h2 className="font-heading text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
               <p className="mt-3 text-base text-white/75 md:text-lg">{text}</p>
@@ -32,12 +36,12 @@ export function CtaBand({
                 href="#contact"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-lg tap hover:-translate-y-0.5"
               >
-                Demander mon devis gratuit
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                {t.ctaBand.askQuote}
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
               </a>
               {whatsapp ? (
                 <a
-                  href={whatsappLink(whatsapp, "Bonjour NUVEX, je souhaite un devis pour mon site web.")}
+                  href={whatsappLink(whatsapp, t.whatsappHello)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold tap hover:bg-white hover:text-primary"
@@ -50,7 +54,7 @@ export function CtaBand({
                   href="#offres"
                   className="flex items-center justify-center rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold tap hover:bg-white hover:text-primary"
                 >
-                  Voir les offres
+                  {t.ctaBand.seeOffers}
                 </a>
               )}
             </div>

@@ -3,6 +3,17 @@ export interface PlanFeature {
   included: boolean;
 }
 
+/** Traductions d'un contenu de l'admin (le français reste dans les colonnes normales). */
+export type Translations<T> = Partial<Record<"en" | "ar", T>>;
+
+/** Textes traduits d'une offre. `features` : libellés dans le même ordre que les lignes françaises. */
+export interface OfferText {
+  name?: string;
+  description?: string;
+  delivery?: string;
+  features?: string[];
+}
+
 export interface Offer {
   id: string;
   name: string;
@@ -13,6 +24,9 @@ export interface Offer {
   features: PlanFeature[];
   popular: boolean;
   position: number;
+  translations?: Translations<OfferText> | null;
+  /** Nom français de l'offre, envoyé avec les demandes de devis (rempli à l'affichage dans une autre langue). */
+  value?: string;
 }
 
 export type ReviewStatus = "pending" | "approved" | "rejected";
@@ -82,6 +96,12 @@ export interface Order {
 }
 
 /** Réalisation affichée sur le site (portfolio). */
+export interface ProjectText {
+  title?: string;
+  category?: string;
+  description?: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -90,6 +110,7 @@ export interface Project {
   image_url: string;
   link: string | null;
   position: number;
+  translations?: Translations<ProjectText> | null;
 }
 
 export interface Settings {

@@ -4,21 +4,23 @@ import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, X } from "lucide-react";
+import { useI18n } from "@/components/i18n-provider";
+import { LanguageSwitcher } from "@/components/site/language-switcher";
 import { cn } from "@/lib/utils";
 
-// Liens vers les sections de l'accueil (« / » devant : ils marchent aussi depuis les autres pages).
-export const navLinks = [
-  { name: "Accueil", href: "/#accueil" },
-  { name: "Offres", href: "/#offres" },
-  { name: "Réalisations", href: "/#realisations" },
-  { name: "Avis", href: "/#avis" },
-  { name: "FAQ", href: "/#faq" },
-  { name: "Contact", href: "/#contact" },
-];
+// Sections de l'accueil (« / » devant : les liens marchent aussi depuis les autres pages).
+const sections = ["accueil", "offres", "realisations", "avis", "faq", "contact"] as const;
+
+function useNavLinks() {
+  const { t, href } = useI18n();
+  const names = [t.nav.home, t.nav.offers, t.nav.projects, t.nav.reviews, t.nav.faq, t.nav.contact];
+  return sections.map((id, i) => ({ name: names[i], href: href(`/#${id}`) }));
+}
 
 export function Logo({ className, light }: { className?: string; light?: boolean }) {
+  const { href } = useI18n();
   return (
-    <Link href="/#accueil" className={cn("flex items-center gap-2 font-heading text-xl font-bold tracking-tight", className)}>
+    <Link href={href("/#accueil")} className={cn("flex items-center gap-2 font-heading text-xl font-bold tracking-tight", className)}>
       <span
         className={cn(
           "grid size-8 place-items-center rounded-lg text-sm transition-colors",
@@ -38,6 +40,8 @@ export function Header({ solid = false }: { solid?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const [hovered, setHovered] = React.useState<string | null>(null);
   const reduceMotion = useReducedMotion();
+  const { t, href } = useI18n();
+  const navLinks = useNavLinks();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -61,7 +65,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
 
         <nav
           className="hidden items-center gap-1 lg:flex"
-          aria-label="Navigation principale"
+          aria-label={t.nav.mainNav}
           onMouseLeave={() => setHovered(null)}
           onBlur={() => setHovered(null)}
         >
@@ -96,8 +100,9 @@ export function Header({ solid = false }: { solid?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher light={onPhoto} className="me-1 sm:me-2" />
           <Link
-            href="/#contact"
+            href={href("/#contact")}
             className={cn(
               "tap hidden rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap sm:inline-flex",
               onPhoto
@@ -105,13 +110,13 @@ export function Header({ solid = false }: { solid?: boolean }) {
                 : "bg-primary text-primary-foreground hover:bg-primary/90"
             )}
           >
-            Devis gratuit
+            {t.nav.quote}
           </Link>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             className={cn("tap grid size-10 place-items-center rounded-lg lg:hidden", onPhoto ? "hover:bg-white/15" : "hover:bg-muted")}
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={open}
             aria-controls="menu-mobile"
           >
@@ -144,7 +149,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
         )}
       >
         <div className="overflow-hidden">
-          <nav className="border-t bg-background px-4 pb-5" aria-label="Navigation mobile">
+          <nav className="border-t bg-background px-4 pb-5" aria-label={t.nav.mobileNav}>
             <ul className="flex flex-col py-2">
               {navLinks.map((link, i) => (
                 <li
@@ -163,11 +168,11 @@ export function Header({ solid = false }: { solid?: boolean }) {
               ))}
             </ul>
             <Link
-              href="/#contact"
+              href={href("/#contact")}
               onClick={() => setOpen(false)}
               className="tap block rounded-full bg-primary py-3 text-center font-semibold text-primary-foreground hover:bg-primary/90"
             >
-              Demander un devis gratuit
+              {t.nav.quoteLong}
             </Link>
           </nav>
         </div>

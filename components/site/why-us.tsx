@@ -3,22 +3,20 @@
 import { motion } from "motion/react";
 import { Headphones, Palette, Smartphone, Zap } from "lucide-react";
 import { SectionHeading } from "@/components/site/section-heading";
+import { useI18n } from "@/components/i18n-provider";
 
-const reasons = [
-  { icon: Zap, title: "Livré en 7 jours", text: "Avec les offres Éco, Pro et Premium, votre site est en ligne en 7 jours, pas en quelques mois." },
-  { icon: Palette, title: "Design moderne", text: "Un site unique qui donne confiance et vous démarque de la concurrence." },
-  { icon: Smartphone, title: "Adapté au mobile", text: "Parfait sur téléphone, là où se trouvent la majorité de vos clients." },
-  { icon: Headphones, title: "Accompagnement", text: "On reste disponibles après la mise en ligne pour vous aider." },
-];
+const icons = [Zap, Palette, Smartphone, Headphones];
 
 export function WhyUs() {
+  const { t } = useI18n();
+  const reasons = t.whyUs.reasons.map((r, i) => ({ ...r, icon: icons[i] }));
   return (
     <section className="px-4 py-24 md:px-8">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          badge="Pourquoi NUVEX"
-          title="Simple, rapide, efficace"
-          subtitle="On s'occupe de tout, vous vous concentrez sur votre activité."
+          badge={t.whyUs.badge}
+          title={t.whyUs.title}
+          subtitle={t.whyUs.subtitle}
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map(({ icon: Icon, title, text }, i) => (

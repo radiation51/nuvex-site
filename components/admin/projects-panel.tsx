@@ -10,11 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ProjectCard } from "@/components/site/projects";
 import { captureScreenshot, done, uploadImage } from "@/components/admin/shared";
-import type { Project } from "@/lib/types";
+import type { Project, ProjectText } from "@/lib/types";
+import { TranslationsEditor } from "@/components/admin/translations-editor";
 
-type Draft = Pick<Project, "title" | "category" | "description" | "link" | "image_url">;
+type Draft = Pick<Project, "title" | "category" | "description" | "link" | "image_url" | "translations">;
 
-const emptyDraft: Draft = { title: "", category: "", description: "", link: "", image_url: "" };
+const emptyDraft: Draft = { title: "", category: "", description: "", link: "", image_url: "", translations: null };
 
 export function ProjectsPanel({ supabase }: { supabase: SupabaseClient }) {
   const [projects, setProjects] = React.useState<Project[]>([]);
@@ -148,6 +149,7 @@ function ProjectForm({
     description: initial.description ?? "",
     link: initial.link ?? "",
     image_url: initial.image_url ?? "",
+    translations: initial.translations ?? null,
   });
   const [file, setFile] = React.useState<File | null>(null);
   const [capturing, setCapturing] = React.useState(false);
@@ -160,7 +162,7 @@ function ProjectForm({
     if (filePreview) URL.revokeObjectURL(filePreview);
   }, [filePreview]);
 
-  const set = (key: keyof Draft, value: string) => setDraft((d) => ({ ...d, [key]: value }));
+  const set = (key: Exclude<keyof Draft, "translations">, value: string) => setDraft((d) => ({ ...d, [key]: value }));
   const link = draft.link?.trim() ?? "";
   const validLink = /^https?:\/\/\S+\.\S+/.test(link);
 
@@ -200,6 +202,7 @@ function ProjectForm({
       description: draft.description?.trim() || null,
       link: link || null,
       image_url,
+      translations: draft.translations,
     });
     setSaving(false);
     if (ok && resetAfterSubmit) {
@@ -268,6 +271,19 @@ function ProjectForm({
           <p className="text-xs text-muted-foreground">
             Sans image, la capture est faite automatiquement à l&apos;enregistrement si un lien est renseigné.
           </p>
+        </div>
+
+        <div className="sm:col-span-2">
+          <TranslationsEditor<ProjectText>
+            id="p"
+            fields={[
+              { key: "title", label: "Nom du projet", placeholder: draft.title || "Ex. Bourahla Auto" },
+              { key: "category", label: "Catégorie", placeholder: draft.category || "Ex. Location de voitures" },
+              { key: "description", label: "Description courte", placeholder: draft.description || "Ex. Site vitrine avec réservation en ligne" },
+            ]}
+            value={draft.translations}
+            onChange={(translations) => setDraft((d) => ({ ...d, translations }))}
+          />
         </div>
 
         <Button type="submit" disabled={saving || capturing} className="h-10 sm:col-span-2">

@@ -265,3 +265,33 @@ section[id] {
     animation: none !important;
   }
 }
+
+/* ===== Page 404 : texte circulaire qui tourne lentement ===== */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@utility animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow {
+    animation: none !important;
+  }
+}
+
+/* ===== Version arabe : polices arabes (Next.js les charge uniquement sur les pages en arabe) ===== */
+html[lang="ar"] {
+  --font-sans: var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-arabic-display), var(--font-arabic), sans-serif;
+}
+/* L'arabe ne s'écrit pas avec des lettres espacées ni en majuscules. */
+html[lang="ar"] .tracking-tight,
+html[lang="ar"] .tracking-wide,
+html[lang="ar"] .tracking-wider {
+  letter-spacing: 0;
+}

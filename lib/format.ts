@@ -1,8 +1,12 @@
-const priceFormatter = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+import type { Locale } from "@/lib/i18n/config";
 
-/** 25000 → "25 000 DA" */
-export function formatDA(value: number) {
-  return `${priceFormatter.format(value)} DA`;
+const frenchNumbers = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+const englishNumbers = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
+
+/** 25000 → "25 000 DA" (fr), "25,000 DA" (en), "25 000 دج" (ar). */
+export function formatDA(value: number, locale: Locale = "fr") {
+  if (locale === "en") return `${englishNumbers.format(value)} DA`;
+  return `${frenchNumbers.format(value)} ${locale === "ar" ? "دج" : "DA"}`;
 }
 
 /** Numéro saisi librement → lien wa.me (ex. "0555 12 34 56" → 213555123456). */
@@ -26,11 +30,11 @@ export function initials(name: string) {
 /** Demande au formulaire de contact de pré-sélectionner une offre, puis y fait défiler la page. */
 export const SELECT_OFFER_EVENT = "nuvex:select-offer";
 
-export function selectOffer(offerName: string) {
+/** `contactHref` : adresse du formulaire dans la langue de la page (ex. "/en#contact"). */
+export function selectOffer(offerName: string, contactHref = "/#contact") {
   window.dispatchEvent(new CustomEvent(SELECT_OFFER_EVENT, { detail: offerName }));
   const contact = document.getElementById("contact");
   // Sur une autre page que l'accueil : on y retourne, au formulaire.
   if (contact) contact.scrollIntoView({ behavior: "smooth" });
-  // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- fonction appelée hors composant, sans router
-  else window.location.href = "/#contact";
+  else window.location.href = contactHref;
 }

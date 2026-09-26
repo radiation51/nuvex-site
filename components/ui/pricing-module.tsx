@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Briefcase, Check, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
+import { Briefcase, Check, ChevronDown, Clock, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDA, selectOffer } from "@/lib/format";
 import type { Offer } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/i18n-provider";
 
 export type { PlanFeature } from "@/lib/types";
 
@@ -41,7 +42,8 @@ const icons: Record<string, React.ElementType> = {
 
 const tabIcons: Record<string, React.ElementType> = { sites: Globe, logiciels: Monitor };
 
-export function PricingModule({ title = "Nos offres", groups, className }: PricingModuleProps) {
+export function PricingModule({ title, groups, className }: PricingModuleProps) {
+  const { t } = useI18n();
   const [active, setActive] = React.useState(groups[0].id);
   const group = groups.find((g) => g.id === active) ?? groups[0];
   const groupIds = groups.map((g) => g.id).join(" ");
@@ -89,7 +91,7 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
           viewport={{ once: true, margin: "-80px" }}
           className="mx-auto flex max-w-2xl flex-col items-center text-center"
         >
-          <div role="tablist" aria-label="Type d'offre" className="inline-flex rounded-full border bg-card p-1 shadow-sm">
+          <div role="tablist" aria-label={t.pricing.tabsLabel} className="inline-flex rounded-full border bg-card p-1 shadow-sm">
             {groups.map((g) => {
               const Icon = tabIcons[g.id] ?? Sparkles;
               const selected = g.id === group.id;
@@ -117,7 +119,7 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
               );
             })}
           </div>
-          <h2 className="mt-5 font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{title}</h2>
+          <h2 className="mt-5 font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{title ?? t.pricing.title}</h2>
           <p className="mt-4 min-h-[3.5rem] text-base text-muted-foreground sm:text-lg">{group.subtitle}</p>
         </motion.div>
 
@@ -130,6 +132,7 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25 }}
             >
+              <PlanWallet plans={group.plans} />
               <PlanGrid plans={group.plans} />
               {group.footnote && <p className="mt-10 text-center text-sm text-muted-foreground">{group.footnote}</p>}
             </motion.div>
@@ -140,12 +143,182 @@ export function PricingModule({ title = "Nos offres", groups, className }: Prici
   );
 }
 
-/** Grille des cartes d'offres. */
+/**
+ * Téléphone : « portefeuille » d'offres. Toutes les cartes sont fermées (nom, description, prix),
+ * la flèche en bas à droite ouvre le détail d'une seule carte à la fois.
+ */
+function PlanWallet({ plans }: { plans: Offer[] }) {
+  const { t: all, lang, href } = useI18n();
+  const t = all.pricing;
+  const [open, setOpen] = React.useState<string | null>(null);
+  // Dernier toucher sur une flèche (relance l'onde à chaque fois).
+  const [tap, setTap] = React.useState<{ id: string; n: number } | null>(null);
+
+  return (
+    <div className="sm:hidden">
+      <p className="mb-6 text-center text-sm text-muted-foreground">
+        {t.walletIntro}
+      </p>
+
+      <div className="flex flex-col gap-4">
+        {plans.map((plan) => {
+          const Icon = icons[plan.id] ?? Sparkles;
+          const onQuote = plan.price === null;
+          const isOpen = open === plan.id;
+          const detailId = `offre-${plan.id}-detail`;
+
+          return (
+            <div
+              key={plan.id}
+              className={cn(
+                "relative isolate rounded-2xl p-4 pb-3 transition-shadow",
+                plan.popular
+                  ? "mt-3 bg-glass text-white shadow-lg shadow-primary/25 ring-2 ring-primary/40"
+                  : "bg-card ring-1 ring-foreground/10",
+                isOpen && !plan.popular && "shadow-lg shadow-primary/10"
+              )}
+            >
+              {plan.popular && (
+                <>
+                  {/* Même effet verre à petits traits que la carte PC */}
+                  <div aria-hidden className="fluted pointer-events-none absolute inset-0 -z-10 rounded-2xl" />
+                  <div className="absolute inset-x-0 -top-3.5 mx-auto w-fit rounded-full bg-lime px-3.5 py-1 text-xs font-bold text-ink shadow">
+                    {t.popular}
+                  </div>
+                </>
+              )}
+
+              <div className="flex items-center gap-3">
+                <span
+                  className={cn(
+                    "grid size-11 shrink-0 place-items-center rounded-xl",
+                    plan.popular ? "bg-white/10 text-lime" : "bg-primary/10 text-primary"
+                  )}
+                >
+                  <Icon className="size-5" />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="font-heading text-lg leading-tight font-bold">{plan.name}</h3>
+                  <p className={cn("text-sm", plan.popular ? "text-white/70" : "text-muted-foreground")}>{plan.description}</p>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-end justify-between gap-3">
+                <div>
+                  <span className={cn("block text-[11px] font-medium tracking-wider uppercase", plan.popular ? "text-white/60" : "text-muted-foreground")}>
+                    {onQuote ? t.freeQuote : t.from}
+                  </span>
+                  <span className="font-heading text-2xl font-bold whitespace-nowrap">
+                    {onQuote ? t.onQuote : formatDA(plan.price!, lang)}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(isOpen ? null : plan.id);
+                    setTap((t) => ({ id: plan.id, n: (t?.n ?? 0) + 1 }));
+                  }}
+                  aria-expanded={isOpen}
+                  aria-controls={detailId}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-full py-1.5 ps-3 pe-1.5 text-xs font-semibold tap",
+                    plan.popular ? "bg-white/10 text-white" : "bg-primary/8 text-primary"
+                  )}
+                >
+                  {isOpen ? t.close : t.details}
+                  {/* Flèche : s'enfonce au toucher, pivote avec un petit rebond et lance une onde */}
+                  <span className="relative grid size-7 place-items-center">
+                    {tap?.id === plan.id && (
+                      <motion.span
+                        key={tap.n}
+                        aria-hidden
+                        className={cn("absolute inset-0 rounded-full", plan.popular ? "bg-lime" : "bg-primary")}
+                        initial={{ scale: 1, opacity: 0.5 }}
+                        animate={{ scale: 2.2, opacity: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                      />
+                    )}
+                    <motion.span
+                      className={cn(
+                        "relative grid size-7 place-items-center rounded-full",
+                        plan.popular ? "bg-lime text-ink" : "bg-primary text-primary-foreground"
+                      )}
+                      initial={false}
+                      animate={{ rotate: isOpen ? 0 : 180 }}
+                      whileTap={{ scale: 0.8 }}
+                      transition={{ type: "spring", stiffness: 380, damping: 14 }}
+                    >
+                      <ChevronDown className="size-4" />
+                    </motion.span>
+                  </span>
+                </button>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    id={detailId}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className={cn("mt-4 border-t pt-4 text-sm", plan.popular ? "border-white/15" : "border-foreground/10")}>
+                      <ul className="space-y-2">
+                        {plan.features.map((f, j) => (
+                          <li key={j} className="flex items-start gap-2">
+                            {f.included ? (
+                              <Check className={cn("mt-0.5 size-4 shrink-0", plan.popular ? "text-lime" : "text-primary")} />
+                            ) : (
+                              <X className="mt-0.5 size-4 shrink-0 opacity-40" />
+                            )}
+                            <span
+                              className={cn(
+                                plan.popular ? "text-white/85" : "text-muted-foreground",
+                                !f.included && "line-through opacity-50"
+                              )}
+                            >
+                              {f.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className={cn("mt-3 flex items-center gap-2", plan.popular ? "text-white/70" : "text-muted-foreground")}>
+                        <Clock className="size-4 shrink-0" />
+                        {plan.delivery}
+                      </p>
+                      <Button
+                        onClick={() => selectOffer(plan.value ?? plan.name, href("/#contact"))}
+                        variant={plan.popular ? "default" : "outline"}
+                        className={cn(
+                          "mt-4 mb-1 h-11 w-full rounded-xl text-sm font-semibold",
+                          plan.popular && "bg-lime text-ink hover:bg-lime/85",
+                          !plan.popular && "border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                        )}
+                      >
+                        {onQuote ? t.askQuote : t.choose}
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/** Tablette et PC : grille des cartes d'offres. */
 function PlanGrid({ plans }: { plans: Offer[] }) {
+  const { t: all, lang, href } = useI18n();
+  const t = all.pricing;
   return (
     <div
       className={cn(
-        "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:items-stretch",
+        "hidden grid-cols-1 gap-6 sm:grid sm:grid-cols-2 lg:items-stretch",
         plans.length === 3 ? "mx-auto max-w-5xl lg:grid-cols-3" : "lg:grid-cols-4"
       )}
     >
@@ -176,8 +349,8 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
                 <div aria-hidden className="fluted pointer-events-none absolute inset-0 -z-10 rounded-2xl" />
               )}
               {plan.popular && (
-                <div className="absolute -top-3.5 left-0 right-0 mx-auto w-fit rounded-full bg-lime px-3.5 py-1 text-xs font-bold text-ink shadow">
-                  Le plus populaire
+                <div className="absolute inset-x-0 -top-3.5 mx-auto w-fit rounded-full bg-lime px-3.5 py-1 text-xs font-bold text-ink shadow">
+                  {t.popular}
                 </div>
               )}
 
@@ -201,24 +374,24 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
                   <div className="mb-5 flex min-h-[4.5rem] flex-col items-center justify-center">
                     {onQuote ? (
                       <>
-                        <div className="font-heading text-3xl font-bold">Sur devis</div>
+                        <div className="font-heading text-3xl font-bold">{t.onQuote}</div>
                         <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/12 px-3 py-1 text-xs font-bold text-emerald-700">
                           <Gift className="size-3.5" />
-                          Devis 100 % gratuit
+                          {t.freeQuote}
                         </span>
                       </>
                     ) : (
                       <>
                         <span className={cn("text-xs font-medium uppercase tracking-wider", plan.popular ? "text-white/60" : "text-muted-foreground")}>
-                          À partir de
+                          {t.from}
                         </span>
-                        <div className="font-heading text-3xl font-bold whitespace-nowrap">{formatDA(plan.price!)}</div>
+                        <div className="font-heading text-3xl font-bold whitespace-nowrap">{formatDA(plan.price!, lang)}</div>
                       </>
                     )}
                   </div>
 
                   <Button
-                    onClick={() => selectOffer(plan.name)}
+                    onClick={() => selectOffer(plan.value ?? plan.name, href("/#contact"))}
                     variant={plan.popular ? "default" : "outline"}
                     className={cn(
                       "mb-2 h-11 w-full rounded-xl text-sm font-semibold",
@@ -226,23 +399,23 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
                       onQuote && !plan.popular && "border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                     )}
                   >
-                    {onQuote ? "Demander mon devis gratuit" : "Choisir cette offre"}
+                    {onQuote ? t.askQuote : t.choose}
                   </Button>
                 </CardContent>
               </div>
 
               <CardContent
                 className={cn(
-                  "flex-1 text-left text-sm",
-                  wide && "sm:max-lg:border-l sm:max-lg:py-2",
+                  "flex-1 text-start text-sm",
+                  wide && "sm:max-lg:border-s sm:max-lg:py-2",
                   wide && (plan.popular ? "border-white/15" : "border-foreground/10")
                 )}
               >
                 <div>
-                  <h3 className="mb-2 font-semibold">En bref</h3>
+                  <h3 className="mb-2 font-semibold">{t.inBrief}</h3>
                   <p className={cn("mb-4", plan.popular ? "text-white/70" : "text-muted-foreground")}>✓ {plan.delivery}</p>
 
-                  <h3 className="mb-2 font-semibold">Inclus</h3>
+                  <h3 className="mb-2 font-semibold">{t.included}</h3>
                   <ul className="space-y-2">
                     {plan.features.map((f, j) => (
                       <li key={j} className="flex items-start gap-2">

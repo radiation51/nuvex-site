@@ -12,17 +12,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { whatsappLink } from "@/lib/format";
 import { formsViaWhatsApp } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/i18n-provider";
+import { fill } from "@/lib/i18n/fill";
 
 export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
   const [open, setOpen] = React.useState(false);
   const [rating, setRating] = React.useState(0);
   const [hover, setHover] = React.useState(0);
   const [sending, setSending] = React.useState(false);
+  const { t: all, href } = useI18n();
+  const t = all.review;
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!rating) {
-      toast.error("Choisissez une note de 1 à 5 étoiles.");
+      toast.error(t.pickRating);
       return;
     }
     const form = event.currentTarget;
@@ -33,16 +37,16 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
     if (formsViaWhatsApp && whatsapp) {
       const text = (k: string) => String(data.get(k) ?? "").trim();
       const message = [
-        "Bonjour NUVEX, voici mon avis :",
+        t.waIntro,
         `${"★".repeat(rating)}${"☆".repeat(5 - rating)} (${rating}/5)`,
-        `Nom : ${text("name")}`,
-        text("role") && `Métier / entreprise : ${text("role")}`,
-        `Avis : ${text("text")}`,
+        `${t.waName} : ${text("name")}`,
+        text("role") && `${t.waRole} : ${text("role")}`,
+        `${t.waReview} : ${text("text")}`,
       ]
         .filter(Boolean)
         .join("\n");
       if (!text("website")) window.open(whatsappLink(whatsapp, message), "_blank", "noopener");
-      toast.success("Merci ! Votre avis s'est ouvert dans WhatsApp : appuyez sur Envoyer.");
+      toast.success(t.sentWhatsapp);
       form.reset();
       setRating(0);
       setOpen(false);
@@ -53,13 +57,13 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
     try {
       const res = await fetch("/api/reviews", { method: "POST", body: data });
       const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.error ?? "Envoi impossible.");
-      toast.success("Merci ! Votre avis sera publié après validation.");
+      if (!res.ok) throw new Error(json.error ?? t.error);
+      toast.success(t.sent);
       form.reset();
       setRating(0);
       setOpen(false);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Envoi impossible.");
+      toast.error(error instanceof Error ? error.message : t.error);
     } finally {
       setSending(false);
     }
@@ -69,19 +73,19 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
     <>
       <Button onClick={() => setOpen(true)} size="lg" className="h-11 rounded-xl px-6 text-sm font-semibold">
         <MessageSquarePlus />
-        Laisser un avis
+        {t.leave}
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-md">
           {sending && (
             <div className="absolute inset-0 z-20 grid animate-loader-fade place-items-center rounded-[inherit] bg-background/95 p-6">
-              <Loader size="sm" title="Envoi de votre avis" messages={["Merci pour votre retour…", "Encore un instant…"]} />
+              <Loader size="sm" title={t.sendingTitle} messages={t.sendingMessages} />
             </div>
           )}
           <DialogHeader>
-            <DialogTitle className="font-heading text-xl font-bold">Votre avis compte</DialogTitle>
-            <DialogDescription>Partagez votre expérience avec NUVEX. Votre avis sera publié après validation.</DialogDescription>
+            <DialogTitle className="font-heading text-xl font-bold">{t.title}</DialogTitle>
+            <DialogDescription>{t.description}</DialogDescription>
           </DialogHeader>
 
           <form onSubmit={onSubmit} className="grid gap-4">
@@ -89,15 +93,15 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
             <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
 
             <div className="grid gap-2">
-              <Label>Votre note *</Label>
-              <div className="flex gap-1" onMouseLeave={() => setHover(0)} role="radiogroup" aria-label="Note">
+              <Label>{t.rating}</Label>
+              <div className="flex gap-1" onMouseLeave={() => setHover(0)} role="radiogroup" aria-label={t.ratingAria}>
                 {[1, 2, 3, 4, 5].map((value) => (
                   <button
                     key={value}
                     type="button"
                     role="radio"
                     aria-checked={rating === value}
-                    aria-label={`${value} étoile${value > 1 ? "s" : ""}`}
+                    aria-label={fill(value > 1 ? t.stars : t.star, { n: value })}
                     onClick={() => setRating(value)}
                     onMouseEnter={() => setHover(value)}
                     className="rounded p-0.5 transition-transform hover:scale-110"
@@ -114,17 +118,17 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="review-name">Nom *</Label>
-              <Input id="review-name" name="name" required minLength={2} maxLength={60} placeholder="Ex. Yacine B." className="h-10" />
+              <Label htmlFor="review-name">{t.name}</Label>
+              <Input id="review-name" name="name" required minLength={2} maxLength={60} placeholder={t.namePlaceholder} className="h-10" />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="review-role">Métier / entreprise</Label>
-              <Input id="review-role" name="role" maxLength={80} placeholder="Ex. Restaurant, Alger" className="h-10" />
+              <Label htmlFor="review-role">{t.role}</Label>
+              <Input id="review-role" name="role" maxLength={80} placeholder={t.rolePlaceholder} className="h-10" />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="review-text">Votre avis *</Label>
+              <Label htmlFor="review-text">{t.text}</Label>
               <Textarea
                 id="review-text"
                 name="text"
@@ -132,23 +136,23 @@ export function ReviewDialog({ whatsapp }: { whatsapp?: string }) {
                 minLength={10}
                 maxLength={600}
                 rows={4}
-                placeholder="Qu'avez-vous pensé de notre travail ?"
+                placeholder={t.textPlaceholder}
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="review-photo">Photo (facultatif)</Label>
+              <Label htmlFor="review-photo">{t.photo}</Label>
               <Input id="review-photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" className="h-10" />
             </div>
 
             <Button type="submit" disabled={sending} className="mt-1 h-11 rounded-xl text-sm font-semibold">
               {sending && <Loader2 className="animate-spin" />}
-              Envoyer mon avis
+              {t.submit}
             </Button>
             <p className="text-center text-xs text-muted-foreground">
-              Votre nom, votre métier et votre avis seront visibles sur le site après validation. Voir notre{" "}
-              <a href="/politique-de-confidentialite" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
-                politique de confidentialité
+              {t.notice}{" "}
+              <a href={href("/politique-de-confidentialite")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                {t.privacyLink}
               </a>
               .
             </p>

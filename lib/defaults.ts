@@ -1,8 +1,11 @@
 // Contenu par défaut, utilisé tant que la base de données est vide ou non configurée.
 // Offres, réalisations et coordonnées se modifient ensuite depuis /admin.
+import { offerTranslations, projectTranslations } from "@/lib/i18n/default-translations";
 import type { Offer, Project, Settings } from "@/lib/types";
 
-export const defaultOffers: Offer[] = [
+const withOfferTranslations = (offers: Offer[]) => offers.map((o) => ({ ...o, translations: offerTranslations[o.id] ?? null }));
+
+export const defaultOffers: Offer[] = withOfferTranslations([
   {
     id: "eco",
     name: "Éco",
@@ -32,7 +35,7 @@ export const defaultOffers: Offer[] = [
       { label: "Adapté mobile", included: true },
       { label: "Bouton WhatsApp", included: true },
       { label: "Référencement Google de base", included: true },
-      { label: "Espace d'administration", included: false },
+      { label: "Petit espace d'administration (textes, photos, horaires)", included: true },
     ],
     popular: true,
     position: 2,
@@ -47,7 +50,7 @@ export const defaultOffers: Offer[] = [
       { label: "Pages illimitées", included: true },
       { label: "Nom de domaine inclus", included: true },
       { label: "Design 100 % personnalisé", included: true },
-      { label: "Espace d'administration", included: true },
+      { label: "Espace d'administration complet", included: true },
       { label: "Référencement Google avancé", included: true },
       { label: "Support prioritaire", included: true },
     ],
@@ -70,14 +73,14 @@ export const defaultOffers: Offer[] = [
     popular: false,
     position: 4,
   },
-];
+]);
 
 // Les offres logiciels sont des lignes de la même table « offers », repérées par leur identifiant.
 const SOFTWARE_PREFIX = "logiciel-";
 
 export const isSoftwareOffer = (offer: Pick<Offer, "id">) => offer.id.startsWith(SOFTWARE_PREFIX);
 
-export const defaultSoftwareOffers: Offer[] = [
+export const defaultSoftwareOffers: Offer[] = withOfferTranslations([
   {
     id: "logiciel-essentiel",
     name: "Logiciel Essentiel",
@@ -135,7 +138,7 @@ export const defaultSoftwareOffers: Offer[] = [
     popular: false,
     position: 13,
   },
-];
+]);
 
 /**
  * Sépare les offres enregistrées en sites / logiciels.
@@ -153,7 +156,8 @@ export function splitOffers(rows: Offer[]) {
 }
 
 // Nos vraies réalisations, affichées tant qu'aucun projet n'est enregistré dans l'admin.
-export const defaultProjects: Project[] = [
+export const defaultProjects: Project[] = (
+  [
   {
     id: "bourahla-auto",
     title: "Bourahla Auto",
@@ -181,7 +185,8 @@ export const defaultProjects: Project[] = [
     link: null,
     position: 3,
   },
-];
+  ] as Project[]
+).map((p) => ({ ...p, translations: projectTranslations[p.id] ?? null }));
 
 export const defaultSettings: Settings = {
   whatsapp: "0791 84 00 45",

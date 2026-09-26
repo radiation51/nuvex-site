@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { done } from "@/components/admin/shared";
 import { Loading } from "@/components/admin/ui-bits";
+import { TranslationsEditor } from "@/components/admin/translations-editor";
 import { splitOffers } from "@/lib/defaults";
-import type { Offer } from "@/lib/types";
+import type { Offer, OfferText } from "@/lib/types";
 
 export function OffersPanel({ supabase }: { supabase: SupabaseClient }) {
   const [groups, setGroups] = React.useState<ReturnType<typeof splitOffers> | null>(null);
@@ -59,10 +60,20 @@ function OfferEditor({ supabase, initial }: { supabase: SupabaseClient; initial:
       offer.features.map((f, i) => (i === index ? { ...f, ...patch } : f))
     );
 
+  // Retire une ligne « Ce qui est inclus », et sa traduction à la même place.
+  const removeFeature = (index: number) =>
+    setOffer((o) => ({
+      ...o,
+      features: o.features.filter((_, j) => j !== index),
+      translations: withoutLines(o.translations, (lines) => lines.filter((_, j) => j !== index)),
+    }));
+
   async function save() {
     setSaving(true);
-    const features = offer.features.filter((f) => f.label.trim());
-    const { error } = await supabase.from("offers").upsert({ ...offer, features });
+    const kept = offer.features.map((f, i) => (f.label.trim() ? i : -1)).filter((i) => i >= 0);
+    const features = kept.map((i) => offer.features[i]);
+    const translations = withoutLines(offer.translations, (lines) => kept.map((i) => lines[i] ?? ""));
+    const { error } = await supabase.from("offers").upsert({ ...offer, features, translations });
     setSaving(false);
     await done(supabase, error, `Offre « ${offer.name} » enregistrée.`);
   }
@@ -70,7 +81,7 @@ function OfferEditor({ supabase, initial }: { supabase: SupabaseClient; initial:
   const id = offer.id;
 
   return (
-    <div className="grid gap-3 rounded-2xl border bg-card p-5">
+    <div className="grid content-start gap-3 rounded-2xl border bg-card p-5">
       <div className="grid grid-cols-2 gap-3">
         <div className="grid gap-1.5">
           <Label htmlFor={`${id}-name`}>Nom</Label>
@@ -120,7 +131,7 @@ function OfferEditor({ supabase, initial }: { supabase: SupabaseClient; initial:
             <Button
               size="icon-sm"
               variant="ghost"
-              onClick={() => set("features", offer.features.filter((_, j) => j !== i))}
+              onClick={() => removeFeature(i)}
               aria-label="Retirer"
             >
               <Trash2 />
@@ -138,10 +149,33 @@ function OfferEditor({ supabase, initial }: { supabase: SupabaseClient; initial:
         </Button>
       </div>
 
+      <TranslationsEditor<OfferText>
+        id={id}
+        fields={[
+          { key: "name", label: "Nom", placeholder: offer.name },
+          { key: "description", label: "Description", placeholder: offer.description },
+          { key: "delivery", label: "Délai / en bref", placeholder: offer.delivery },
+        ]}
+        lists={[{ key: "features", label: "Ce qui est inclus", placeholders: offer.features.map((f) => f.label || "…") }]}
+        value={offer.translations}
+        onChange={(translations) => set("translations", translations)}
+      />
+
       <Button onClick={save} disabled={saving} className="mt-2 h-10">
         <Save />
         Enregistrer
       </Button>
     </div>
   );
+}
+
+/** Applique `change` aux lignes traduites de « Ce qui est inclus », dans chaque langue. */
+function withoutLines(translations: Offer["translations"], change: (lines: string[]) => string[]): Offer["translations"] {
+  if (!translations) return translations;
+  const next: NonNullable<Offer["translations"]> = {};
+  for (const lang of ["en", "ar"] as const) {
+    const tr = translations[lang];
+    if (tr) next[lang] = { ...tr, features: tr.features ? change(tr.features) : tr.features };
+  }
+  return next;
 }

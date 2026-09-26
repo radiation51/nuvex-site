@@ -10,6 +10,7 @@ export interface LoaderProps {
   messages?: string[];
   /** Affiche « Connexion sécurisée » sous le chargement. */
   secure?: boolean;
+  secureLabel?: string;
   size?: "sm" | "md";
   className?: string;
 }
@@ -18,7 +19,7 @@ export interface LoaderProps {
  * Chargement aux couleurs de NUVEX : logo « N » entouré d'un anneau qui tourne,
  * halo qui respire, barre de progression et message qui change. Animations CSS uniquement (légères).
  */
-export function Loader({ title, messages = [], secure, size = "md", className }: LoaderProps) {
+export function Loader({ title, messages = [], secure, secureLabel = "Connexion sécurisée", size = "md", className }: LoaderProps) {
   const [index, setIndex] = React.useState(0);
   const small = size === "sm";
 
@@ -61,7 +62,7 @@ export function Loader({ title, messages = [], secure, size = "md", className }:
       {secure && (
         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <ShieldCheck className="size-3.5 text-emerald-600" />
-          Connexion sécurisée
+          {secureLabel}
         </p>
       )}
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BedDouble,
   Building2,
@@ -36,55 +38,22 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
+import { useI18n } from "@/components/i18n-provider";
 import { cn } from "@/lib/utils";
 
 type Sector = { icon: LucideIcon; label: string };
 
-const rowOne: Sector[] = [
-  { icon: Car, label: "Location de voitures" },
-  { icon: KeyRound, label: "Location d'appartements" },
-  { icon: Forklift, label: "Location de matériel" },
-  { icon: UtensilsCrossed, label: "Restaurants" },
-  { icon: Coffee, label: "Cafés" },
-  { icon: ShoppingBag, label: "Boutiques" },
-  { icon: ShoppingCart, label: "E-commerce" },
-  { icon: Building2, label: "Immobilier" },
-  { icon: HardHat, label: "BTP" },
-  { icon: Stethoscope, label: "Cabinets médicaux" },
-  { icon: Pill, label: "Pharmacies" },
-  { icon: Scissors, label: "Coiffure & beauté" },
-  { icon: Dumbbell, label: "Salles de sport" },
-  { icon: BedDouble, label: "Hôtels" },
-  { icon: Plane, label: "Agences de voyage" },
-  { icon: CarFront, label: "Auto-écoles" },
-  { icon: GraduationCap, label: "Écoles & formations" },
-];
+// Icônes des secteurs, dans l'ordre des libellés du dictionnaire (sectors.rowOne / rowTwo).
 
-const rowTwo: Sector[] = [
-  { icon: Scale, label: "Avocats & notaires" },
-  { icon: Calculator, label: "Comptables" },
-  { icon: PartyPopper, label: "Salles des fêtes" },
-  { icon: Camera, label: "Photographes" },
-  { icon: CakeSlice, label: "Traiteurs & pâtisseries" },
-  { icon: Croissant, label: "Boulangeries" },
-  { icon: Truck, label: "Transport & logistique" },
-  { icon: Wrench, label: "Garages & artisans" },
-  { icon: Tractor, label: "Agriculture" },
-  { icon: SprayCan, label: "Nettoyage" },
-  { icon: Laptop, label: "Informatique" },
-  { icon: Shirt, label: "Mode" },
-  { icon: Gem, label: "Bijouteries" },
-  { icon: Glasses, label: "Opticiens" },
-  { icon: PawPrint, label: "Vétérinaires" },
-  { icon: Sofa, label: "Meubles & déco" },
-  { icon: Factory, label: "Industrie" },
-  { icon: HeartHandshake, label: "Associations" },
-];
+const rowOneIcons: LucideIcon[] = [Car, KeyRound, Forklift, UtensilsCrossed, Coffee, ShoppingBag, ShoppingCart, Building2, HardHat, Stethoscope, Pill, Scissors, Dumbbell, BedDouble, Plane, CarFront, GraduationCap];
+
+const rowTwoIcons: LucideIcon[] = [Scale, Calculator, PartyPopper, Camera, CakeSlice, Croissant, Truck, Wrench, Tractor, SprayCan, Laptop, Shirt, Gem, Glasses, PawPrint, Sofa, Factory, HeartHandshake];
 
 /** Une rangée qui défile en boucle (la liste est doublée pour un défilement sans coupure). */
 function MarqueeRow({ sectors, reverse }: { sectors: Sector[]; reverse?: boolean }) {
   return (
-    <div className="group overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+    // Toujours de gauche à droite (le défilement en boucle en dépend), même en arabe.
+    <div dir="ltr" className="group overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
       <ul
         className={cn(
           "flex w-max animate-marquee group-hover:[animation-play-state:paused]",
@@ -110,19 +79,28 @@ function MarqueeRow({ sectors, reverse }: { sectors: Sector[]; reverse?: boolean
 
 /** Bande sobre sous l'accueil, à la manière d'une rangée de logos clients. */
 export function SectorsStrip() {
+  const { t, lang } = useI18n();
+  const rowOne = rowOneIcons.map((icon, i) => ({ icon, label: t.sectors.rowOne[i] }));
+  const rowTwo = rowTwoIcons.map((icon, i) => ({ icon, label: t.sectors.rowTwo[i] }));
+
   return (
-    <section aria-label="Secteurs" className="border-b bg-background py-10">
-      <p className="px-4 text-center text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
-        Des sites et logiciels pour tous les secteurs
+    <section aria-label={t.sectors.aria} className="border-b bg-background py-10">
+      <p
+        className={cn(
+          "px-4 text-center text-xs font-medium text-muted-foreground",
+          lang === "ar" ? "text-sm" : "tracking-[0.2em] uppercase"
+        )}
+      >
+        {t.sectors.title}
       </p>
       <div className="mx-auto mt-6 flex max-w-6xl flex-col gap-5">
         <MarqueeRow sectors={rowOne} />
         <MarqueeRow sectors={rowTwo} reverse />
       </div>
       <p className="mt-6 px-4 text-center text-sm text-muted-foreground">
-        Votre activité n&apos;est pas dans la liste ?{" "}
+        {t.sectors.notListed}{" "}
         <a href="#contact" className="font-semibold text-primary underline-offset-4 hover:underline">
-          On s&apos;adapte, parlons-en.
+          {t.sectors.adapt}
         </a>
       </p>
     </section>

@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { ArrowUpRight, ImageIcon, Lock } from "lucide-react";
 import { SectionHeading } from "@/components/site/section-heading";
 import type { Project } from "@/lib/types";
+import { useI18n } from "@/components/i18n-provider";
+import { fill } from "@/lib/i18n/fill";
 
 function domainOf(link: string | null) {
   if (!link) return null;
@@ -17,6 +19,7 @@ function domainOf(link: string | null) {
 /** Carte d'une réalisation (aussi utilisée comme aperçu dans l'admin). */
 export function ProjectCard({ project }: { project: Project }) {
   const domain = domainOf(project.link);
+  const { t } = useI18n();
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-shadow hover:shadow-xl hover:shadow-primary/10">
@@ -26,9 +29,9 @@ export function ProjectCard({ project }: { project: Project }) {
           <span className="size-2 rounded-full bg-[#ff5f57]" />
           <span className="size-2 rounded-full bg-[#febc2e]" />
           <span className="size-2 rounded-full bg-[#28c840]" />
-          <span className="ml-2 flex min-w-0 items-center gap-1 truncate rounded-md bg-background px-2 py-0.5 text-[11px] text-muted-foreground">
+          <span className="ms-2 flex min-w-0 items-center gap-1 truncate rounded-md bg-background px-2 py-0.5 text-[11px] text-muted-foreground">
             <Lock className="size-2.5 shrink-0" />
-            {domain ?? "logiciel"}
+            {domain ?? t.projects.software}
           </span>
         </div>
         <div className="aspect-[16/10] overflow-hidden rounded-t-lg bg-muted">
@@ -36,7 +39,7 @@ export function ProjectCard({ project }: { project: Project }) {
             // eslint-disable-next-line @next/next/no-img-element -- captures locales ou hébergées sur Supabase
             <img
               src={project.image_url}
-              alt={`Aperçu de ${project.title}`}
+              alt={fill(t.projects.previewOf, { name: project.title })}
               loading="lazy"
               className="size-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
             />
@@ -59,8 +62,8 @@ export function ProjectCard({ project }: { project: Project }) {
             rel="noopener noreferrer"
             className="mt-4 inline-flex w-fit items-center gap-1 text-sm font-semibold text-foreground tap hover:text-primary"
           >
-            Voir le site
-            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            {t.projects.seeSite}
+            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
           </a>
         )}
       </div>
@@ -69,13 +72,14 @@ export function ProjectCard({ project }: { project: Project }) {
 }
 
 export function Projects({ projects }: { projects: Project[] }) {
+  const { t } = useI18n();
   return (
     <section id="realisations" className="bg-muted/40 px-4 py-24 md:px-8">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          badge="Réalisations"
-          title="Nos derniers projets"
-          subtitle="Des sites et logiciels réels, en ligne et utilisés par nos clients."
+          badge={t.projects.badge}
+          title={t.projects.title}
+          subtitle={t.projects.subtitle}
         />
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (

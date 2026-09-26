@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { CalendarCheck, Lock, MapPin, Star } from "lucide-react";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
+import { useI18n } from "@/components/i18n-provider";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -49,6 +50,8 @@ export function SkyBackground() {
 
 /** Maquette d'un site réalisé (ordinateur + téléphone) qui monte depuis le bas de l'accueil. */
 export function SiteMockup() {
+  const { t } = useI18n();
+  const m = t.mockup;
   return (
     <motion.div
       aria-hidden
@@ -70,36 +73,35 @@ export function SiteMockup() {
         </div>
 
         {/* Le site d'exemple */}
-        <div className="text-left text-ink">
+        <div className="text-start text-ink">
           <div className="flex items-center justify-between px-5 py-3 sm:px-8">
             <span className="font-heading text-sm font-bold sm:text-base">El Bahdja</span>
             <span className="hidden gap-6 text-xs text-muted-foreground sm:flex">
-              <span>Menu</span>
-              <span>Réservation</span>
-              <span>Avis</span>
-              <span>Contact</span>
+              {m.links.map((link) => (
+                <span key={link}>{link}</span>
+              ))}
             </span>
-            <span className="rounded-full bg-ink px-3 py-1.5 text-[11px] font-semibold text-white">Réserver</span>
+            <span className="rounded-full bg-ink px-3 py-1.5 text-[11px] font-semibold text-white">{m.book}</span>
           </div>
 
           <div className="grid gap-6 px-5 pt-2 pb-16 sm:grid-cols-[1.05fr_1fr] sm:px-8 sm:pb-24">
             <div className="flex flex-col justify-center">
               <span className="flex items-center gap-1 text-[11px] font-semibold text-primary">
                 <MapPin className="size-3" />
-                Restaurant · Alger
+                {m.place}
               </span>
               <p className="mt-2 font-heading text-xl leading-tight font-semibold sm:text-3xl">
-                Une cuisine authentique, au cœur d&apos;Alger.
+                {m.title}
               </p>
               <p className="mt-2 max-w-sm text-xs text-muted-foreground sm:text-sm">
-                Plats faits maison, terrasse ensoleillée et réservation en ligne en 30 secondes.
+                {m.text}
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <span className="flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-[11px] font-semibold text-white sm:text-xs">
                   <CalendarCheck className="size-3.5" />
-                  Réserver une table
+                  {m.bookTable}
                 </span>
-                <span className="rounded-full px-4 py-2 text-[11px] font-semibold ring-1 ring-black/10 sm:text-xs">Voir le menu</span>
+                <span className="rounded-full px-4 py-2 text-[11px] font-semibold ring-1 ring-black/10 sm:text-xs">{m.seeMenu}</span>
               </div>
               <span className="mt-4 flex items-center gap-1 text-[11px] text-muted-foreground">
                 <span className="flex">
@@ -107,7 +109,7 @@ export function SiteMockup() {
                     <Star key={i} className="size-3 fill-amber-400 text-amber-400" />
                   ))}
                 </span>
-                4,9 · 230 avis
+                {m.rating}
               </span>
             </div>
             <div className="relative hidden aspect-[4/3] overflow-hidden rounded-xl sm:block">
@@ -118,15 +120,15 @@ export function SiteMockup() {
       </div>
 
       {/* Le même site sur téléphone */}
-      <div className="absolute right-[-2%] bottom-[22%] hidden w-[21%] rotate-[4deg] rounded-[30px] bg-ink p-1.5 shadow-2xl shadow-black/30 md:block">
-        <div className="overflow-hidden rounded-[24px] bg-white text-left text-ink">
+      <div className="absolute end-[-2%] bottom-[22%] hidden w-[21%] rotate-[4deg] rtl:-rotate-[4deg] rounded-[30px] bg-ink p-1.5 shadow-2xl shadow-black/30 md:block">
+        <div className="overflow-hidden rounded-[24px] bg-white text-start text-ink">
           <div className="relative aspect-[4/3]">
             <Image src={DEMO_PHOTO} alt="" fill sizes={DEMO_SIZES} className="object-cover" />
           </div>
           <div className="space-y-2 p-3">
             <p className="font-heading text-sm leading-tight font-semibold">El Bahdja</p>
-            <p className="text-[10px] leading-snug text-muted-foreground">Cuisine authentique au cœur d&apos;Alger.</p>
-            <span className="block rounded-full bg-primary py-1.5 text-center text-[10px] font-semibold text-white">Réserver</span>
+            <p className="text-[10px] leading-snug text-muted-foreground">{m.short}</p>
+            <span className="block rounded-full bg-primary py-1.5 text-center text-[10px] font-semibold text-white">{m.book}</span>
             <span className="flex items-center justify-center gap-1 rounded-full bg-[#25D366]/15 py-1.5 text-[10px] font-semibold text-[#128C4B]">
               <WhatsAppIcon className="size-3" />
               WhatsApp

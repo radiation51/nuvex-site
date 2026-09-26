@@ -71,7 +71,9 @@ create table if not exists public.offers (
   delivery text not null default '',
   features jsonb not null default '[]'::jsonb,
   popular boolean not null default false,
-  position int not null default 0
+  position int not null default 0,
+  -- Traductions anglais / arabe (voir supabase/migration-langues.sql)
+  translations jsonb
 );
 
 create table if not exists public.projects (
@@ -81,7 +83,8 @@ create table if not exists public.projects (
   description text,
   image_url text not null,
   link text,
-  position int not null default 0
+  position int not null default 0,
+  translations jsonb
 );
 
 create table if not exists public.settings (
@@ -188,9 +191,9 @@ insert into public.offers (id, name, description, price, delivery, features, pop
 ('eco', 'Éco', 'L''essentiel pour être visible en ligne.', 25000, 'Livré en 7 jours',
   '[{"label":"Site one-page","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Adapté mobile","included":true},{"label":"Bouton WhatsApp","included":true},{"label":"Formulaire de contact","included":true},{"label":"Référencement Google","included":false}]', false, 1),
 ('pro', 'Pro', 'Le choix idéal pour les entreprises.', 45000, 'Livré en 7 jours',
-  '[{"label":"Jusqu''à 5 pages","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Adapté mobile","included":true},{"label":"Bouton WhatsApp","included":true},{"label":"Référencement Google de base","included":true},{"label":"Espace d''administration","included":false}]', true, 2),
+  '[{"label":"Jusqu''à 5 pages","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Adapté mobile","included":true},{"label":"Bouton WhatsApp","included":true},{"label":"Référencement Google de base","included":true},{"label":"Petit espace d''administration (textes, photos, horaires)","included":true}]', true, 2),
 ('premium', 'Premium', 'Un site complet que vous gérez vous-même.', 95000, 'Livré en 7 jours',
-  '[{"label":"Pages illimitées","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Design 100 % personnalisé","included":true},{"label":"Espace d''administration","included":true},{"label":"Référencement Google avancé","included":true},{"label":"Support prioritaire","included":true}]', false, 3),
+  '[{"label":"Pages illimitées","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Design 100 % personnalisé","included":true},{"label":"Espace d''administration complet","included":true},{"label":"Référencement Google avancé","included":true},{"label":"Support prioritaire","included":true}]', false, 3),
 ('sur-mesure', 'Sur-mesure', 'E-commerce, réservation, application… on s''adapte.', null, 'Délai fixé ensemble selon le projet',
   '[{"label":"Analyse de votre besoin","included":true},{"label":"Nom de domaine inclus","included":true},{"label":"Fonctionnalités sur mesure","included":true},{"label":"Boutique en ligne possible","included":true},{"label":"Accompagnement dédié","included":true}]', false, 4)
 on conflict (id) do nothing;
