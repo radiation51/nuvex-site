@@ -10,8 +10,17 @@ import { dateFormatter, done } from "@/components/admin/shared";
 import { Empty, PageHeader, Pill, WhatsAppButton } from "@/components/admin/ui-bits";
 import { formatDA } from "@/lib/format";
 import { leadStatusLabel, leadStatusStyle } from "@/lib/orders";
+import { leadKind, leadKindLabel, leadKindStyle, subscriptionPrice, type LeadKind } from "@/lib/lead-kind";
 import type { Lead, LeadStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+const kinds: { id: LeadKind | "all"; label: string }[] = [
+  { id: "all", label: "Tout" },
+  { id: "order", label: "Commandes" },
+  { id: "quote", label: "Devis" },
+  { id: "subscription", label: "Abonnements" },
+  { id: "service", label: "Services" },
+];
 
 const filters: { id: LeadStatus | "all"; label: string }[] = [
   { id: "new", label: "Nouvelles" },
@@ -33,9 +42,12 @@ export function ReservationsPanel({
   const { leads, offers, clients, reload } = data;
   const [filter, setFilter] = React.useState<LeadStatus | "all">(() => (leads.some((l) => l.status === "new") ? "new" : "all"));
   const [converting, setConverting] = React.useState<OrderPrefill | null>(null);
+  const [kind, setKind] = React.useState<LeadKind | "all">("all");
 
-  const count = (s: LeadStatus) => leads.filter((l) => l.status === s).length;
-  const visible = filter === "all" ? leads : leads.filter((l) => l.status === filter);
+  const ofKind = kind === "all" ? leads : leads.filter((l) => leadKind(l.offer) === kind);
+  const count = (s: LeadStatus) => ofKind.filter((l) => l.status === s).length;
+  const countKind = (k: LeadKind) => leads.filter((l) => leadKind(l.offer) === k).length;
+  const visible = filter === "all" ? ofKind : ofKind.filter((l) => l.status === filter);
   const priceOf = (offer: string | null) => offers.find((o) => o.name === offer)?.price;
 
   async function setStatus(lead: Lead, status: LeadStatus) {
@@ -60,6 +72,28 @@ export function ReservationsPanel({
         }
       />
 
+      {/* Type de demande */}
+      <div className="mb-3 flex gap-1.5 overflow-x-auto">
+        {kinds.map((k) => (
+          <button
+            key={k.id}
+            type="button"
+            onClick={() => setKind(k.id)}
+            className={cn(
+              "flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-semibold transition-colors",
+              kind === k.id
+                ? k.id === "all"
+                  ? "bg-primary text-primary-foreground"
+                  : cn(leadKindStyle[k.id], "ring-2 ring-current/30")
+                : "bg-muted/70 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {k.label}
+            {k.id !== "all" && <span className="text-xs opacity-70">{countKind(k.id)}</span>}
+          </button>
+        ))}
+      </div>
+
       <div className="mb-5 flex gap-1 overflow-x-auto">
         {filters.map((f) => (
           <button
@@ -80,11 +114,14 @@ export function ReservationsPanel({
       <div className="grid gap-4 lg:grid-cols-2">
         {visible.length === 0 && <Empty>Aucune réservation ici.</Empty>}
         {visible.map((lead) => {
+          const type = leadKind(lead.offer);
+          const yearly = subscriptionPrice(lead.offer);
           const price = priceOf(lead.offer);
           return (
             <article key={lead.id} className={cn("flex flex-col rounded-2xl border bg-card p-5", lead.status === "new" && "ring-2 ring-primary/30")}>
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
+                  <Pill className={cn("mb-1.5", leadKindStyle[type])}>{leadKindLabel[type]}</Pill>
                   <p className="text-lg font-semibold">{lead.name}</p>
                   <p className="text-xs text-muted-foreground">{dateFormatter.format(new Date(lead.created_at))}</p>
                 </div>
@@ -93,8 +130,13 @@ export function ReservationsPanel({
 
               {lead.offer && (
                 <p className="mt-3 text-sm">
-                  Offre <strong>{lead.offer}</strong>
-                  {price != null ? ` · ${formatDA(price)} (acompte ${formatDA(Math.round(price / 2))})` : " · sur devis"}
+                  {type === "service" ? "Service" : type === "subscription" ? "Formule" : "Offre"}{" "}
+                  <strong>{lead.offer.replace(/^Service : /, "")}</strong>
+                  {yearly != null
+                    ? ` · ${formatDA(yearly)} par an`
+                    : price != null
+                      ? ` · ${formatDA(price)} (acompte ${formatDA(Math.round(price / 2))})`
+                      : " · sur devis"}
                 </p>
               )}
 

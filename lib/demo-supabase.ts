@@ -186,12 +186,12 @@ class DemoQuery implements PromiseLike<Result> {
 
 /** Faux client Supabase pour le mode démo. */
 export function createDemoSupabase(): SupabaseClient {
-  const tables = load();
   const files = new Map<string, string>();
   const session = { access_token: "demo", user: { email: "demo@nuvex.dz" } };
 
   const client = {
-    from: (table: string) => new DemoQuery(tables, table),
+    // Relit le stockage à chaque requête : une demande envoyée depuis le site (autre onglet) apparaît aussitôt.
+    from: (table: string) => new DemoQuery(load(), table),
     rpc: async () => ({ data: true, error: null }),
     auth: {
       getSession: async () => ({ data: { session }, error: null }),

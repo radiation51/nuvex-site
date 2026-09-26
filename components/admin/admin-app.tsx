@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAdminData } from "@/components/admin/admin-data";
+import { useLiveUpdates } from "@/components/admin/live-updates";
 import { CalendarPanel } from "@/components/admin/calendar-panel";
 import { ClientsPanel } from "@/components/admin/clients-panel";
 import { DashboardPanel, type AdminTab } from "@/components/admin/dashboard-panel";
@@ -177,6 +178,9 @@ function Dashboard({ supabase, demo }: { supabase: SupabaseClient; demo: boolean
     setTab(next);
     window.scrollTo({ top: 0 });
   };
+
+  // Mise à jour automatique, avec son et bannière à chaque nouvelle demande.
+  useLiveUpdates(data, go);
 
   // Sur téléphone, garde l'onglet actif visible dans le menu qui défile.
   React.useEffect(() => {

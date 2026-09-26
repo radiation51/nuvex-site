@@ -1,5 +1,6 @@
 import { clientIp, isRateLimited } from "@/lib/rate-limit";
 import { getServerSupabase } from "@/lib/supabase";
+import { notifyLead } from "@/lib/telegram";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
@@ -50,5 +51,8 @@ export async function POST(request: Request) {
   });
 
   if (error) return Response.json({ error: "Envoi impossible pour le moment." }, { status: 500 });
+
+  // Notification sur le téléphone (Telegram), si elle est configurée.
+  await notifyLead({ name, phone, email, offer, message });
   return Response.json({ ok: true });
 }
