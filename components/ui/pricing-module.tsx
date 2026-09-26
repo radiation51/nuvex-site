@@ -30,7 +30,8 @@ export interface PricingModuleProps {
   className?: string;
 }
 
-const icons: Record<string, React.ElementType> = {
+/** Icône de chaque offre (aussi utilisée dans le formulaire de contact). */
+export const offerIcons: Record<string, React.ElementType> = {
   eco: Rocket,
   pro: Briefcase,
   premium: Crown,
@@ -162,7 +163,7 @@ function PlanWallet({ plans }: { plans: Offer[] }) {
 
       <div className="flex flex-col gap-4">
         {plans.map((plan) => {
-          const Icon = icons[plan.id] ?? Sparkles;
+          const Icon = offerIcons[plan.id] ?? Sparkles;
           const onQuote = plan.price === null;
           const isOpen = open === plan.id;
           const detailId = `offre-${plan.id}-detail`;
@@ -323,7 +324,7 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
       )}
     >
       {plans.map((plan, i) => {
-        const Icon = icons[plan.id] ?? Sparkles;
+        const Icon = offerIcons[plan.id] ?? Sparkles;
         const onQuote = plan.price === null;
         // Nombre impair d'offres : sur 2 colonnes (tablette), la dernière carte prend toute la largeur.
         const wide = plans.length % 2 === 1 && i === plans.length - 1;

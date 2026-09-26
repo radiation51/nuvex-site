@@ -17,6 +17,7 @@ import type { Offer, Settings } from "@/lib/types";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 import { InstagramIcon, instagramHandle } from "@/components/site/social-icons";
 import { RichText } from "@/components/ui/rich-text";
+import { OfferSelect } from "@/components/site/offer-select";
 import { useI18n } from "@/components/i18n-provider";
 import { fill } from "@/lib/i18n/fill";
 
@@ -200,29 +201,7 @@ export function Contact({
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="lead-offer">{t.offer}</Label>
-                <select
-                  id="lead-offer"
-                  name="offer"
-                  value={offer}
-                  onChange={(e) => setOffer(e.target.value)}
-                  className="h-11 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                >
-                  <option value="">{t.dontKnow}</option>
-                  <optgroup label={t.sitesGroup}>
-                    {offers.map((o) => (
-                      <option key={o.id} value={o.value ?? o.name}>
-                        {o.name}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label={t.softwareGroup}>
-                    {softwareOffers.map((o) => (
-                      <option key={o.id} value={o.value ?? o.name}>
-                        {o.name}
-                      </option>
-                    ))}
-                  </optgroup>
-                </select>
+                <OfferSelect id="lead-offer" offers={offers} softwareOffers={softwareOffers} value={offer} onChange={setOffer} />
               </div>
             </div>
 

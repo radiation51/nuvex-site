@@ -295,3 +295,31 @@ html[lang="ar"] .tracking-wide,
 html[lang="ar"] .tracking-wider {
   letter-spacing: 0;
 }
+
+/* ===== Choix de l'offre (formulaire de contact) : ouverture en glissant, lignes qui apparaissent une à une ===== */
+.offer-popup {
+  transition:
+    opacity 180ms ease-out,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.offer-popup[data-starting-style],
+.offer-popup[data-ending-style] {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+}
+@keyframes offer-option-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+.offer-popup[data-open] .offer-option {
+  animation: offer-option-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer-popup,
+  .offer-popup[data-open] .offer-option {
+    transition: none;
+    animation: none;
+  }
+}
