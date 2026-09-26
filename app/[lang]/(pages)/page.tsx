@@ -9,6 +9,7 @@ import { Faq } from "@/components/site/faq";
 import { Header } from "@/components/site/header";
 import { Projects } from "@/components/site/projects";
 import { SectorsStrip } from "@/components/site/sectors-strip";
+import { ServicesTeaser } from "@/components/site/services-teaser";
 import { Steps } from "@/components/site/steps";
 import { Testimonials } from "@/components/site/testimonials";
 import { WhyUs } from "@/components/site/why-us";
@@ -47,6 +48,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <WhyUs />
         <PricingModule
           title={t.pricing.title}
+          after={<ServicesTeaser />}
           groups={[
             { id: "sites", ...t.pricing.sites, plans: offers },
             { id: "logiciels", ...t.pricing.software, plans: softwareOffers },

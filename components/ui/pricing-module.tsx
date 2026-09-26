@@ -59,6 +59,8 @@ export interface PricingModuleProps {
   id?: string;
   title?: string;
   groups: PlanGroup[];
+  /** Contenu affiché sous les offres, quel que soit l'onglet (ex. bandeau vers la page Services). */
+  after?: React.ReactNode;
   className?: string;
 }
 
@@ -88,7 +90,7 @@ export const offerIcons: Record<string, React.ElementType> = {
 
 const tabIcons: Record<string, React.ElementType> = { sites: Globe, logiciels: Monitor };
 
-export function PricingModule({ id = "offres", title, groups, className }: PricingModuleProps) {
+export function PricingModule({ id = "offres", title, groups, after, className }: PricingModuleProps) {
   const { t } = useI18n();
   const [active, setActive] = React.useState(groups[0].id);
   const group = groups.find((g) => g.id === active) ?? groups[0];
@@ -184,6 +186,7 @@ export function PricingModule({ id = "offres", title, groups, className }: Prici
             </motion.div>
           </AnimatePresence>
         </div>
+        {after}
       </div>
     </section>
   );

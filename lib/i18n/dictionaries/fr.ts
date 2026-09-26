@@ -421,6 +421,16 @@ export const fr = {
     waIntro: "Bonjour NUVEX, je souhaite un service.",
     waSite: "Mon site",
   },
+  servicesTeaser: {
+    badge: "Après la livraison",
+    title: "On reste à vos côtés, toute l'année",
+    text: "Renouvellement du nom de domaine et de l'hébergement, modifications, fiche Google Maps, dépannage : choisissez une formule de suivi et gardez votre site toujours à jour.",
+    items: ["Domaine et hébergement", "Rappel avant l'échéance", "Google Maps", "Traduction", "Dépannage"],
+    from: "Formules de suivi dès",
+    price: "6 000 DA",
+    perYear: "par an",
+    cta: "Voir les services",
+  },
   footer: {
     tagline: "Des sites web et logiciels\nqui font grandir votre activité.",
     rights: "Tous droits réservés",

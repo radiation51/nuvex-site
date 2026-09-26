@@ -419,6 +419,16 @@ export const en: Dictionary = {
     waIntro: "Hello NUVEX, I'd like a service.",
     waSite: "My website",
   },
+  servicesTeaser: {
+    badge: "After delivery",
+    title: "We stay by your side, all year round",
+    text: "Domain name and hosting renewal, updates, Google Maps listing, troubleshooting: choose a care plan and keep your website always up to date.",
+    items: ["Domain and hosting", "Renewal reminder", "Google Maps", "Translation", "Troubleshooting"],
+    from: "Care plans from",
+    price: "6,000 DA",
+    perYear: "per year",
+    cta: "See our services",
+  },
   footer: {
     tagline: "Websites and software\nthat help your business grow.",
     rights: "All rights reserved",
