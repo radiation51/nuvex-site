@@ -78,6 +78,14 @@ export function OfferSelect({
       value={value || null}
       onValueChange={(v) => onChange((v as string | null) ?? "")}
       modal={false}
+      onOpenChange={(open) => {
+        // La liste s'ouvre toujours vers le bas : si le champ est trop bas à l'écran,
+        // on remonte un peu la page pour lui laisser la place.
+        const field = document.getElementById(id);
+        if (!open || !field) return;
+        const { top, bottom } = field.getBoundingClientRect();
+        if (window.innerHeight - bottom < 420) window.scrollBy({ top: top - 96, behavior: "smooth" });
+      }}
     >
       <Select.Trigger
         id={id}
@@ -109,7 +117,13 @@ export function OfferSelect({
       </Select.Trigger>
 
       <Select.Portal>
-        <Select.Positioner side="bottom" sideOffset={8} alignItemWithTrigger={false} className="z-50 outline-none">
+        <Select.Positioner
+          side="bottom"
+          sideOffset={8}
+          alignItemWithTrigger={false}
+          collisionAvoidance={{ side: "none" }}
+          className="z-50 outline-none"
+        >
           <Select.Popup className="offer-popup max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) overflow-y-auto rounded-2xl border bg-popover p-1.5 text-popover-foreground shadow-2xl shadow-primary/15 outline-none">
             <Select.List>
               <Select.Item
