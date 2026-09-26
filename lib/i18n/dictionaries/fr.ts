@@ -125,6 +125,8 @@ export const fr = {
     inBrief: "En bref",
     included: "Inclus",
     walletIntro: "Tous nos prix d'un coup d'œil. Touchez la flèche d'une carte pour découvrir tout ce qu'elle comprend.",
+    chooseShort: "Choisir",
+    chooseQuote: "Devis gratuit",
     details: "Détails",
     close: "Fermer",
   },

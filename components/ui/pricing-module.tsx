@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Briefcase, Check, ChevronDown, Clock, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
+import { ArrowRight, Briefcase, Check, ChevronDown, Clock, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDA, selectOffer } from "@/lib/format";
@@ -204,15 +204,29 @@ function PlanWallet({ plans }: { plans: Offer[] }) {
                 </div>
               </div>
 
-              <div className="mt-3 flex items-end justify-between gap-3">
-                <div>
-                  <span className={cn("block text-[11px] font-medium tracking-wider uppercase", plan.popular ? "text-white/60" : "text-muted-foreground")}>
-                    {onQuote ? t.freeQuote : t.from}
-                  </span>
-                  <span className="font-heading text-2xl font-bold whitespace-nowrap">
-                    {onQuote ? t.onQuote : formatDA(plan.price!, lang)}
-                  </span>
-                </div>
+              <div className="mt-3">
+                <span className={cn("block text-[11px] font-medium tracking-wider uppercase", plan.popular ? "text-white/60" : "text-muted-foreground")}>
+                  {onQuote ? t.freeQuote : t.from}
+                </span>
+                <span className="font-heading text-2xl font-bold whitespace-nowrap">
+                  {onQuote ? t.onQuote : formatDA(plan.price!, lang)}
+                </span>
+              </div>
+
+              {/* Choisir directement, ou ouvrir le détail */}
+              <div className="mt-3 flex items-center gap-2">
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => selectOffer(plan.value ?? plan.name, href("/#contact"))}
+                  className={cn(
+                    "group/choose flex h-11 flex-1 items-center justify-center gap-2 rounded-full px-4 text-sm font-bold shadow-sm transition-colors",
+                    plan.popular ? "bg-lime text-ink hover:bg-lime/85" : "bg-primary text-primary-foreground hover:bg-primary/90"
+                  )}
+                >
+                  {onQuote ? t.chooseQuote : t.chooseShort}
+                  <ArrowRight className="size-4 transition-transform group-hover/choose:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/choose:-translate-x-0.5" />
+                </motion.button>
                 <button
                   type="button"
                   onClick={() => {
@@ -222,8 +236,8 @@ function PlanWallet({ plans }: { plans: Offer[] }) {
                   aria-expanded={isOpen}
                   aria-controls={detailId}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-full py-1.5 ps-3 pe-1.5 text-xs font-semibold tap",
-                    plan.popular ? "bg-white/10 text-white" : "bg-primary/8 text-primary"
+                    "flex h-11 shrink-0 items-center gap-1.5 rounded-full ps-3.5 pe-2 text-xs font-semibold tap",
+                    plan.popular ? "bg-white/10 text-white ring-1 ring-white/20" : "bg-primary/8 text-primary ring-1 ring-primary/15"
                   )}
                 >
                   {isOpen ? t.close : t.details}

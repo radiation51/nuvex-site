@@ -124,6 +124,8 @@ export const ar: Dictionary = {
     inBrief: "باختصار",
     included: "يشمل",
     walletIntro: "كل أسعارنا في لمحة واحدة. المس سهم البطاقة لاكتشاف كل ما تتضمّنه.",
+    chooseShort: "اختر",
+    chooseQuote: "عرض مجاني",
     details: "التفاصيل",
     close: "إغلاق",
   },

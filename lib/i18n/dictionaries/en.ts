@@ -125,6 +125,8 @@ export const en: Dictionary = {
     inBrief: "At a glance",
     included: "Included",
     walletIntro: "All our prices at a glance. Tap a card's arrow to see everything it includes.",
+    chooseShort: "Choose",
+    chooseQuote: "Free quote",
     details: "Details",
     close: "Close",
   },
