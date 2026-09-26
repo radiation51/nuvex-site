@@ -33,7 +33,7 @@ function LostSitePostcard({ slug, label }: { slug: string; label: string }) {
         <span className="size-2 rounded-full bg-amber-400" />
         <span className="size-2 rounded-full bg-emerald-400" />
         <span className="ml-2 flex-1 truncate rounded-md bg-white px-2 py-0.5 text-[10px] text-slate-400 ring-1 ring-slate-200">
-          nuvex-agence.netlify.app/<span className="text-red-400">{slug}</span>
+          nuvex-algerie.netlify.app/<span className="text-red-400">{slug}</span>
         </span>
       </div>
       <div className="relative flex flex-1 flex-col items-center justify-center bg-linear-to-br from-[oklch(0.5_0.24_268)] to-[oklch(0.72_0.12_240)] text-white">

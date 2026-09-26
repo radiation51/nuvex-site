@@ -4,7 +4,7 @@ import { bricolage, manrope } from "@/lib/fonts";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.URL ?? "https://nuvex-agence.netlify.app"),
+  metadataBase: new URL(process.env.URL ?? "https://nuvex-algerie.netlify.app"),
   // Admin installable comme une application (notifications sur iPhone).
   appleWebApp: { capable: true, title: "NUVEX", statusBarStyle: "default" },
   icons: { apple: "/icons/icon-180.png" },

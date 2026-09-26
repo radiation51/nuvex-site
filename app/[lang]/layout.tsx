@@ -24,15 +24,24 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const t = getDictionary(lang);
   return {
     // Adresse du site (fournie par Netlify) : sert aux liens de l'image d'aperçu de partage.
-    metadataBase: new URL(process.env.URL ?? "https://nuvex-agence.netlify.app"),
+    metadataBase: new URL(process.env.URL ?? "https://nuvex-algerie.netlify.app"),
     title: t.meta.title,
     description: t.meta.description,
     other: { google: "notranslate" },
+    // Carte d'aperçu quand le lien est partagé (WhatsApp, Instagram, Facebook…) : image générée par app/opengraph-image.tsx.
     openGraph: {
       title: t.meta.ogTitle,
       description: t.meta.ogDescription,
+      siteName: "NUVEX",
       locale: ogLocale[lang],
       type: "website",
+      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: t.meta.ogTitle }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t.meta.ogTitle,
+      description: t.meta.ogDescription,
+      images: ["/opengraph-image"],
     },
   };
 }

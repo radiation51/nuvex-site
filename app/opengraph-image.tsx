@@ -98,7 +98,7 @@ export default function OpenGraphImage() {
             <div style={{ width: 11, height: 11, borderRadius: 99, background: "#febc2e", display: "flex" }} />
             <div style={{ width: 11, height: 11, borderRadius: 99, background: "#28c840", display: "flex" }} />
             <div style={{ display: "flex", marginLeft: 12, padding: "5px 12px", borderRadius: 8, background: "#fff", color: "#5b6078", fontSize: 15 }}>
-              nuvex-dz.netlify.app
+              nuvex-algerie.netlify.app
             </div>
           </div>
           {/* Mini accueil du site */}
