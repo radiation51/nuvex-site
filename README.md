@@ -24,9 +24,9 @@ Sans base de données, le site s'affiche avec le contenu par défaut, mais les f
 8. Relancez `npm run dev`, allez sur `/admin` et connectez-vous.
 
 ## Mot de passe de /admin
-L'admin s'ouvre uniquement à son **adresse secrète**, définie dans la variable Netlify `ADMIN_PATH` (`/admin` affiche « page introuvable »), puis avec un mot de passe vérifié sur le serveur (jamais écrit dans le code).
+L'admin s'ouvre à l'adresse **`/admin`**, avec un mot de passe vérifié sur le serveur (jamais écrit dans le code) et un blocage automatique après 10 essais ratés.
 - **Anti-spam** : 10 mauvais mots de passe en 15 min → l'adresse IP est bloquée 1 h, puis 24 h, puis 7 jours en cas de récidive (même le bon mot de passe est refusé pendant le blocage). Le compteur est gardé dans Netlify Blobs (magasin « admin-security »). Pour débloquer quelqu'un avant la fin : Netlify → Blobs → admin-security → supprimer l'entrée.
-- Pour changer l'adresse secrète : modifier la variable `ADMIN_PATH` sur Netlify, puis redéployer. En local sans cette variable : `/espace-admin`.
+- Option : pour cacher l'admin derrière une adresse secrète, ajouter la variable `ADMIN_PATH` sur Netlify (ex. `espace-k7p2x9`), puis redéployer : `/admin` affiche alors « page introuvable ».
 - **Sur Netlify** : Project configuration → Environment variables → Add a variable → clé `ADMIN_PASSWORD`, valeur = votre mot de passe → puis redéployer.
 - **Sur votre ordinateur** (facultatif) : ajoutez `ADMIN_PASSWORD=...` dans `.env.local`. Sans cette ligne, l'admin reste accessible en local pour travailler.
 - Tant que `ADMIN_PASSWORD` n'est pas défini en ligne, `/admin` reste **verrouillé**.

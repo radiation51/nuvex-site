@@ -2,17 +2,18 @@ import { NextResponse, type NextRequest } from "next/server";
 import { ADMIN_COOKIE, adminToken, readAdminPassword, readAdminPath, safeEqual } from "@/lib/admin-auth";
 import { LOCALE_COOKIE, defaultLocale, hasLocale } from "@/lib/i18n/config";
 
-// 1. L'admin n'est accessible que par son adresse secrète (variable ADMIN_PATH), puis par mot de passe.
+// 1. Admin : à l'adresse « /admin » (ou à l'adresse secrète ADMIN_PATH si elle est définie), puis mot de passe.
 // 2. Langues : « / » = français (sans préfixe), « /en » et « /ar » = anglais et arabe.
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const notFound = () => NextResponse.rewrite(new URL(`/${defaultLocale}/page-introuvable`, request.url));
 
-  // Les vraies pages de l'admin ne sont jamais accessibles directement.
-  if (pathname === "/admin" || pathname.startsWith("/admin/")) return notFound();
-
   const entry = readAdminPath();
-  const isEntry = entry !== "" && (pathname === entry || pathname.startsWith(`${entry}/`));
+  const isEntry = pathname === entry || pathname.startsWith(`${entry}/`);
+
+  // Avec une adresse secrète, les vraies pages de l'admin ne sont jamais accessibles directement.
+  if (!isEntry && (pathname === "/admin" || pathname.startsWith("/admin/"))) return notFound();
+
   if (isEntry) {
     const password = readAdminPassword();
     if (!password) {

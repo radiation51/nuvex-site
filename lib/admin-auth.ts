@@ -4,12 +4,12 @@
 type NetlifyGlobal = { Netlify?: { env: { get(key: string): string | undefined } } };
 
 /**
- * Adresse secrète de l'admin : définie dans la variable d'environnement ADMIN_PATH (jamais dans le code).
- * En local sans ADMIN_PATH : « /espace-admin ». En ligne sans ADMIN_PATH : l'admin est inaccessible.
+ * Adresse de l'admin : « /admin » par défaut (protégé par le mot de passe).
+ * Une adresse secrète peut être choisie avec la variable d'environnement ADMIN_PATH (ex. « espace-k7p2x9 »).
  */
 export function readAdminPath() {
   const raw = (process.env.ADMIN_PATH || (globalThis as NetlifyGlobal).Netlify?.env.get("ADMIN_PATH") || "").trim();
-  if (!raw) return process.env.NODE_ENV === "production" ? "" : "/espace-admin";
+  if (!raw) return "/admin";
   return `/${raw.replace(/^\/+|\/+$/g, "")}`;
 }
 
