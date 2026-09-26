@@ -16,19 +16,30 @@ import { cn } from "@/lib/utils";
  */
 export function OfferSelect({
   id,
-  offers,
-  softwareOffers,
+  offers = [],
+  softwareOffers = [],
+  groups,
+  noneLabel,
   value,
   onChange,
 }: {
   id: string;
-  offers: Offer[];
-  softwareOffers: Offer[];
+  offers?: Offer[];
+  softwareOffers?: Offer[];
+  /** Groupes personnalisés (ex. page Services). Par défaut : sites web puis logiciels. */
+  groups?: { label: string; icon: React.ElementType; items: Offer[] }[];
+  /** Première ligne, sans choix (par défaut « Je ne sais pas encore »). */
+  noneLabel?: string;
   value: string;
   onChange: (value: string) => void;
 }) {
   const { t, lang } = useI18n();
-  const all = [...offers, ...softwareOffers];
+  const lists = groups ?? [
+    { label: t.contact.sitesGroup, icon: Globe, items: offers },
+    { label: t.contact.softwareGroup, icon: Monitor, items: softwareOffers },
+  ];
+  const none = noneLabel ?? t.contact.dontKnow;
+  const all = lists.flatMap((g) => g.items);
   const selected = all.find((o) => (o.value ?? o.name) === value);
   const price = (o: Offer) => (o.price === null ? t.pricing.onQuote : formatDA(o.price, lang));
 
@@ -107,7 +118,7 @@ export function OfferSelect({
                 <span className="ms-auto shrink-0 text-xs text-muted-foreground">{price(selected)}</span>
               </>
             ) : (
-              <span className="text-muted-foreground">{t.contact.dontKnow}</span>
+              <span className="text-muted-foreground">{none}</span>
             )
           }
         </Select.Value>
@@ -134,13 +145,14 @@ export function OfferSelect({
                 <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground">
                   <CircleHelp className="size-4" />
                 </span>
-                <Select.ItemText className="flex-1 font-medium">{t.contact.dontKnow}</Select.ItemText>
+                <Select.ItemText className="flex-1 font-medium">{none}</Select.ItemText>
                 <Select.ItemIndicator className="shrink-0 text-primary">
                   <Check className="size-4" strokeWidth={3} />
                 </Select.ItemIndicator>
               </Select.Item>
-              {group(t.contact.sitesGroup, Globe, offers)}
-              {group(t.contact.softwareGroup, Monitor, softwareOffers)}
+              {lists.map((g) => (
+                <React.Fragment key={g.label}>{group(g.label, g.icon, g.items)}</React.Fragment>
+              ))}
             </Select.List>
           </Select.Popup>
         </Select.Positioner>

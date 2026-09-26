@@ -2,7 +2,33 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Briefcase, Check, ChevronDown, Clock, Crown, Gift, Globe, Monitor, Rocket, Sparkles, Store, X } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  Check,
+  ChevronDown,
+  CircleArrowUp,
+  Clock,
+  Crown,
+  FilePlus,
+  Gem,
+  Gift,
+  Globe,
+  GraduationCap,
+  HeartHandshake,
+  Languages,
+  Link2,
+  MapPin,
+  Monitor,
+  MonitorCog,
+  Paintbrush,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  Store,
+  Wrench,
+  X,
+} from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDA, selectOffer } from "@/lib/format";
@@ -22,9 +48,15 @@ export interface PlanGroup {
   subtitle: string;
   plans: Offer[];
   footnote?: string;
+  /** Remplace « À partir de » au-dessus du prix (ex. « Par an »). */
+  priceLabel?: string;
+  /** Texte du bouton de choix sur ordinateur (par défaut « Choisir cette offre »). */
+  chooseLabel?: string;
 }
 
 export interface PricingModuleProps {
+  /** Ancre de la section (par défaut « offres »). */
+  id?: string;
   title?: string;
   groups: PlanGroup[];
   className?: string;
@@ -39,11 +71,24 @@ export const offerIcons: Record<string, React.ElementType> = {
   "logiciel-essentiel": Monitor,
   "logiciel-pro": Store,
   "logiciel-sur-mesure": Sparkles,
+  "suivi-essentiel": ShieldCheck,
+  "suivi-confort": HeartHandshake,
+  "suivi-serenite": Gem,
+  // Services à la carte (page Services)
+  traduction: Languages,
+  "nouvelle-page": FilePlus,
+  "offre-superieure": CircleArrowUp,
+  refonte: Paintbrush,
+  "google-maps": MapPin,
+  "nom-domaine": Link2,
+  depannage: Wrench,
+  formation: GraduationCap,
+  "logiciel-poste": MonitorCog,
 };
 
 const tabIcons: Record<string, React.ElementType> = { sites: Globe, logiciels: Monitor };
 
-export function PricingModule({ title, groups, className }: PricingModuleProps) {
+export function PricingModule({ id = "offres", title, groups, className }: PricingModuleProps) {
   const { t } = useI18n();
   const [active, setActive] = React.useState(groups[0].id);
   const group = groups.find((g) => g.id === active) ?? groups[0];
@@ -78,7 +123,7 @@ export function PricingModule({ title, groups, className }: PricingModuleProps) 
   }, [groupIds]);
 
   return (
-    <section id="offres" className={cn("relative w-full bg-muted/40 px-4 py-24 text-foreground md:px-8", className)}>
+    <section id={id} className={cn("relative w-full bg-muted/40 px-4 py-24 text-foreground md:px-8", className)}>
       {/* Ancres des autres onglets : même position que la section */}
       {groups.slice(1).map((g) => (
         <span key={g.id} id={g.id} aria-hidden className="absolute top-0" />
@@ -92,7 +137,7 @@ export function PricingModule({ title, groups, className }: PricingModuleProps) 
           viewport={{ once: true, margin: "-80px" }}
           className="mx-auto flex max-w-2xl flex-col items-center text-center"
         >
-          <div role="tablist" aria-label={t.pricing.tabsLabel} className="inline-flex rounded-full border bg-card p-1 shadow-sm">
+          <div role="tablist" aria-label={t.pricing.tabsLabel} className={cn("inline-flex rounded-full border bg-card p-1 shadow-sm", groups.length < 2 && "hidden")}>
             {groups.map((g) => {
               const Icon = tabIcons[g.id] ?? Sparkles;
               const selected = g.id === group.id;
@@ -133,8 +178,8 @@ export function PricingModule({ title, groups, className }: PricingModuleProps) 
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25 }}
             >
-              <PlanWallet plans={group.plans} />
-              <PlanGrid plans={group.plans} />
+              <PlanWallet plans={group.plans} priceLabel={group.priceLabel} />
+              <PlanGrid plans={group.plans} priceLabel={group.priceLabel} chooseLabel={group.chooseLabel} />
               {group.footnote && <p className="mt-10 text-center text-sm text-muted-foreground">{group.footnote}</p>}
             </motion.div>
           </AnimatePresence>
@@ -148,7 +193,7 @@ export function PricingModule({ title, groups, className }: PricingModuleProps) 
  * Téléphone : « portefeuille » d'offres. Toutes les cartes sont fermées (nom, description, prix),
  * la flèche en bas à droite ouvre le détail d'une seule carte à la fois.
  */
-function PlanWallet({ plans }: { plans: Offer[] }) {
+function PlanWallet({ plans, priceLabel }: { plans: Offer[]; priceLabel?: string }) {
   const { t: all, lang, href } = useI18n();
   const t = all.pricing;
   const [open, setOpen] = React.useState<string | null>(null);
@@ -206,7 +251,7 @@ function PlanWallet({ plans }: { plans: Offer[] }) {
 
               <div className="mt-3">
                 <span className={cn("block text-[11px] font-medium tracking-wider uppercase", plan.popular ? "text-white/60" : "text-muted-foreground")}>
-                  {onQuote ? t.freeQuote : t.from}
+                  {onQuote ? t.freeQuote : (priceLabel ?? t.from)}
                 </span>
                 <span className="font-heading text-2xl font-bold whitespace-nowrap">
                   {onQuote ? t.onQuote : formatDA(plan.price!, lang)}
@@ -327,7 +372,7 @@ function PlanWallet({ plans }: { plans: Offer[] }) {
 }
 
 /** Tablette et PC : grille des cartes d'offres. */
-function PlanGrid({ plans }: { plans: Offer[] }) {
+function PlanGrid({ plans, priceLabel, chooseLabel }: { plans: Offer[]; priceLabel?: string; chooseLabel?: string }) {
   const { t: all, lang, href } = useI18n();
   const t = all.pricing;
   return (
@@ -398,7 +443,7 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
                     ) : (
                       <>
                         <span className={cn("text-xs font-medium uppercase tracking-wider", plan.popular ? "text-white/60" : "text-muted-foreground")}>
-                          {t.from}
+                          {priceLabel ?? t.from}
                         </span>
                         <div className="font-heading text-3xl font-bold whitespace-nowrap">{formatDA(plan.price!, lang)}</div>
                       </>
@@ -414,7 +459,7 @@ function PlanGrid({ plans }: { plans: Offer[] }) {
                       onQuote && !plan.popular && "border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                     )}
                   >
-                    {onQuote ? t.askQuote : t.choose}
+                    {onQuote ? t.askQuote : (chooseLabel ?? t.choose)}
                   </Button>
                 </CardContent>
               </div>

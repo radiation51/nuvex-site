@@ -161,6 +161,15 @@ export const legalFr: LegalDoc = {
         ],
       },
       {
+        id: "formules-suivi",
+        title: "Formules de suivi annuel",
+        blocks: [
+          {
+            p: "Après la livraison, le client peut souscrire une formule de suivi annuel (Essentiel, Confort ou Sérénité), présentée sur la page Services. La formule est **payée une fois par an, à l'avance**, et couvre les douze mois qui suivent le paiement. Elle comprend le renouvellement du nom de domaine et de l'hébergement pendant cette période, la vérification mensuelle du site et le nombre d'interventions prévu par la formule. Une intervention correspond à une petite modification, mise à jour ou correction d'environ une heure de travail ; les interventions non utilisées ne sont pas reportées à l'année suivante. Les demandes plus importantes (nouvelle page hors formule, refonte, nouvelle fonction) font l'objet d'un devis, avec la réduction prévue par la formule. Le client reçoit un rappel avant chaque échéance et peut choisir de ne pas renouveler : dans ce cas, le renouvellement du nom de domaine et de l'hébergement redevient à sa charge. Une année commencée reste due et n'est pas remboursée.",
+          },
+        ],
+      },
+      {
         id: "propriete",
         title: "Propriété et licence d'utilisation",
         blocks: [

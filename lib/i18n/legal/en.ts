@@ -161,6 +161,15 @@ export const legalEn: LegalDoc = {
         ],
       },
       {
+        id: "formules-suivi",
+        title: "Annual care plans",
+        blocks: [
+          {
+            p: "After delivery, the client can subscribe to an annual care plan (Essential, Comfort or Peace of Mind), presented on the Services page. The plan is **paid once a year, in advance**, and covers the twelve months following payment. It includes the renewal of the domain name and hosting during that period, a monthly check of the website and the number of interventions included in the plan. An intervention is a small change, update or fix of about one hour of work; unused interventions are not carried over to the following year. Larger requests (a new page outside the plan, a redesign, a new feature) require a quote, with the discount included in the plan. The client receives a reminder before each renewal date and may choose not to renew: in that case, renewing the domain name and hosting becomes their responsibility again. A year that has started remains due and is not refunded.",
+          },
+        ],
+      },
+      {
         id: "propriete",
         title: "Ownership and licence",
         blocks: [

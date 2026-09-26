@@ -17,6 +17,7 @@ export default function FooterSection5({ offers, settings }: { offers: Offer[]; 
   const { t: all, href } = useI18n();
   const t = all.footer;
   const navigation = sections.map((id, i) => ({ name: t.links[i], href: href(`/#${id}`) }));
+  navigation.splice(3, 0, { name: all.nav.services, href: href("/services") });
   const contactLinks = [
     settings.whatsapp && { name: "WhatsApp", href: whatsappLink(settings.whatsapp) },
     settings.phone && { name: settings.phone, href: `tel:${settings.phone.replace(/\s/g, "")}` },

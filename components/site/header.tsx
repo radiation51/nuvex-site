@@ -14,7 +14,10 @@ const sections = ["accueil", "offres", "realisations", "avis", "faq", "contact"]
 function useNavLinks() {
   const { t, href } = useI18n();
   const names = [t.nav.home, t.nav.offers, t.nav.projects, t.nav.reviews, t.nav.faq, t.nav.contact];
-  return sections.map((id, i) => ({ name: names[i], href: href(`/#${id}`) }));
+  const links = sections.map((id, i) => ({ name: names[i], href: href(`/#${id}`) }));
+  // Page à part « Services », juste après les réalisations.
+  links.splice(3, 0, { name: t.nav.services, href: href("/services") });
+  return links;
 }
 
 export function Logo({ className, light }: { className?: string; light?: boolean }) {
