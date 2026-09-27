@@ -9,9 +9,9 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 import "../globals.css";
 
-// Seules les langues prévues existent (« /de » → page introuvable).
-export const dynamicParams = false;
-
+// Les 3 langues sont préparées à l'avance. Pas de « dynamicParams = false » : après une régénération
+// demandée par l'admin, les pages doivent pouvoir être recréées (sinon tout le site passe en 404).
+// Une langue inconnue reste une page introuvable grâce à hasLocale() ci-dessous et au proxy.
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
