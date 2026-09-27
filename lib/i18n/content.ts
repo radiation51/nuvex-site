@@ -6,6 +6,24 @@ import type { Offer, Project, SiteData } from "@/lib/types";
 
 const pick = (translated: string | undefined, original: string) => (translated?.trim() ? translated : original);
 
+const arabicDays = (n: number) => (n === 1 ? "يوم واحد" : n === 2 ? "يومين" : n <= 10 ? `${n} أيام` : `${n} يومًا`);
+
+/**
+ * Délai de livraison traduit à partir du français (« Livré en 3 jours », « Livré en 3 à 5 jours · livraison gratuite »),
+ * pour que l'anglais et l'arabe suivent toujours le délai réglé dans l'admin. Autre formulation : traduction enregistrée.
+ */
+function autoDelivery(french: string, locale: Locale): string | undefined {
+  const m = french.trim().match(/^Livré en (\d+)(?:\s*(?:à|-|–)\s*(\d+))?\s*jours?\s*(·\s*livraison gratuite)?$/i);
+  if (!m || locale === "fr") return undefined;
+  const [a, b] = [Number(m[1]), m[2] ? Number(m[2]) : null];
+  if (locale === "en") {
+    const days = b ? `${a} to ${b} days` : `${a} day${a > 1 ? "s" : ""}`;
+    return `Delivered in ${days}${m[3] ? " · free delivery" : ""}`;
+  }
+  const days = b ? `${a} إلى ${arabicDays(b)}` : arabicDays(a);
+  return `التسليم في ${days}${m[3] ? " · توصيل مجاني" : ""}`;
+}
+
 export function localizeOffer(offer: Offer, locale: Locale): Offer {
   const tr = locale === "fr" ? undefined : offer.translations?.[locale];
   return {
@@ -13,7 +31,7 @@ export function localizeOffer(offer: Offer, locale: Locale): Offer {
     value: offer.name,
     name: pick(tr?.name, offer.name),
     description: pick(tr?.description, offer.description),
-    delivery: pick(tr?.delivery, offer.delivery),
+    delivery: autoDelivery(offer.delivery, locale) ?? pick(tr?.delivery, offer.delivery),
     features: offer.features.map((f, i) => ({ ...f, label: pick(tr?.features?.[i], f.label) })),
   };
 }

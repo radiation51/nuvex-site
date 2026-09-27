@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import { bricolage, manrope } from "@/lib/fonts";
+import { bricolage, doto, manrope } from "@/lib/fonts";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const viewport: Viewport = { themeColor: "#3448e8" };
 /** L'espace admin reste en français, avec sa propre mise en page. */
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
   return (
-    <html lang="fr" className={`${manrope.variable} ${bricolage.variable} h-full antialiased`}>
+    <html lang="fr" className={`${manrope.variable} ${bricolage.variable} ${doto.variable} h-full antialiased`}>
       <head>
         {/* Fiche d'application : envoyée avec le cookie admin (elle contient l'adresse secrète). */}
         <link rel="manifest" href="/api/admin/manifest" crossOrigin="use-credentials" />

@@ -10,6 +10,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-display);
+  --font-pixel: var(--font-doto), ui-monospace, monospace;
   --color-lime: var(--lime);
   --color-ink: var(--ink);
   --color-sidebar-ring: var(--sidebar-ring);

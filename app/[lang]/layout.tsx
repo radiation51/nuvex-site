@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { I18nProvider } from "@/components/i18n-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { VisitTracker } from "@/components/site/visit-tracker";
-import { bricolage, kufiArabic, manrope, plexArabic } from "@/lib/fonts";
+import { bricolage, doto, kufiArabic, manrope, plexArabic } from "@/lib/fonts";
 import { dirOf, hasLocale, locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
@@ -57,7 +57,7 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
       lang={lang}
       dir={dirOf(lang)}
       translate="no"
-      className={cn(manrope.variable, bricolage.variable, lang === "ar" && [plexArabic.variable, kufiArabic.variable], "h-full antialiased")}
+      className={cn(manrope.variable, bricolage.variable, doto.variable, lang === "ar" && [plexArabic.variable, kufiArabic.variable], "h-full antialiased")}
     >
       <body className="flex min-h-full flex-col">
         <I18nProvider lang={lang} t={getDictionary(lang)}>

@@ -12,6 +12,8 @@ import { ProjectCard } from "@/components/site/projects";
 import { captureScreenshot, done, uploadImage } from "@/components/admin/shared";
 import type { Project, ProjectText } from "@/lib/types";
 import { TranslationsEditor } from "@/components/admin/translations-editor";
+import { I18nProvider } from "@/components/i18n-provider";
+import { fr } from "@/lib/i18n/dictionaries/fr";
 
 type Draft = Pick<Project, "title" | "category" | "description" | "link" | "image_url" | "translations">;
 
@@ -69,8 +71,9 @@ export function ProjectsPanel({ supabase }: { supabase: SupabaseClient }) {
     if (await done(supabase, error, "Réalisation supprimée.")) load();
   }
 
+  // Les aperçus réutilisent la carte du site public, qui lit ses textes dans les traductions (en français ici).
   return (
-    <div>
+    <I18nProvider lang="fr" t={fr}>
       <h1 className="font-heading text-2xl font-bold">Réalisations</h1>
       <p className="text-sm text-muted-foreground">
         Ajoutez vos projets : collez le lien du site et la capture d&apos;écran se fait toute seule.
@@ -126,7 +129,7 @@ export function ProjectsPanel({ supabase }: { supabase: SupabaseClient }) {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+    </I18nProvider>
   );
 }
 

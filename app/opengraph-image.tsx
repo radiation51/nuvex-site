@@ -58,7 +58,7 @@ export default function OpenGraphImage() {
 
           <div style={{ display: "flex", flexDirection: "column", marginTop: 54, fontSize: 60, lineHeight: 1.08, letterSpacing: -1.5 }}>
             <span>Votre site web pro,</span>
-            <span>prêt en 7 jours.</span>
+            <span>prêt en 3 à 5 jours.</span>
           </div>
           <div style={{ display: "flex", marginTop: 22, fontSize: 24, color: "rgba(255,255,255,0.92)", whiteSpace: "nowrap" }}>
             Dès 25 000 DA · Adapté au mobile · Devis 100 % gratuit

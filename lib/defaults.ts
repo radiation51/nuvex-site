@@ -11,7 +11,7 @@ export const defaultOffers: Offer[] = withOfferTranslations([
     name: "Éco",
     description: "L'essentiel pour être visible en ligne.",
     price: 25000,
-    delivery: "Livré en 7 jours",
+    delivery: "Livré en 3 jours",
     features: [
       { label: "Site one-page", included: true },
       { label: "Nom de domaine inclus", included: true },
@@ -28,7 +28,7 @@ export const defaultOffers: Offer[] = withOfferTranslations([
     name: "Pro",
     description: "Le choix idéal pour les entreprises.",
     price: 45000,
-    delivery: "Livré en 7 jours",
+    delivery: "Livré en 3 jours",
     features: [
       { label: "Jusqu'à 5 pages", included: true },
       { label: "Nom de domaine inclus", included: true },
@@ -45,7 +45,7 @@ export const defaultOffers: Offer[] = withOfferTranslations([
     name: "Premium",
     description: "Un site complet que vous gérez vous-même.",
     price: 95000,
-    delivery: "Livré en 7 jours",
+    delivery: "Livré en 5 jours",
     features: [
       { label: "Pages illimitées", included: true },
       { label: "Nom de domaine inclus", included: true },

@@ -8,13 +8,13 @@ export const offerTranslations: Record<string, Translations<OfferText>> = {
     en: {
       name: "Eco",
       description: "The essentials to be visible online.",
-      delivery: "Delivered in 7 days",
+      delivery: "Delivered in 3 days",
       features: ["One-page website", "Domain name included", "Mobile-friendly", "WhatsApp button", "Contact form", "Google search optimisation"],
     },
     ar: {
       name: "Éco",
       description: "الأساسيات لتكون مرئيًا على الإنترنت.",
-      delivery: "التسليم في 7 أيام",
+      delivery: "التسليم في 3 أيام",
       features: ["موقع من صفحة واحدة", "اسم النطاق مشمول", "متوافق مع الهاتف", "زر واتساب", "استمارة اتصال", "الظهور في نتائج Google"],
     },
   },
@@ -22,7 +22,7 @@ export const offerTranslations: Record<string, Translations<OfferText>> = {
     en: {
       name: "Pro",
       description: "The ideal choice for businesses.",
-      delivery: "Delivered in 7 days",
+      delivery: "Delivered in 3 days",
       features: [
         "Up to 5 pages",
         "Domain name included",
@@ -35,7 +35,7 @@ export const offerTranslations: Record<string, Translations<OfferText>> = {
     ar: {
       name: "Pro",
       description: "الخيار الأمثل للمؤسسات.",
-      delivery: "التسليم في 7 أيام",
+      delivery: "التسليم في 3 أيام",
       features: [
         "حتى 5 صفحات",
         "اسم النطاق مشمول",
@@ -50,7 +50,7 @@ export const offerTranslations: Record<string, Translations<OfferText>> = {
     en: {
       name: "Premium",
       description: "A complete website you manage yourself.",
-      delivery: "Delivered in 7 days",
+      delivery: "Delivered in 5 days",
       features: [
         "Unlimited pages",
         "Domain name included",
@@ -63,7 +63,7 @@ export const offerTranslations: Record<string, Translations<OfferText>> = {
     ar: {
       name: "Premium",
       description: "موقع متكامل تسيّره بنفسك.",
-      delivery: "التسليم في 7 أيام",
+      delivery: "التسليم في 5 أيام",
       features: ["صفحات غير محدودة", "اسم النطاق مشمول", "تصميم خاص 100 %", "مساحة إدارة كاملة", "تحسين متقدّم للظهور في Google", "دعم ذو أولوية"],
     },
   },

@@ -7,7 +7,7 @@ export const legalEn: LegalDoc = {
   badge: "Legal information",
   title: "Privacy policy and terms of sale",
   intro: "Last updated: {date}. By requesting a quote on this website, you confirm that you have read and accepted this entire document.",
-  updatedAt: "26 September 2026",
+  updatedAt: "27 September 2026",
   officialNotice:
     "This English translation is provided for convenience. In case of any difference, the French version of this document prevails.",
   essentialsTitle: "The essentials in 5 points",
@@ -80,7 +80,7 @@ export const legalEn: LegalDoc = {
         blocks: [
           {
             ul: [
-              "Eco, Pro and Premium websites, Essential and Pro software: **delivered in 7 days**. Custom plans: timeline set in the quote.",
+              "Eco and Pro websites: **delivered in 3 days**; Premium website: **delivered in 5 days**; Essential and Pro software: **delivered in 7 days**. Custom plans: timeline set in the quote.",
               "The timeline starts once NUVEX has received the deposit **and** all the required material (texts, photos, logo, product list, business information) and the mockup has been approved.",
               "If the client sends their material late or is slow to reply or approve, the delivery date moves back accordingly. A delay caused by force majeure (general outage, prolonged power cut, event beyond our control) cannot be held against NUVEX.",
             ],

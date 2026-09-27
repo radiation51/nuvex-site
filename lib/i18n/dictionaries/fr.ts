@@ -29,7 +29,7 @@ export const fr = {
   hero: {
     badgeTag: "Nouveau",
     badge: "Logiciels de gestion",
-    headline: "Votre site web pro,\nprêt en 7 jours.",
+    headline: "Votre site web pro,\nprêt en 3 à 5 jours.",
     subheadline: "Sites vitrines modernes et adaptés au mobile, à partir de 25 000 DA. Devis 100 % gratuit.",
     primary: "Demander un devis gratuit",
     secondary: "Voir nos offres",
@@ -95,7 +95,7 @@ export const fr = {
     title: "Simple, rapide, efficace",
     subtitle: "On s'occupe de tout, vous vous concentrez sur votre activité.",
     reasons: [
-      { title: "Livré en 7 jours", text: "Avec les offres Éco, Pro et Premium, votre site est en ligne en 7 jours, pas en quelques mois." },
+      { title: "Livré en 3 à 5 jours", text: "Avec les offres Éco, Pro et Premium, votre site est en ligne en 3 à 5 jours, pas en quelques mois." },
       { title: "Design moderne", text: "Un site unique qui donne confiance et vous démarque de la concurrence." },
       { title: "Adapté au mobile", text: "Parfait sur téléphone, là où se trouvent la majorité de vos clients." },
       { title: "Accompagnement", text: "On reste disponibles après la mise en ligne pour vous aider." },
@@ -144,7 +144,7 @@ export const fr = {
   ctaLaunch: {
     outline: "SIMPLE",
     title: "Prêt à lancer votre site ?",
-    text: "Un site pro à partir de 25 000 DA, livré en 7 jours et adapté au mobile.",
+    text: "Un site pro à partir de 25 000 DA, livré en 3 à 5 jours et adapté au mobile.",
   },
   ctaQuote: {
     outline: "GRATUIT",
@@ -208,7 +208,7 @@ export const fr = {
     items: [
       {
         q: "En combien de temps mon site ou mon logiciel est-il livré ?",
-        a: "7 jours pour les sites Éco, Pro et Premium comme pour les logiciels Essentiel et Pro, à partir de la validation de la maquette et de la réception de vos contenus (textes, photos, logo, liste de produits). Pour un projet sur-mesure, le délai est fixé ensemble dans le devis.",
+        a: "3 à 5 jours pour les sites (3 jours pour Éco et Pro, 5 jours pour Premium) et 7 jours pour les logiciels Essentiel et Pro, à partir de la validation de la maquette et de la réception de vos contenus (textes, photos, logo, liste de produits). Pour un projet sur-mesure, le délai est fixé ensemble dans le devis.",
       },
       {
         q: "Comment se passe le paiement ?",
@@ -443,13 +443,22 @@ export const fr = {
   notFound: {
     title: "Page introuvable — NUVEX",
     heading: "(404) Cette page s'est perdue en chemin.",
-    subtext: "Pas de panique : cette page s'est égarée, mais votre futur site, lui, sera livré en 7 jours.",
+    subtext: "Pas de panique : cette page s'est égarée, mais votre futur site, lui, sera livré en 3 à 5 jours.",
     back: "Retour à l'accueil",
     offers: "Voir nos offres",
     curvedTop: "NUVEX · Sites web & logiciels",
     curvedBottom: "Algérie",
     slug: "page-perdue",
     label: "Page introuvable",
+  },
+  errorPage: {
+    title: "Petit souci — NUVEX",
+    heading: "(Oups) Cette page a trébuché.",
+    subtext: "Un petit souci technique de notre côté. Réessayez : en général, tout repart immédiatement.",
+    retry: "Réessayer",
+    back: "Retour à l'accueil",
+    slug: "petit-souci",
+    label: "Erreur passagère",
   },
   loader: {
     page: "Chargement de la page…",

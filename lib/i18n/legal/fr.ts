@@ -9,7 +9,7 @@ export const legalFr: LegalDoc = {
   title: "Politique de confidentialité et conditions de vente",
   intro:
     "Dernière mise à jour : {date}. En demandant un devis sur ce site, vous déclarez avoir lu et accepté l'ensemble de ce document.",
-  updatedAt: "26 septembre 2026",
+  updatedAt: "27 septembre 2026",
   essentialsTitle: "L'essentiel en 5 points",
   essentials: [
     "Acompte de 50 % pour lancer le site ; le reste est payé une fois le site terminé, avant sa publication et sa livraison.",
@@ -80,7 +80,7 @@ export const legalFr: LegalDoc = {
         blocks: [
           {
             ul: [
-              "Sites Éco, Pro et Premium, logiciels Essentiel et Pro : **livraison en 7 jours**. Offres Sur-mesure : délai fixé dans le devis.",
+              "Sites Éco et Pro : **livraison en 3 jours** ; site Premium : **livraison en 5 jours** ; logiciels Essentiel et Pro : **livraison en 7 jours**. Offres Sur-mesure : délai fixé dans le devis.",
               "Le délai commence lorsque NUVEX a reçu l'acompte **et** tous les éléments nécessaires (textes, photos, logo, liste de produits, informations sur l'activité) et que la maquette a été validée.",
               "Si le client envoie ses éléments en retard ou tarde à répondre ou à valider, la date de livraison est décalée d'autant. Un retard lié à un cas de force majeure (panne générale, coupure prolongée, événement indépendant de notre volonté) ne peut pas être reproché à NUVEX.",
             ],

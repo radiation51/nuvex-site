@@ -54,7 +54,11 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Toutes les pages (l'adresse secrète n'est connue qu'au moment de la requête),
-  // sauf fichiers, API et images générées (aperçu de partage, icônes).
-  matcher: ["/((?!_next/|api/|opengraph-image|apple-icon|icon|.*\\.[A-Za-z0-9]+$).*)"],
+  // Toutes les adresses, sauf les fichiers qui existent vraiment (dossier public, images générées) et les API.
+  // Une adresse de fichier inconnue (« /photo.png », « /index.html ») passe donc ici et finit sur la page
+  // introuvable au design NUVEX, au lieu de la page 404 brute de Next.js.
+  // ⚠️ Nouveau fichier ou dossier dans public/ : l'ajouter à cette liste, sinon il répondra « introuvable ».
+  matcher: [
+    "/((?!_next/|api/|opengraph-image|apple-icon|icon\\.svg|icons/|projects/|sw\\.js$|(?:file|globe|next|vercel|window)\\.svg$).*)",
+  ],
 };

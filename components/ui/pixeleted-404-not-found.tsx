@@ -1,10 +1,9 @@
+import type * as React from "react";
 import Link from "next/link";
-import { Doto } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const doto = Doto({ subsets: ["latin"], weight: ["700", "900"] });
 
 interface Error404Props {
   postcardImage?: string;
@@ -22,10 +21,14 @@ interface Error404Props {
   postcardLabel?: string;
   /** Police « pixel » du titre (désactivée pour l'arabe, qu'elle ne sait pas afficher). */
   pixelHeading?: boolean;
+  /** Code affiché sur la carte postale et le timbre (« 404 », « 500 »…). */
+  code?: string;
+  /** Boutons à la place de « Retour à l'accueil » (ex. « Réessayer » sur une page d'erreur). */
+  actions?: React.ReactNode;
 }
 
 // Carte postale par défaut : une mini-page NUVEX « perdue », dessinée en code (aucune image à charger).
-function LostSitePostcard({ slug, label }: { slug: string; label: string }) {
+function LostSitePostcard({ slug, label, code }: { slug: string; label: string; code: string }) {
   return (
     <div className="flex h-[220px] w-[300px] flex-col overflow-hidden bg-white sm:w-[360px]">
       <div className="flex items-center gap-1.5 border-b border-slate-200 bg-slate-50 px-3 py-2">
@@ -37,7 +40,7 @@ function LostSitePostcard({ slug, label }: { slug: string; label: string }) {
         </span>
       </div>
       <div className="relative flex flex-1 flex-col items-center justify-center bg-linear-to-br from-[oklch(0.5_0.24_268)] to-[oklch(0.72_0.12_240)] text-white">
-        <span className={cn(doto.className, "text-7xl leading-none font-black tracking-wider")}>404</span>
+        <span className={cn("font-pixel text-7xl leading-none font-black tracking-wider")}>{code}</span>
         <span className="mt-2 text-[11px] font-medium tracking-[0.2em] text-white/80 uppercase">{label}</span>
         <div className="absolute inset-x-6 bottom-3 flex gap-2 opacity-40">
           <span className="h-1.5 flex-1 rounded-full bg-white" />
@@ -63,6 +66,8 @@ export function Error404({
   postcardSlug = "page-perdue",
   postcardLabel = "Page introuvable",
   pixelHeading = true,
+  code = "404",
+  actions,
 }: Error404Props) {
   return (
     <div className="flex min-h-screen items-center justify-center overflow-hidden px-4 py-16">
@@ -89,7 +94,7 @@ export function Error404({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={postcardImage} alt={postcardAlt} className="h-[220px] w-[300px] object-cover sm:w-[360px]" />
               ) : (
-                <LostSitePostcard slug={postcardSlug} label={postcardLabel} />
+                <LostSitePostcard slug={postcardSlug} label={postcardLabel} code={code} />
               )}
 
               {/* Timbre NUVEX, au prix de la page perdue */}
@@ -98,7 +103,7 @@ export function Error404({
                   <span className="grid size-6 place-items-center rounded-md bg-primary text-[11px] font-bold text-primary-foreground">
                     N
                   </span>
-                  <span className={cn(doto.className, "mt-1 text-[13px] leading-none font-black")}>404 DA</span>
+                  <span className={cn("font-pixel mt-1 text-[13px] leading-none font-black")}>{code} DA</span>
                 </div>
               </div>
             </div>
@@ -124,11 +129,13 @@ export function Error404({
         </div>
 
         <div className="max-w-2xl text-center">
-          <h1 className={cn(pixelHeading ? doto.className : "font-heading", "mb-6 text-4xl leading-tight font-bold text-balance md:text-5xl")}>
+          <h1 className={cn(pixelHeading ? "font-pixel" : "font-heading", "mb-6 text-4xl leading-tight font-bold text-balance md:text-5xl")}>
             {heading}
           </h1>
           <p className="mb-10 text-base text-muted-foreground md:text-lg">{subtext}</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
+            {actions ?? (
+              <>
             <Link href={backButtonHref} className={cn(buttonVariants({ size: "lg" }), "h-11 rounded-lg px-6")}>
               {backButtonLabel}
               <ArrowRight className="size-4 rtl:-scale-x-100" />
@@ -140,6 +147,8 @@ export function Error404({
               >
                 {secondaryLabel}
               </Link>
+            )}
+              </>
             )}
           </div>
         </div>
