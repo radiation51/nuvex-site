@@ -3,11 +3,11 @@
 
 export const fr = {
   meta: {
-    title: "NUVEX — Sites web et logiciels de gestion en Algérie | À partir de 25 000 DA",
+    title: "NUVEX — Création de sites web en Algérie | Agence web",
     description:
-      "NUVEX crée des sites web modernes et des logiciels de gestion qui fonctionnent sans internet pour les entreprises en Algérie. Sites à partir de 25 000 DA, devis 100 % gratuit.",
-    ogTitle: "NUVEX — Sites web et logiciels en Algérie",
-    ogDescription: "Sites web à partir de 25 000 DA et logiciels de gestion sur mesure. Devis 100 % gratuit.",
+      "Création de site web en Algérie (Alger, Oran, Constantine…) : site internet vitrine adapté au mobile, boutique en ligne et logiciel de gestion de stock. Devis gratuit sur WhatsApp.",
+    ogTitle: "NUVEX — Création de sites web en Algérie",
+    ogDescription: "Sites web pro adaptés au mobile et logiciels de gestion sur mesure pour les commerces en Algérie. Devis gratuit.",
   },
   currency: "DA",
   nav: {

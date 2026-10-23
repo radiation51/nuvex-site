@@ -3,11 +3,11 @@ import type { Dictionary } from "./fr";
 // Textes du site en anglais.
 export const en: Dictionary = {
   meta: {
-    title: "NUVEX — Websites and business software in Algeria | From 25,000 DA",
+    title: "NUVEX — Website Design in Algeria | Web Agency",
     description:
-      "NUVEX builds modern websites and business software that works offline for companies in Algeria. Websites from 25,000 DA, 100% free quote.",
-    ogTitle: "NUVEX — Websites and software in Algeria",
-    ogDescription: "Websites from 25,000 DA and custom business software. 100% free quote.",
+      "Website design in Algeria (Algiers, Oran, Constantine…): mobile-friendly business websites, online stores and stock management software. Free quote on WhatsApp.",
+    ogTitle: "NUVEX — Website design in Algeria",
+    ogDescription: "Professional mobile-friendly websites and custom business software for businesses in Algeria. Free quote.",
   },
   currency: "DA",
   nav: {

@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import { bricolage, doto, manrope } from "@/lib/fonts";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.URL ?? "https://nuvex-algerie.netlify.app"),
+  metadataBase: new URL(SITE_URL),
   // Admin installable comme une application (notifications sur iPhone).
   appleWebApp: { capable: true, title: "NUVEX", statusBarStyle: "default" },
   icons: { apple: "/icons/icon-180.png" },

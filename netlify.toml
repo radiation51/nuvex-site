@@ -9,3 +9,10 @@
 # Module Next.js de Netlify (pages, routes /api, images).
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# L'ancienne adresse Netlify renvoie vers l'adresse officielle (une seule version du site pour Google).
+[[redirects]]
+  from = "https://nuvex-algerie.netlify.app/*"
+  to = "https://nuvexdz.com/:splat"
+  status = 301
+  force = true

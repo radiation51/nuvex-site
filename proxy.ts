@@ -59,6 +59,6 @@ export const config = {
   // introuvable au design NUVEX, au lieu de la page 404 brute de Next.js.
   // ⚠️ Nouveau fichier ou dossier dans public/ : l'ajouter à cette liste, sinon il répondra « introuvable ».
   matcher: [
-    "/((?!_next/|api/|opengraph-image|apple-icon|icon\\.svg|icons/|projects/|sw\\.js$|(?:file|globe|next|vercel|window)\\.svg$).*)",
+    "/((?!_next/|api/|opengraph-image|apple-icon|icon\\.svg|icons/|projects/|sw\\.js$|robots\\.txt$|sitemap\\.xml$|google[0-9a-f]+\\.html$|(?:file|globe|next|vercel|window)\\.svg$).*)",
   ],
 };

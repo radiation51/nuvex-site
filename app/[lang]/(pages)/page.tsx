@@ -11,6 +11,7 @@ import { Projects } from "@/components/site/projects";
 import { SectorsStrip } from "@/components/site/sectors-strip";
 import { ServicesTeaser } from "@/components/site/services-teaser";
 import { Steps } from "@/components/site/steps";
+import { StructuredData } from "@/components/site/structured-data";
 import { Testimonials } from "@/components/site/testimonials";
 import { WhyUs } from "@/components/site/why-us";
 import { getSiteData } from "@/lib/data";
@@ -41,6 +42,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
+      <StructuredData settings={settings} description={t.meta.description} />
       <Header />
       <main>
         <DownloadWithColumnLines badgeTag={t.hero.badgeTag} badge={t.hero.badge} badgeHref="#logiciels" />

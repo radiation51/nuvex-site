@@ -6,6 +6,7 @@ import { VisitTracker } from "@/components/site/visit-tracker";
 import { bricolage, doto, kufiArabic, manrope, plexArabic } from "@/lib/fonts";
 import { dirOf, hasLocale, locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { GOOGLE_SITE_VERIFICATION, SITE_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import "../globals.css";
 
@@ -23,11 +24,12 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   if (!hasLocale(lang)) return {};
   const t = getDictionary(lang);
   return {
-    // Adresse du site (fournie par Netlify) : sert aux liens de l'image d'aperçu de partage.
-    metadataBase: new URL(process.env.URL ?? "https://nuvex-algerie.netlify.app"),
+    // Adresse officielle (nuvexdz.com) : sert à la balise « canonical », aux liens hreflang et à l'image d'aperçu.
+    metadataBase: new URL(SITE_URL),
     title: t.meta.title,
     description: t.meta.description,
     other: { google: "notranslate" },
+    verification: { google: GOOGLE_SITE_VERIFICATION },
     // Carte d'aperçu quand le lien est partagé (WhatsApp, Instagram, Facebook…) : image générée par app/opengraph-image.tsx.
     openGraph: {
       title: t.meta.ogTitle,
