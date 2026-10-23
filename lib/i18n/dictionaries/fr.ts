@@ -250,6 +250,21 @@ export const fr = {
         q: "Le devis est-il vraiment gratuit ?",
         a: "Oui, 100 % gratuit et sans engagement. Vous nous expliquez votre projet, on vous répond avec un prix clair.",
       },
+      {
+        q: "Vous créez des sites web partout en Algérie ?",
+        a:
+          "Oui. NUVEX crée des sites web et sites internet pour les commerces et entreprises de toute l’Algérie : Alger, Oran, Constantine, Annaba, Blida, Sétif, Tizi Ouzou, Béjaïa… Tout se fait à distance, par WhatsApp et téléphone, et votre site peut être en français, en arabe ou en anglais.",
+      },
+      {
+        q: "Quel type de site pouvez-vous créer pour mon commerce ?",
+        a:
+          "Site vitrine, boutique en ligne (e-commerce), site avec menu et réservation pour restaurant ou café, site pour salon de coiffure, garage, agence immobilière, cabinet médical, école… Chaque site est adapté au mobile et pensé pour être trouvé sur Google.",
+      },
+      {
+        q: "Combien coûte la création d’un site web en Algérie ?",
+        a:
+          "Le prix dépend du type de site, du nombre de pages et des services souhaités. Nos offres sont affichées dans la section « Offres », et le devis est gratuit sur WhatsApp.",
+      },
     ],
   },
   contact: {

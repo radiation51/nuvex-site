@@ -250,6 +250,21 @@ export const en: Dictionary = {
         q: "Is the quote really free?",
         a: "Yes, 100% free with no commitment. Tell us about your project and we'll reply with a clear price.",
       },
+      {
+        q: "Do you build websites all over Algeria?",
+        a:
+          "Yes. NUVEX builds websites for shops and businesses all over Algeria: Algiers, Oran, Constantine, Annaba, Blida, Sétif, Tizi Ouzou, Béjaïa… Everything is done remotely by WhatsApp and phone, and your website can be in French, Arabic or English.",
+      },
+      {
+        q: "What kind of website can you build for my business?",
+        a:
+          "Business websites, online stores (e-commerce), websites with a menu and bookings for restaurants and cafés, websites for hair salons, garages, real estate agencies, medical practices, schools… Every website is mobile-friendly and built to be found on Google.",
+      },
+      {
+        q: "How much does a website cost in Algeria?",
+        a:
+          "The price depends on the type of website, the number of pages and the services you need. Our plans are shown in the “Pricing” section, and the quote is free on WhatsApp.",
+      },
     ],
   },
   contact: {
