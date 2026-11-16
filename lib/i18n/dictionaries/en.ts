@@ -29,7 +29,7 @@ export const en: Dictionary = {
   hero: {
     badgeTag: "New",
     badge: "Business software",
-    headline: "Your professional website,\nready in 3 to 5 days.",
+    headline: "Your professional website,\nready in 3 days.",
     subheadline: "Modern, mobile-friendly websites from 25,000 DA. 100% free quote.",
     primary: "Get a free quote",
     secondary: "See our pricing",
@@ -95,7 +95,7 @@ export const en: Dictionary = {
     title: "Simple, fast, effective",
     subtitle: "We take care of everything, you focus on your business.",
     reasons: [
-      { title: "Delivered in 3 to 5 days", text: "With our Eco, Pro and Premium plans, your website goes live in 3 to 5 days, not months." },
+      { title: "Delivered in 3 days", text: "With our Eco and Pro plans, your website goes live in 3 days, not months." },
       { title: "Modern design", text: "A unique website that builds trust and sets you apart from the competition." },
       { title: "Mobile-friendly", text: "Perfect on phones, where most of your customers are." },
       { title: "Ongoing support", text: "We stay available after launch to help you." },
@@ -144,7 +144,7 @@ export const en: Dictionary = {
   ctaLaunch: {
     outline: "SIMPLE",
     title: "Ready to launch your website?",
-    text: "A professional website from 25,000 DA, delivered in 3 to 5 days and mobile-friendly.",
+    text: "A professional website from 25,000 DA, delivered in 3 days and mobile-friendly.",
   },
   ctaQuote: {
     outline: "FREE",
@@ -208,7 +208,7 @@ export const en: Dictionary = {
     items: [
       {
         q: "How long does it take to deliver my website or software?",
-        a: "3 to 5 days for websites (3 days for Eco and Pro, 5 days for Premium) and 7 days for Essential and Pro software, starting from mockup approval and once we have your content (texts, photos, logo, product list). For a custom project, the timeline is agreed together in the quote.",
+        a: "3 days for Eco and Pro websites (5 days for Premium) and 7 days for Essential and Pro software, starting from mockup approval and once we have your content (texts, photos, logo, product list). For a custom project, the timeline is agreed together in the quote.",
       },
       {
         q: "How does payment work?",
@@ -456,7 +456,7 @@ export const en: Dictionary = {
   notFound: {
     title: "Page not found — NUVEX",
     heading: "(404) This page got lost along the way.",
-    subtext: "Don't worry: this page wandered off, but your future website will be delivered in 3 to 5 days.",
+    subtext: "Don't worry: this page wandered off, but your future website will be delivered in 3 days.",
     back: "Back to home",
     offers: "See our pricing",
     curvedTop: "NUVEX · Websites & software",
